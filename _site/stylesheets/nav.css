@@ -1,0 +1,16 @@
+#primary-nav {
+  background: #1a1919;
+  min-height: 1rem;
+  overflow: hidden;
+  padding: .5rem; }
+  #primary-nav .logo {
+    float: left;
+    font-family: "Gotham 3r","Gotham A","Gotham B",Helvetica,Arial,sans-serif;
+    max-height: 60px;
+    overflow: hidden; }
+    #primary-nav .logo img {
+      float: left;
+      max-width: 61px;
+      width: 61px; }
+    #primary-nav .logo .logo-anchor-text {
+      color: #fff; }
