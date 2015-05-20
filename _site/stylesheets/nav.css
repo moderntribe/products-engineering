@@ -1,16 +1,66 @@
+.page-header {
+  background-color: #10a8c8;
+  background-image: linear-gradient(120deg, #10a8c8, #057d76);
+  color: #fff;
+  text-align: center; }
+
+@media screen and (min-width: 64em) {
+  .page-header {
+    padding: 5rem 6rem; } }
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  .page-header {
+    padding: 3rem 4rem; } }
+@media screen and (max-width: 42em) {
+  .page-header {
+    padding: 2rem 1rem; } }
 #primary-nav {
-  background: #1a1919;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
   min-height: 1rem;
   overflow: hidden;
-  padding: .5rem; }
+  padding: .5rem;
+  position: relative;
+  z-index: 2; }
   #primary-nav .logo {
     float: left;
     font-family: "Gotham 3r","Gotham A","Gotham B",Helvetica,Arial,sans-serif;
     max-height: 60px;
-    overflow: hidden; }
+    overflow: hidden;
+    text-decoration: none; }
     #primary-nav .logo img {
       float: left;
-      max-width: 61px;
-      width: 61px; }
+      max-width: 161px;
+      width: 161px; }
     #primary-nav .logo .logo-anchor-text {
-      color: #fff; }
+      color: #aaa;
+      display: inline-block;
+      font-size: 2rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-weight: 200;
+      padding: .5rem 0; }
+  #primary-nav .links {
+    float: right;
+    padding-right: .5rem; }
+    #primary-nav .links li {
+      display: inline-block;
+      padding: .5rem; }
+    #primary-nav .links a {
+      color: #aaa;
+      display: inline-block;
+      position: relative;
+      transition: .5s ease all; }
+      #primary-nav .links a:after {
+        background: transparent;
+        bottom: -.5rem;
+        content: '';
+        display: block;
+        height: 2px;
+        left: 0;
+        position: absolute;
+        right: 0;
+        transition: .25s ease all; }
+      #primary-nav .links a:hover {
+        color: #333;
+        text-decoration: none; }
+        #primary-nav .links a:hover:after {
+          background: #aaa; }
