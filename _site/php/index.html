@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<title>PHP | Modern Tribe: Engineering</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/normalize.css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="//cloud.typography.com/689960/768184/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/foundation.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/app.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/github-light.css" media="screen">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body class="internal">
+<nav id="primary-nav">
+	<a class="logo" href="/">
+		<img src="/images/logo.png" class="logo-image" itemprop="logo" alt="Modern Tribe logo">
+		<span class="logo-anchor-text">
+			Engineering
+		</span>
+	</a>
+	<ul class="links">
+		<li><a href="/html/" class="">HTML</a></li>
+		<li><a href="/css/" class="">CSS</a></li>
+		<li><a href="/js/" class="">JS</a></li>
+		<li><a href="/php/" class="active">PHP</a></li>
+		<li><a href="/git/" class="">Git</a></li>
+		<li><a href="/structure/" class="">Structure</a></li>
+	</ul>
+</nav>
+<section class="page-header">
+	
+		<h1 class="project-name">PHP</h1>
+	
+</section>
+<section class="main-content row">
+	<div class="small-12">
+
+<div id="page-index">
+	<ol>
+		<li>
+			<a href="/php/#php-codestyle">Code style</a>
+			<ol>
+				<li><a href="/php/#php-functions">Functions</a></li>
+				<li><a href="/php/#php-classes">Classes</a></li>
+			</ol>
+		</li>
+		<li>
+			<a href="/php/#php-wordpress">WordPress</a>
+			<ol>
+				<li><a href="/php/#php-wordpress-hooks">Hooks &amp; constants</a></li>
+				<li><a href="/php/#php-wordpress-deprecation">How to deprecate</a></li>
+			</ol>
+		</li>
+	</ol>
+</div>
+
+<h2 id="a-idphp-codestylea-code-style"><a id="php-codestyle"></a> Code style</h2>
+
+<h3 id="a-idphp-functionsa-functions"><a id="php-functions"></a> Functions</h3>
+
+<h4 id="when-to-create-global-functions">When to create global functions</h4>
+<p>If there is a piece of code that is frequently referenced throughout the addons, or could be useful to users who want to create custom templates or addons, that’s when it’s appropriate to create a global function. </p>
+
+<p>Keep in mind that whenever a global function is created and released, from that point on, it’ll be “in the wild”. Customers may be using it in their themes or plugins, and we will need to support it from that point on. With this in mind, please be sure not to create unnecessary functions that we won’t want to support.</p>
+
+<h4 id="where-to-put-function-code">Where to put function code</h4>
+<p>There are template tag files for most areas of the plugin. They are located in the <code>template-tags/</code> directory. Take care in selecting the appropriate file for your new function, and place the new function at the end of the file. If it closely references another function in the file, place it next to that function.</p>
+
+<p>It’s usually appropriate to place the logic for a function into a class, and then use a function as a wrapper for the class method. When you have some code that you’d like to make publicly available, but it would also make sense as a method of one of our classes, you should make the method within the class, and then make a global function that calls that method and returns its result.</p>
+
+<h4 id="echo-or-return">Echo or return?</h4>
+<p>When a function returns a scalar value that might be used in templates, be sure to return the value instead of echoing it. There is no need to take <code>$echo</code> as a boolean argument to the function; if a user wants to echo the value, they can simply directly echo the function’s result in their template.</p>
+
+<h4 id="applying-filters-to-the-result">Applying filters to the result</h4>
+<p>Note that whenever you create a global function, be sure to run <code>apply_filters()</code> on the result before it’s returned.</p>
+
+<p>The filter should have the same name as the function, and should be passed the return value, followed by (at minimum), all parameters that were passed to the function initially.</p>
+
+<h4 id="function-naming">Function naming</h4>
+<p>Since we’re creating code that is distributed, has been downloaded over 1 million times, and will be installed alongside myriad themes and plugins, it’s very important that you prefix your global namespace definitions with <code>tribe_</code> – so there’s far less chance another plugin’s or theme’s definitions will have the same name.</p>
+
+<p><strong>Example: Naming a Global Function</strong></p>
+
+<p>Wrong (not namespaced, uses camelCase): </p>
+
+<pre>
+function getEventStartTime() {
+	// do something
+}
+</pre>
+
+<p>Right (prefixed with <code>tribe_</code>, uses underscores):</p>
+
+<pre>
+function tribe_get_event_start_time() {
+	// do something
+}
+</pre>
+
+<h3 id="a-idphp-classesaclasses"><a id="php-classes"></a>Classes</h3>
+
+<h4 id="class-naming">Class naming</h4>
+
+<p>Classes should be named with the Modern Tribe namespace (“Tribe”), the plugin namespace (“Events”), and then the classname. Those three parts should be separated by double underscores (which will translate to directory slashes in the autoloader). Since we’re using double underscores as namespace separators, you can (and should) use single underscores in the class names. </p>
+
+<p><strong>Example: Naming a Class</strong></p>
+
+<p>Wrong (not namespaced, uses CamelCase):</p>
+
+<pre>
+class DateUtilities {
+	// define some things
+}
+</pre>
+
+<p>Right:</p>
+
+<p>Classes should be namespaced with a hierarchy that is separated by double-underscores (__). The hierarchy is as such: src/Tribe/Class_Name. In the class name, that translates to:</p>
+
+<pre>
+class Tribe__Events__Date_Utilities {
+	// define some things
+}
+</pre>
+
+<h4 id="class-member-visibility">Class member visibility</h4>
+<p>The default visibility for class members should be “private”. Increase the visibility incrementally (to protected, and then public), as needed. </p>
+
+<p><em><strong>NOTE:</strong> static methods and properties should be used sparingly and avoided whenever possible.</em></p>
+
+<h4 id="class-functionality">Class functionality</h4>
+<p>When creating a new class, please try to ensure that the class has a single responsibility. Use inheritance when possible to keep things simple, organized and DRY.</p>
+
+<h4 id="class-method-functionality">Class method functionality</h4>
+<p>Each method within a class should perform a single task. This keeps your code clean and easy to read.</p>
+
+<h2 id="a-idphp-wordpressawordpress"><a id="php-wordpress"></a>WordPress</h2>
+
+<h3 id="a-idphp-wordpress-hooksahooks-vs-constants"><a id="php-wordpress-hooks"></a>Hooks vs constants</h3>
+
+<p>Occasionally we may have a request or an idea for a setting that could be useful to advanced users, but that isn’t something we’d want to expose to everyone in the plugin’s settings pages. In those cases, we’ll usually want to create a “hidden” setting that is available for users to set the value of via a hook or a constant.</p>
+
+<h4 id="when-to-use-a-hook">When to Use a Hook</h4>
+<p>Most of the time hooks should be used to create these hidden settings. A user will then be able to create a line in their functions.php which sets the value.</p>
+
+<h4 id="when-to-use-a-constant">When to Use a Constant</h4>
+<p>Constants should only be used when a site owner will want to set a setting site-wide, no matter what theme or plugins are in use, and no theme or plugin should be allowed to override this value. A user will then be able to create a line in their wp-config.php which sets the value. </p>
+
+<p><em><strong>NOTE:</strong> if a Modern Tribe developer would like to suggest a constant be used, they will need to bring it up during the code review that happens once per release cycle. Pull requests that add constants to the codebase will also need to be discussed on Modern Tribe’s internal code review before they are accepted.</em></p>
+
+<h3 id="a-idphp-wordpress-deprecationahow-to-deprecate"><a id="php-wordpress-deprecation"></a>How to deprecate</h3>
+
+<p>When a global function or hook needs to be renamed or taken out of use, please take the following steps:</p>
+
+<ul>
+  <li>For functions, move the function to the <code>deprecated.php</code> file  </li>
+  <li>Place an <code>@deprecated</code> phpDoc docblock tag in the documentation for the function or hook  </li>
+  <li>Place an <code>@todo</code> in the phpDoc docblock that describes when to remove the function. It should be a minimum of two versions into the future.  </li>
+  <li>For functions, run WordPress’ <code>_deprecated_function()</code> just inside function  </li>
+  <li>For hooks, check <code>has_filter()</code>, and if it returns true, run the WordPress <code>_deprecated_function()</code> just above the hook  </li>
+</ul>
+
+<p><em><strong>NOTE:</strong> private and protected class members don’t need to be deprecated.</em></p>
+
+
+		<footer class="site-footer">
+			<span class="site-footer-owner"><a href="https://github.com/borkweb/engineering">Engineering</a> is maintained by <a href="https://github.com/borkweb">borkweb</a>.</span>
+		</footer>
+	</div>
+</section>
+<script src="/js/foundation.min.js"></script>
+</body>
+</html>
+
