@@ -6,6 +6,11 @@
   background-image: linear-gradient( 120deg, #10a8c8, #057d76 );
 	color: #fff;
 	text-align: center;
+
+	h1,
+	h2 {
+		color: #fff;
+	}
 }
 
 @media screen and (min-width: 64em) {
@@ -30,7 +35,7 @@
 	box-shadow: 0 0 5px 0 rgba( 0, 0, 0, .3 );
 	min-height: 1rem;
 	overflow: hidden;
-	padding: .5rem;
+	padding: .5rem .5rem 1rem;
 	position: relative;
 	z-index: 2;
 
@@ -50,17 +55,18 @@
 		.logo-anchor-text {
 			color: #aaa;
 			display: inline-block;
-			font-size: 2rem;
+			font-size: 2.25rem;
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
 			font-weight: 200;
-			padding: .5rem 0;
+			padding: .65rem 0 .5rem;
 		}
 	}
 
 	.links {
 		float: right;
-		padding-right: .5rem;
+		margin: 0;
+		padding: 1.25rem .5rem .5rem;
 
 		li {
 			display: inline-block;
