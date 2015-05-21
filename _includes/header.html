@@ -16,7 +16,7 @@
 <body class="{% if '/index.html' == page.url %}homepage{% else %}internal{% endif %}">
 <nav id="primary-nav">
 	<a class="logo" href="/">
-		<img src="/images/logo.png" class="logo-image" itemprop="logo" alt="Modern Tribe logo">
+		<img src="{% if '/index.html' != page.url %}../{% endif %}images/logo.png" class="logo-image" itemprop="logo" alt="Modern Tribe logo">
 		<span class="logo-anchor-text">
 			Engineering
 		</span>
