@@ -4,13 +4,13 @@
 	<meta charset="UTF-8">
 	<title>{% if page.title %}{{ page.title }} | {% endif %}Modern Tribe: Engineering</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="/stylesheets/normalize.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="{% if '/index.html' != page.url %}../{% endif %}stylesheets/normalize.css" media="screen">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="//cloud.typography.com/689960/768184/css/fonts.css">
-	<link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="/stylesheets/foundation.min.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="/stylesheets/app.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="/stylesheets/github-light.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="{% if '/index.html' != page.url %}../{% endif %}stylesheets/font-awesome.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="{% if '/index.html' != page.url %}../{% endif %}stylesheets/foundation.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="{% if '/index.html' != page.url %}../{% endif %}stylesheets/app.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="{% if '/index.html' != page.url %}../{% endif %}stylesheets/github-light.css" media="screen">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body class="{% if '/index.html' == page.url %}homepage{% else %}internal{% endif %}">
@@ -22,12 +22,12 @@
 		</span>
 	</a>
 	<ul class="links">
-		<li><a href="/html/" class="{% if '/html/index.html' == page.url %}active{% endif %}">HTML</a></li>
-		<li><a href="/css/" class="{% if '/css/index.html' == page.url %}active{% endif %}">CSS</a></li>
-		<li><a href="/js/" class="{% if '/js/index.html' == page.url %}active{% endif %}">JS</a></li>
-		<li><a href="/php/" class="{% if '/php/index.html' == page.url %}active{% endif %}">PHP</a></li>
-		<li><a href="/git/" class="{% if '/git/index.html' == page.url %}active{% endif %}">Git</a></li>
-		<li><a href="/structure/" class="{% if '/structure/index.html' == page.url %}active{% endif %}">Structure</a></li>
+		<li><a href="{% if '/index.html' != page.url %}../{% endif %}html/" class="{% if '/html/index.html' == page.url %}active{% endif %}">HTML</a></li>
+		<li><a href="{% if '/index.html' != page.url %}../{% endif %}css/" class="{% if '/css/index.html' == page.url %}active{% endif %}">CSS</a></li>
+		<li><a href="{% if '/index.html' != page.url %}../{% endif %}js/" class="{% if '/js/index.html' == page.url %}active{% endif %}">JS</a></li>
+		<li><a href="{% if '/index.html' != page.url %}../{% endif %}php/" class="{% if '/php/index.html' == page.url %}active{% endif %}">PHP</a></li>
+		<li><a href="{% if '/index.html' != page.url %}../{% endif %}git/" class="{% if '/git/index.html' == page.url %}active{% endif %}">Git</a></li>
+		<li><a href="{% if '/index.html' != page.url %}../{% endif %}structure/" class="{% if '/structure/index.html' == page.url %}active{% endif %}">Structure</a></li>
 	</ul>
 </nav>
 <section class="page-header">
