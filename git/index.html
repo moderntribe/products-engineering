@@ -1,0 +1,27 @@
+---
+layout: page
+title: Git
+---
+## Git flow
+
+### Master branch
+The `master` branch contains the public, currently released version of the plugin. The `develop` branch is merged into the master branch at the end of every release cycle. This branch should generally not be committed to, except by the developer in charge of releasing the plugin.
+
+_**NOTE:** if you need to test something against the currently released version of the plugin, a simple way to switch to that version is by checking out the master branch. Just be sure to switch back to your working branch before you make any commits!_
+
+### Develop branch
+While working on the current release, most code should be developed in the develop branch. This should be considered the primary working branch during every release cycle.
+
+### Other branches
+_**NOTE:** The following instructions are for internal use only, if you're sending a pull request, it'll already be in its own branch._
+
+If you find yourself assigned to a ticket you anticipate may need extreme QA effort, break other areas of the plugin, or has the potential (for any reason) not to be finished in a single release cycle, please create a branch off of develop, and do your work in there.
+
+The naming convention for new branches should be as such - `[feature-or-bugfix]/[ticket number]-[brief-description]`. For example:
+
+`feature/24343-activation-page`
+or
+`bugfix/28363-list-view-eod-cutoff`
+
+Please ensure that the prefix (“feature” or “bugfix”) corresponds to the issue tracker selected in the ticket.
+
