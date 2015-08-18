@@ -1,0 +1,83 @@
+---
+layout: page
+title: JavaScript
+---
+
+<div id="page-index">
+	<ol>
+		<li>
+			<a href="#js-style">Code style</a>
+		</li>
+		<li>
+			<a href="#js-event-namespacing">Event namespacing</a>
+		</li>
+	</ol>
+</div>
+
+## <a id="js-style"></a> Code style
+
+All javascript should be well documented. Functions, namespaces should adhere to the jsdoc 3 standard, available here: [[http://usejsdoc.org/about-getting-started.html]].
+
+Inside functions declare additional comments with the // syntax.
+
+### Variable declaration
+
+Variable declarations should be comma separated:
+
+	var v, x, y;
+	
+	var $this = $(this),
+	    $that = $(that),
+	    i = 0;
+
+_**NOTE:** Watch for implicit globals when declaring your variables. This is a very common issue,
+especially with iterators in javascript loops. Leaking these to global scope can yield unexpected
+results._
+
+Utility functions, state, tests and options for the main plugins should be stored in
+`tribe-events.js` and `tribe-events-pro.js`. 
+
+If functions or portions of functionality move between plugins, make sure all associated js code
+moves to that new area with them.
+
+## <a id="js-event-namespacing"></a> Event namespacing
+
+To promote flexible event handling within jQuery, [namespacing events](https://api.jquery.com/event.namespace/) is preferred over prefixing custom event names. 
+
+### Why?
+
+Namespacing allows a developer to add and remove events in an isolated fashion.  CSS-Tricks has [an excellent write-up](https://css-tricks.com/namespaced-events-jquery/) about why they are awesome.
+
+### Namespacing conventions
+
+Namespaced custom events should use the following convention:
+
+	[event name].[plugin slug].tribe
+
+#### [event name]
+
+The `[event name]` should be something that indicates the action that is occurring. If saving a ticket, an event name of `saveTicket` would be appropriate - `fryBacon` would not.
+
+
+#### [plugin slug]
+
+Replace `[plugin slug]` with the appropriate plugin slug.  Examples:
+
+	$( document ).trigger( 'saveTicket.tec.tribe' );
+	$( document ).on( 'saveEvent.events-community.tribe', function() {} );
+	$( document ).off( 'fetchEvents.events-pro.tribe' );
+
+Plugin slugs of note:
+
+* The Events Calendar: `tec`
+* Events Pro: `events-pro`
+* Events Community: `events-community`
+* Events Eventbrite: `events-eventbrite`
+* Events Facebook: `events-facebook`
+* etc.
+
+__NOTE:__ There should be some debate on what the TEC slug should be. Some other options that have been proposed: `events-core`, `the-events-calender`, `events`, and `core`. I'm guessing there'll be more.
+
+#### tribe
+
+This is the piece of the namespace that should be present everywhere. It separates our events from those of other plugins.

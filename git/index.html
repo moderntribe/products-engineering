@@ -2,20 +2,61 @@
 layout: page
 title: Git
 ---
-## Git flow
+
+<div id="page-index">
+	<ol>
+		<li>
+			<a href="#git-flow">Git flow</a>
+		</li>
+		<li>
+			<a href="#git-code-review">Code reviews</a>
+			<ol>
+				<li><a href="#git-labels">Labels for pull requests</a></li>
+			</ol>
+		</li>
+	</ol>
+</div>
+
+## <a id="git-flow"></a> Git flow
 
 ### Master branch
-The `master` branch contains the public, currently released version of the plugin. The `develop` branch is merged into the master branch at the end of every release cycle. This branch should generally not be committed to, except by the developer in charge of releasing the plugin.
 
-_**NOTE:** if you need to test something against the currently released version of the plugin, a simple way to switch to that version is by checking out the master branch. Just be sure to switch back to your working branch before you make any commits!_
+The `master` branch contains the public, currently released version of the plugin. At the end of a
+release cycle, the corresponding `release/xxx` branch is merged into the master branch. The `master`
+branch should generally not be committed to, except by the developer in charge of releasing the plugin.
 
-### Develop branch
-While working on the current release, most code should be developed in the develop branch. This should be considered the primary working branch during every release cycle.
+_**NOTE:** if you need to test something against the currently released version of the plugin, a
+simple way to switch to that version is by checking out the master branch. Just be sure to switch
+back to your working branch before you make any commits!_
+
+### Release Branches
+While working on a release, most code should be developed in the corresponding release branch. This
+should be considered the primary working branch during every release cycle. We always set the current
+working release branch as the default branch in GitHub. (Typically this is the highest numerical
+`release/xxx` branch)
+
+#### Why `release/xxx` branches?
+
+Balancing our development, QA, and release processes is important and we wanted to move to a
+branching structure that had minimal impact across Modern Tribe's team. We often have at least 3
+release branches that are going through some sort of change.  Here's an example:
+
+* `release/118` - a released version (we'll commit bug fixes, security fixes, etc)
+* `release/119` - next release (this has finished principal development and is undergoing QA)
+* `release/120` - upcoming release (this is a release away and is the _active_ development branch)
+
+When `release/119` is released, those branch numbers will shift and we'll add a new `release/121`
+branch when that development cycle has begun (setting the GitHub default branch to `release/121`
+accordingly).
 
 ### Other branches
-_**NOTE:** The following instructions are for internal use only, if you're sending a pull request, it'll already be in its own branch._
 
-If you find yourself assigned to a ticket you anticipate may need extreme QA effort, break other areas of the plugin, or has the potential (for any reason) not to be finished in a single release cycle, please create a branch off of develop, and do your work in there.
+_**NOTE:** The following instructions are for internal use only, if you're sending a pull request,
+it'll already be in its own branch._
+
+If you find yourself assigned to a ticket you anticipate may need extreme QA effort, break other
+areas of the plugin, or has the potential (for any reason) not to be finished in a single release
+cycle, please create a branch off of develop, and do your work in there.
 
 The naming convention for new branches should be as such - `[feature-or-bugfix]/[ticket number]-[brief-description]`. For example:
 
@@ -23,5 +64,46 @@ The naming convention for new branches should be as such - `[feature-or-bugfix]/
 or
 `bugfix/28363-list-view-eod-cutoff`
 
-Please ensure that the prefix (“feature” or “bugfix”) corresponds to the issue tracker selected in the ticket.
+Please ensure that the prefix (“feature” or “bugfix”) corresponds to the issue tracker selected in
+the ticket.
 
+## <a id="git-code-review"></a> Code reviews
+
+**All code that is intended to be merged to `develop`, `master`, or a `release` branch must first
+undergo code review.**
+
+Code reviews must be done by a core product engineer. (Barry, Gustavo, Jessica,  Matt, Peter, or
+Zach)
+
+When an engineer has code ready for merging, they should create a pull request that includes a link
+back to the ticket in Modern Tribe's Internal Central Tickets ("Central").  If the request is coming
+from a 3rd party contributor, a Modern Tribe representative should create a ticket in Central to
+track this change and add a link in a comment on the pull request.  In Central, a reciprocal link
+should be added to link back to any pull requests associated with the ticket and the ticket status
+should be set to “Pending Code Review”.
+
+Reviewers should consider the following:
+
+* Does this code meet [our standards](https://github.com/moderntribe/the-events-calendar/wiki/Code-Style)?
+* Is the pull request against the [correct branch](https://github.com/moderntribe/the-events-calendar/wiki/Git-Branches)?
+* Does the solution make sense?
+* Will this solution lead to other problems? (compatibility, performance, etc)
+
+Once a reviewer has approved a pull request, they should leave a comment on the pull request and
+change the Central ticket status to “Pending QA”.  At this point it should undergo QA.  Assuming QA
+passes, the status on the ticket should be changed to “Pending Merge”.  Once the original requestor
+(or Modern Tribe representative) gets approval, they should merge the code and change the status in
+the ticket to “Pending Smoketest” or “Pending Release” as appropriate.
+
+
+### <a id="git-labels"></a> Labels for pull requests
+
+| Label | Description | Who |
+| ----- | ----------- | --- |
+| `code review` | The PR is awaiting code review. | Added by the pull request submitter. Removed by code reviewer. |
+| `in-qa` | The code was approved and now is ready to be QA’d | Added by the code reviewer. Removed when `merge` label is added or if fails QA. |
+| `merge` | Work on the ticket has been reviewed and tested.  Go ahead and merge! | Added by the person who did the QA. |
+| `question` | The PR has a question that needs lovin'. Work is blocked until the question has been answered. | Typically assigned to the person that can answer the question. Typically removed by the person who answers the question. |
+| `hold` | Don't move forward with the next status. See comments for details. | Typically added by a PM or lead dev. Confirm with Matt, Rob, or Zach before removing. |
+| `bug` | There is a bug in the code submitted in this PR. | Added by the code reviewer. Removed once the bug is resolved. |
+| `enhancement` | There is a recommended enhancement to the code. | Added by the code reviewer.  Removed if the enhancement is done or it is agreed that it should not be done. |
