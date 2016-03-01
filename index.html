@@ -3,25 +3,27 @@ layout: front
 tags: front
 ---
 
-Please feel free to fork any of our repositories and submit pull requests! We love contributions :)
+## Pull requests
 
------
+We love pull requests and merging code from the community! We will thoughtfully review your code and
+work with you to get your code primed and ready for release.  There are a few things that are worth
+knowing about that process:
 
-We do have some items of note that you should keep in mind while working with any of our repositories:
+1. **Please fork the `develop` and submit your pull requests against that branch.** This is the branch with the latest code we are working on. Pull requests to the master branch can't be merged automatically and may be closed.
 
-1. **We have an internal release cycle and review pull requests once per cycle.** Unfortunately we can't guarantee a regular schedule for our review process, but please know that while it may take 1-2 months (at the most) before we review your request, we WILL review it.
+2. **We love details!** When submitting pull requests, be as detailed as you can in describing what you are fixing and why - it will help expedite the review process!
 
-2. **Please submit a detailed description with your pull request.** If we can't figure out what you're submitting, then we may close your request.
+3. **Don't be scared of our friendly tr1b0t!** We use a bot to codesniff pull requests and alert Modern Tribe developers when we need to create/associate the PR with a ticket in our internal ticket tracking system. Feel free to fix codesniffer issues, but don't sweat the ticket notice :)
 
-3. **We do not accept or handle support issues or bug reports here.** You may notice that we have disabled the Issues tab on our public GitHub projects. Please submit bug reports at [WordPress.org](http://wordpress.org/support/plugin/the-events-calendar). If you have purchased any of our premium add-ons, you may create an account and submit support requests at our [Premium Support Forums](http://m.tri.be/kj).
+4. **When developing apply `define('SCRIPT_DEBUG', true)` in your wp-config.php**. This will load unminified versions of our js assets and give you some debugging information in your dev console.
 
-4. **Please fork the `develop` and submit your pull requests against that branch.** This is the branch with the latest code we are working on. Pull requests to the master branch can't be merged automatically and may be closed.
+5. **Familiarize yourself with the dev folder, its readme and run the appropriate Grunt tasks before committing**. JS minification, CSS minification, debug code removal, linting and more should be performed as you develop. Its all done with the grunt tasks defined in the dev folder.
 
-5. **When developing apply `define('SCRIPT_DEBUG', true)` in your wp-config.php**. This will load unminified versions of our js assets and give you some debugging information in your dev console.
+## Some other items of note
 
-6. **Make yourself familiar with the dev folder, its readme and run the appropriate Grunt tasks before committing**. Js minification, css minification, debug code removal, linting and more should be performed as you develop. Its all done with the grunt tasks defined in the dev folder.
+1. **Please submit support issues and bug reports to designated locations.** Bug reports can be made at [WordPress.org](http://wordpress.org/support/plugin/the-events-calendar). If you have purchased any of our premium add-ons, you may create an account and submit support requests in our [Support Forums](http://m.tri.be/kj).
 
-7. **Lastly: We don't recommend using the develop branch on production sites!** You’re welcome to give it a shot, but it is totally unrecommended - and we cannot provide any support if things go wrong. You’re on your own if you run develop code on your site.
+2. **Lastly: We don't recommend using the develop branch on production sites!** You’re welcome to give it a shot, but it is totally unrecommended - and we cannot provide any support if things go wrong. You’re on your own if you run develop code on your site.
 
 That's all! please have fun and code responsibly :)
 
