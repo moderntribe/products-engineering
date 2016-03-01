@@ -31,9 +31,9 @@
 	</ul>
 </nav>
 <section class="page-header">
-	{% if '/index.html' == page.url %}
-		<h1 class="project-name">Standards &amp; Techniques</h1>
-		<h2 class="project-tagline">Some people are squirrel handed</h2>
+	{% if site.github.url == page.url %}
+		<h1 class="project-name">Hello, fellow coder.</h1>
+		<h2 class="project-tagline">Pull requests welcome!</h2>
 	{% else %}
 		<h1 class="project-name">{{page.title}}</h1>
 	{% endif %}
