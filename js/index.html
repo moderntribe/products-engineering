@@ -6,6 +6,9 @@ title: JavaScript
 <div id="page-index">
 	<ol>
 		<li>
+			<a href="#js-basics">The basics</a>
+		</li>
+		<li>
 			<a href="#js-style">Code style</a>
 		</li>
 		<li>
@@ -13,6 +16,10 @@ title: JavaScript
 		</li>
 	</ol>
 </div>
+
+## <a id="js-basics"></a> The Basics
+
+First and foremost, we make an attempt to adhere to the [WordPress JS coding standards](http://make.wordpress.org/core/handbook/coding-standards/js/).
 
 ## <a id="js-style"></a> Code style
 
@@ -52,31 +59,11 @@ Namespacing allows a developer to add and remove events in an isolated fashion. 
 
 Namespaced custom events should use the following convention:
 
-	[event name].[plugin slug].tribe
+	[event name].tribe
 
 #### [event name]
 
-The `[event name]` should be something that indicates the action that is occurring. If saving a ticket, an event name of `saveTicket` would be appropriate - `fryBacon` would not.
-
-
-#### [plugin slug]
-
-Replace `[plugin slug]` with the appropriate plugin slug.  Examples:
-
-	$( document ).trigger( 'saveTicket.tec.tribe' );
-	$( document ).on( 'saveEvent.events-community.tribe', function() {} );
-	$( document ).off( 'fetchEvents.events-pro.tribe' );
-
-Plugin slugs of note:
-
-* The Events Calendar: `tec`
-* Events Pro: `events-pro`
-* Events Community: `events-community`
-* Events Eventbrite: `events-eventbrite`
-* Events Facebook: `events-facebook`
-* etc.
-
-__NOTE:__ There should be some debate on what the TEC slug should be. Some other options that have been proposed: `events-core`, `the-events-calender`, `events`, and `core`. I'm guessing there'll be more.
+The `[event name]` should be something that indicates the action that is occurring. If saving a ticket, an event name of `save-ticket` would be appropriate - `fry-bacon` would not.
 
 #### tribe
 

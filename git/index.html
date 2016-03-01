@@ -22,32 +22,23 @@ title: Git
 ### Master branch
 
 The `master` branch contains the public, currently released version of the plugin. At the end of a
-release cycle, the corresponding `release/xxx` branch is merged into the master branch. The `master`
+release cycle, the `develop` branch is merged into the master branch. The `master`
 branch should generally not be committed to, except by the developer in charge of releasing the plugin.
 
 _**NOTE:** if you need to test something against the currently released version of the plugin, a
 simple way to switch to that version is by checking out the master branch. Just be sure to switch
 back to your working branch before you make any commits!_
 
-### Release Branches
-While working on a release, most code should be developed in the corresponding release branch. This
-should be considered the primary working branch during every release cycle. We always set the current
-working release branch as the default branch in GitHub. (Typically this is the highest numerical
-`release/xxx` branch)
+### Develop branch
+The `develop` branch is the current working branch for the next major release. All public Pull
+Requests should be submitted to that branch. If the PR fixes a bug, it may find its way into a
+Maintenance Release branch.
 
-#### Why `release/xxx` branches?
+### Maintenance release branches
 
-Balancing our development, QA, and release processes is important and we wanted to move to a
-branching structure that had minimal impact across Modern Tribe's team. We often have at least 3
-release branches that are going through some sort of change.  Here's an example:
-
-* `release/118` - a released version (we'll commit bug fixes, security fixes, etc)
-* `release/119` - next release (this has finished principal development and is undergoing QA)
-* `release/120` - upcoming release (this is a release away and is the _active_ development branch)
-
-When `release/119` is released, those branch numbers will shift and we'll add a new `release/121`
-branch when that development cycle has begun (setting the GitHub default branch to `release/121`
-accordingly).
+While working on a maintenance release, most code should be developed in the corresponding release
+branch (`release/x.y.z`). This should be considered the primary working branch during every
+maintenance release cycle.
 
 ### Other branches
 
@@ -58,11 +49,11 @@ If you find yourself assigned to a ticket you anticipate may need extreme QA eff
 areas of the plugin, or has the potential (for any reason) not to be finished in a single release
 cycle, please create a branch off of develop, and do your work in there.
 
-The naming convention for new branches should be as such - `[feature-or-bugfix]/[ticket number]-[brief-description]`. For example:
+The naming convention for new branches should be as such - `<feature|fix>/<ticket number>-<brief-description>`. For example:
 
 `feature/24343-activation-page`
 or
-`bugfix/28363-list-view-eod-cutoff`
+`fix/28363-list-view-eod-cutoff`
 
 Please ensure that the prefix (“feature” or “bugfix”) corresponds to the issue tracker selected in
 the ticket.
@@ -72,8 +63,7 @@ the ticket.
 **All code that is intended to be merged to `develop`, `master`, or a `release` branch must first
 undergo code review.**
 
-Code reviews must be done by a core product engineer. (Barry, Gustavo, Jessica,  Matt, Peter, or
-Zach)
+Code reviews must be done by a core product engineer. (Barry, Gustavo, Matt, or Zach)
 
 When an engineer has code ready for merging, they should create a pull request that includes a link
 back to the ticket in Modern Tribe's Internal Central Tickets ("Central").  If the request is coming
@@ -84,8 +74,8 @@ should be set to “Pending Code Review”.
 
 Reviewers should consider the following:
 
-* Does this code meet [our standards](https://github.com/moderntribe/the-events-calendar/wiki/Code-Style)?
-* Is the pull request against the [correct branch](https://github.com/moderntribe/the-events-calendar/wiki/Git-Branches)?
+* Does this code meet [our standards](/)?
+* Is the pull request against the correct branch?
 * Does the solution make sense?
 * Will this solution lead to other problems? (compatibility, performance, etc)
 

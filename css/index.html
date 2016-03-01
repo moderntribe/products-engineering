@@ -1,0 +1,70 @@
+---
+layout: page
+title: CSS
+---
+
+<div id="page-index">
+	<ol>
+		<li>
+			<a href="#css-basics">The basics</a>
+		</li>
+		<li>
+			<a href="#css-property-ordering">Property ordering</a>
+		</li>
+		<li>
+			<a href="#css-specificity">Specificity</a>
+		</li>
+	</ol>
+</div>
+
+## <a id="css-basics"></a> The Basics
+
+First and foremost, we make an attempt to adhere to the [WordPress CSS coding standards](http://make.wordpress.org/core/handbook/coding-standards/css/).
+There is an exception to this rule, however...**Property Ordering**.
+
+## <a id="css-property-ordering"></a> Property ordering
+
+There are a few strategies for ordering CSS properties out in the wild. The approach we take is alphabetical ordering of properties.
+
+**Avoid**
+
+<pre>
+.thing {
+  color: #555;
+  border: 1px solid #ddd;
+  background: #eee;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  position: absolute;
+  top: 20px;
+  left: 10px;
+}
+</pre>
+
+**Prefer**
+
+<pre>
+.thing {
+  background: #eee;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  color: #555;
+  left: 10px;
+  position: absolute;
+  top: 20px;
+}
+</pre>
+
+## <a id="css-specificity"></a> Specificity
+
+Be sure to use [efficient selectors](http://csswizardry.com/2011/09/writing-efficient-css-selectors/).
+Classes have a nice balance between reusability and efficiency, so their use is preferred over other
+selectors if possible.
+
+### !important
+
+As a general rule, don't use `!important` unless you absolutely must. Be prepared to justify its
+usage during the code review process.
