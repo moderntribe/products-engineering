@@ -15,7 +15,7 @@
 </head>
 <body class="{% if '/index.html' == page.url && '/' != page.url %}homepage{% else %}internal{% endif %}">
 <nav id="primary-nav">
-	<a class="logo" href="/">
+	<a class="logo" href="{{ site.github.url }}">
 		<img src="{{ site.github.url }}/images/logo.png" class="logo-image" itemprop="logo" alt="Modern Tribe logo">
 		<span class="logo-anchor-text">
 			Engineering
