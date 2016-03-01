@@ -2,112 +2,29 @@
 layout: front
 ---
 
-## Guidelines
+Please feel free to fork any of our repositories and submit pull requests! We love contributions :)
 
-In these pages we’re going to cover a set of coding guidelines that aim to make Modern Tribe’s plugin
-code more efficient, easier to read and understand, and more organized.
+-----
 
-Having a more readable, consistent, and organized codebase will help with many things. Most notably,
-it’ll make it easier and faster for our team to to plan and execute adding new features, and new
-contributors will be able to get up to speed more quickly. Customers will also be able to develop
-their own customizations more easily.
+We do have some items of note that you should keep in mind while working with any of our repositories:
 
-Existing code may not follow these guidelines, but new code is expected to. As you are working on
-The Events Calendar codebase, if you see any blocks of code that don’t follow these guidelines, feel
-free to update and improve them to bring them in line with our style.
+1. **We have an internal release cycle and review pull requests once per cycle.** Unfortunately we can't guarantee a regular schedule for our review process, but please know that while it may take 1-2 months (at the most) before we review your request, we WILL review it.
 
+2. **Please submit a detailed description with your pull request.** If we can't figure out what you're submitting, then we may close your request.
 
-## Ground Rules
+3. **We do not accept or handle support issues or bug reports here.** You may notice that we have disabled the Issues tab on our public GitHub projects. Please submit bug reports at [WordPress.org](http://wordpress.org/support/plugin/the-events-calendar). If you have purchased any of our premium add-ons, you may create an account and submit support requests at our [Premium Support Forums](http://m.tri.be/kj).
 
-While everyone has their own way of solving problems and writing algorithms, there are some basic
-guidelines we should all strive to follow.
+4. **Please fork the `develop` and submit your pull requests against that branch.** This is the branch with the latest code we are working on. Pull requests to the master branch can't be merged automatically and may be closed.
 
-### Rule 1: Make sure your code is written in such a way that another developer could look at it and know what it does without much effort.
+5. **When developing apply `define('SCRIPT_DEBUG', true)` in your wp-config.php**. This will load unminified versions of our js assets and give you some debugging information in your dev console.
 
-This includes not making overly complex or nested loop structures and conditional statements --
-remember to K.I.S.S. (Keep It Simple, Stupid!).
+6. **Make yourself familiar with the dev folder, its readme and run the appropriate Grunt tasks before committing**. Js minification, css minification, debug code removal, linting and more should be performed as you develop. Its all done with the grunt tasks defined in the dev folder.
 
-**Example: Nested Levels & Excess Comparisons**
+7. **Lastly: We don't recommend using the develop branch on production sites!** You’re welcome to give it a shot, but it is totally unrecommended - and we cannot provide any support if things go wrong. You’re on your own if you run develop code on your site.
 
-Right:
+That's all! please have fun and code responsibly :)
 
-	// this does the exact same thing!
-	if ( empty ( $date ) ) {
-		return false;
-	}
+## Further Information
 
-	if ( $date > $date1 ) {
-		// do something
-	} else if ( $date < $date 2 ) {
-		// do something else
-	}
-
-Wrong:
-
-	// too many nested levels and convoluted logic
-	if (  ! empty ( $date ) && ( $date > $date1 || $date < $date2 ) ) {
-		if ( $date > $date1 ) {
-			// do something
-		} else if ($date < $date2 ) {
-			// do something else
-		}
-	} else {
-		if ( empty ( $date) ) {
-		return false;
-	}
-}
-
-**Example: Sacrificing Readability for Being Clever**
-
-Right:
-
-	// this does the same thing.. a few extra lines, but it’s far more readable:
-	$tribe_events_template = tribe_get_option( 'tribeEventsTemplate', 'default' );
-	if ( $tribe_events_template == 'default' ) {
-		$tribe_events_template = 'page.php';
-	}
-	$template = locate_template( $tribe_events_template );
-
-Wrong:
-
-	// believe it or not, this is all in one line:
-	$template = locate_template( tribe_get_option( 'tribeEventsTemplate', 'default' ) == 'default' ? 'page.php' : tribe_get_option( 'tribeEventsTemplate', 'default' ) );
-
-
-### Rule 2: Name your functions and variables plainly and descriptively.
-
-If you’re good at this, sometimes comments and confusion can both be avoided!
-
-**Ex. 3, Function & variable naming**
-
-Right:
-
-	// clearly named variables and function
-	$days_between = tribe_calc_days_between( $start_date, $end_date );
-
-Wrong:
-
-	// non-descript variable and function names
-	$x = how_many($y, $z); 
-
-### Rule 3: D.R.Y. (Don’t Repeat Yourself).
-
-If you ever find yourself duplicating a line of code, there’s probably something wrong. Go back and
-figure out how you can solve the problem without any duplicate code (i.e. create a function or a
-variable that you can reuse).
-
-When developing Modern Tribe products, following the D.R.Y. rule also means: don’t write new code
-when there already exists functionality in PHP, WordPress, or elsewhere in the products suite, which
-does the same thing. Before writing a new function, please do your due diligence and check that the
-functionality you need doesn’t already exist somewhere else.
-
-### Rule 4: Be sure to include clear and accurate comments.
-
-Occasionally a complex solution to a problem will be required, and when you realize that it’s not
-immediately clear what a block of your code is doing, you should add an extra line break above it,
-and enter a comment, for the benefit of your teammates who might encounter this block of code in the
-future. Keep in mind that it’ll only take you 30 seconds, but could save someone else 5 minutes or
-more.
-
-Note that comments are usually added as a quick afterthought, and are therefore prone to containing
-typos. Please take a moment to double check your comments for spelling mistakes and clarity.
+* **Support**: https://theeventscalendar.com/support
+* **Documentation**: https://theeventscalendar.com/functions/
