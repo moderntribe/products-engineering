@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ site.github.url }}/stylesheets/github-light.css" media="screen">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
-<body class="{% if '/index.html' == page.url && '/' != page.url %}homepage{% else %}internal{% endif %}">
+<body class="{% if 'front' == page.tags %}homepage{% else %}internal{% endif %}">
 <nav id="primary-nav">
 	<a class="logo" href="{{ site.github.url }}">
 		<img src="{{ site.github.url }}/images/logo.png" class="logo-image" itemprop="logo" alt="Modern Tribe logo">
@@ -22,12 +22,12 @@
 		</span>
 	</a>
 	<ul class="links">
-		<li><a href="{{ site.github.url }}/guidelines/" class="{% if '/guidelines/index.html' == page.url %}active{% endif %}">Guidelines</a></li>
-		<li><a href="{{ site.github.url }}/git/" class="{% if '/git/index.html' == page.url %}active{% endif %}">Git</a></li>
-		<li><a href="{{ site.github.url }}/php/" class="{% if '/php/index.html' == page.url %}active{% endif %}">PHP</a></li>
-		<li><a href="{{ site.github.url }}/js/" class="{% if '/js/index.html' == page.url %}active{% endif %}">JS</a></li>
-		<li><a href="{{ site.github.url }}/css/" class="{% if '/css/index.html' == page.url %}active{% endif %}">CSS</a></li>
-		<li><a href="{{ site.github.url }}/structure/" class="{% if '/structure/index.html' == page.url %}active{% endif %}">Structure</a></li>
+		<li><a href="{{ site.github.url }}/guidelines/" class="{% if 'guidelines' == page.tags %}active{% endif %}">Guidelines</a></li>
+		<li><a href="{{ site.github.url }}/git/" class="{% if 'git' == page.tags %}active{% endif %}">Git</a></li>
+		<li><a href="{{ site.github.url }}/php/" class="{% if 'php' == page.tags %}active{% endif %}">PHP</a></li>
+		<li><a href="{{ site.github.url }}/js/" class="{% if 'js' == page.tags %}active{% endif %}">JS</a></li>
+		<li><a href="{{ site.github.url }}/css/" class="{% if 'css' == page.tags %}active{% endif %}">CSS</a></li>
+		<li><a href="{{ site.github.url }}/structure/" class="{% if 'structure' == page.tags %}active{% endif %}">Structure</a></li>
 	</ul>
 </nav>
 <section class="page-header">
