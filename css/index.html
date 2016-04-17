@@ -7,7 +7,15 @@ tags: css
 <div id="page-index">
 	<ol>
 		<li>
-			<a href="#css-basics">The basics</a>
+			<a href="#postcss">PostCSS</a>
+			<ol>
+				<li>
+					<a href="#postcss-plugins">PostCSS plugins</a>
+				</li>
+			</ol>
+		</li>
+		<li>
+			<a href="#css-basics">CSS basics</a>
 		</li>
 		<li>
 			<a href="#css-property-ordering">Property ordering</a>
@@ -18,7 +26,46 @@ tags: css
 	</ol>
 </div>
 
-## <a id="css-basics"></a> The Basics
+## <a id="postcss"></a> PostCSS
+
+The CSS within Modern Tribe plugins built/transformed with [PostCSS](https://github.com/postcss/postcss). When contributing CSS changes to our plugins, please
+be sure to edit files within <code>src/resources/postcss</code> rather than <code>src/resources/css</code>. Getting your environment set up to work with our
+PostCSS configuration is fairly simple:
+
+Prequisite: [Install node.js](https://nodejs.org/)
+
+1. In the root directory of the plugin, type <code>npm install</code>. If you have already run that command, it is always advised to run <code>npm update</code>
+1. Edit PostCSS (<code>.pcss</code>) files in <code>src/resources/postcss</code> to your heart's content
+1. Compile the PostCSS into CSS by running <code>gulp</code>
+
+### <a id="postcss-plugins"></a> PostCSS plugins
+
+We employ a number of PostCSS plugins to transform our <code>.pcss</code> files into CSS. They are as follows:
+
+**[PostCSS CSSNext](http://cssnext.io/)**
+
+PostCSS-cssnext is a PostCSS plugin that helps you to use the latest CSS syntax today. It transforms
+new CSS specs into more compatible CSS so you don't need to wait for browser support.
+
+**[PostCSS Import](https://github.com/postcss/postcss-import)**
+
+This plugin allows you to <code>@import</code> rules from another file. Simply add <code>@import 'somefile.css';</code>
+and it will inject the contents of <code>somefile.css</code>.
+
+**[PostCSS Nested](https://github.com/postcss/postcss-nested)**
+
+PostCSS plugin to unwrap nested rules like how Sass does it. Basically...it provides support for rule nesting.
+
+**[PostCSS Mixins](https://github.com/postcss/postcss-mixins)**
+
+This plugin adds support for mixins similar to Sass, however the syntax is a bit different. You define mixins via <code>@define-mixin mixinname {}</code>
+and you include the mixin via <code>@mixin mixinname;</code>.
+
+**[PostCSS MediaQuery Packer](https://github.com/hail2u/node-css-mqpacker)**
+
+This plugin merges identical media queries during compilation into CSS.
+
+## <a id="css-basics"></a> CSS Basics
 
 First and foremost, we make an attempt to adhere to the [WordPress CSS coding standards](http://make.wordpress.org/core/handbook/coding-standards/css/).
 There is an exception to this rule, however...**Property Ordering**.
