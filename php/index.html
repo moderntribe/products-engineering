@@ -12,8 +12,35 @@ tags: php
 		<li>
 			<a href="#php-codestyle">Code style</a>
 			<ol>
+				<li><a href="#php-overview">Overview</a></li>
+				<li>
+					<a href="#php-general">General</a>
+					<ol>
+						<li><a href="#php-general-files">Files</a></li>
+						<li><a href="#php-general-keywords">Keywords and true/false/null</a></li>
+					</ol>
+				</li>
+				<li><a href="#php-namespace">Namespace and use declarations</a></li>
+				<li>
+					<a href="#php-classes">Classes, properties, and methods</a>
+					<ol>
+						<li><a href="#php-classes-naming">Class naming</a></li>
+						<li><a href="#php-classes-properites">Properties</a></li>
+						<li><a href="#php-classes-constants">Constants</a></li>
+						<li><a href="#php-classes-methods">Methods</a></li>
+						<li><a href="#php-classes-method-args">Method arguments</a></li>
+						<li><a href="#php-classes-abstract">Abstract, final, and static</a></li>
+						<li><a href="#php-classes-calls">Method and function calls</a></li>
+					</ol>
+				</li>
 				<li><a href="#php-functions">Functions</a></li>
-				<li><a href="#php-classes">Classes</a></li>
+				<li>
+					<a href="#php-control">Control structures</a>
+					<ol>
+						<li><a href="#php-control-switch">Switch, case</a></li>
+					</ol>
+				</li>
+				<li><a href="#php-closures">Closures</a></li>
 			</ol>
 		</li>
 		<li>
@@ -28,10 +55,121 @@ tags: php
 
 ## <a id="php-basics"></a> The Basics
 
-First and foremost, we make an attempt to adhere to the [WordPress PHP coding standards](http://make.wordpress.org/core/handbook/coding-standards/php/).
-
+First and foremost, we make an attempt to adhere to the [WordPress PHP coding standards](http://make.wordpress.org/core/handbook/coding-standards/php/). Additionally, we attempt to follow a number of [PSR-2 standards](http://www.php-fig.org/psr/psr-2/) where they don't conflict with WordPress.
 
 ## <a id="php-codestyle"></a> Code style
+
+### <a id="php-overview"></a> Overview
+
+* Visibility MUST be declared on all properties and methods; abstract and final MUST be declared before the visibility; static MUST be declared after the visibility.
+* The soft limit on line length MUST be 120 characters; automated style checkers MUST warn but MUST NOT error at the soft limit.
+
+### <a id="php-general"></a> General
+
+#### <a id="php-general-files"></a> Files
+
+* All PHP files MUST use the Unix LF (linefeed) line ending.
+* The closing `?>` tag MUST be omitted from files containing only or ending in PHP.
+
+#### <a id="php-general-keywords"></a> Keywords and true/false/null
+
+* PHP keywords MUS be in lowercase.
+* The PHP constants `true`, `false`, and `null` MUST be in lowercase.
+
+### <a id="php-namespace"></a> Namespace and use declarations
+
+Where we are able to use Namespaces (tests, SaaS code, etc), we should adhere to the [PSR-2 standards for Namespaces and Use Declarations](http://www.php-fig.org/psr/psr-2/#3-namespace-and-use-declarations).
+
+### <a id="php-classes"></a>Classes, properties, and methods
+
+When creating a new class, please try to ensure that the class has a single responsibility. Use inheritance when possible to keep things simple, organized and DRY.
+
+#### <a id="php-classes-naming"></a>Class naming
+
+Classes should be named with the Modern Tribe namespace ("Tribe"), the plugin namespace ("Events"), and then the classname. Those three parts should be separated by double underscores (which will translate to directory slashes in the autoloader). Since we're using double underscores as namespace separators, you can (and should) use single underscores in the class names. 
+
+**Example: Naming a Class**
+
+Wrong (not namespaced, uses CamelCase):
+
+<pre>
+class DateUtilities {
+	// define some things
+}
+</pre>
+
+Right:
+
+Classes should be namespaced with a hierarchy that is separated by double-underscores (__). The hierarchy is as such: src/Tribe/Class_Name. In the class name, that translates to:
+
+<pre>
+class Tribe__Events__Date_Utilities {
+	// define some things
+}
+</pre>
+
+#### <a id="php-classes-properties"></a>Properties
+
+We adhere to the [PSR-2 guidelines for properties](http://www.php-fig.org/psr/psr-2/#4-2-properties).
+
+#### <a id="php-classes-constants"></a>Constants
+
+Due to the difficulty of deprecating constants (`const`), we prefer the use of `public static` class properties. This way, if we wish to deprecate the property, we can communicate that deprecation via magic `__get()` methods.
+
+<pre>
+// bad
+const BACON = 'yummy';
+
+// preferred
+public static $bacon = 'yummy';
+</pre>
+
+#### <a id="php-classes-methods"></a>Methods
+
+* Visibility MUST be declared on all methods.
+* Method names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility.
+* Method names MUST NOT be declared with a space after the method name.
+* For public methods that we want to deter public use, use the `@internal` docblock tag rather than an underscore prefix.
+* The default visibility for class members should be `private`. Increase the visibility incrementally (to protected, and then public), as needed. 
+* Static methods and properties should be used sparingly and avoided whenever possible.
+* Be as DRY as possible.
+
+#### <a id="php-classes-method-args"></a>Method arguments
+
+Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line.
+
+When the argument list is split across multiple lines, the closing parenthesis and opening brace MUST be placed together on their own line with one space between them.
+
+Example:
+<pre>
+public function star_wars(
+  $episode,
+  $character,
+  $species,
+  $weapon
+) {
+  // do stuff
+}
+</pre>
+
+#### <a id="php-classes-abstract"></a> Abstract, final, and static
+
+We adhere to the [PSR-2 guidelines for abstract, final and static](http://www.php-fig.org/psr/psr-2/#4-5-abstract-final-and-static).
+
+#### <a id="php-classes-calls"></a> Method and function calls
+
+Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line.
+
+Example:
+
+<pre>
+star_wars(
+  'IV',
+  'Greedo',
+  'Rodian',
+  'DT-12'
+);
+</pre>
 
 ### <a id="php-functions"></a> Functions
 
@@ -74,42 +212,15 @@ function tribe_get_event_start_time() {
 }
 </pre>
 
-### <a id="php-classes"></a>Classes
+### <a id="php-control"></a> Control structures
 
-#### Class naming
+#### <a id="php-control-switch"></a>Switch, case
 
-Classes should be named with the Modern Tribe namespace ("Tribe"), the plugin namespace ("Events"), and then the classname. Those three parts should be separated by double underscores (which will translate to directory slashes in the autoloader). Since we're using double underscores as namespace separators, you can (and should) use single underscores in the class names. 
+We adhere to the [PSR-2 guidelines for `switch` and `case` statements](http://www.php-fig.org/psr/psr-2/#5-2-switch-case) _except_ for the standards around spacing within parentheses.
 
-**Example: Naming a Class**
+### <a id="php-closures"></a> Closures
 
-Wrong (not namespaced, uses CamelCase):
-
-<pre>
-class DateUtilities {
-	// define some things
-}
-</pre>
-
-Right:
-
-Classes should be namespaced with a hierarchy that is separated by double-underscores (__). The hierarchy is as such: src/Tribe/Class_Name. In the class name, that translates to:
-
-<pre>
-class Tribe__Events__Date_Utilities {
-	// define some things
-}
-</pre>
-
-#### Class member visibility
-The default visibility for class members should be “private”. Increase the visibility incrementally (to protected, and then public), as needed. 
-
-_**NOTE:** static methods and properties should be used sparingly and avoided whenever possible._
-
-#### Class functionality
-When creating a new class, please try to ensure that the class has a single responsibility. Use inheritance when possible to keep things simple, organized and DRY.
-
-#### Class method functionality
-Each method within a class should perform a single task. This keeps your code clean and easy to read.
+We adhere to the [PSR-2 guidelines for closuers](http://www.php-fig.org/psr/psr-2/#6-closures) _except_ for the standards around spacing within parentheses.
 
 ## <a id="php-wordpress"></a>WordPress
 
