@@ -4,14 +4,15 @@ title: Plugins
 tags: plugins
 ---
 
-## The Events Calendar
-
-**Hook Prefix:** `tribe_events_`
-
-### Event Aggregator
-
-**Hook Prefix:** `tribe_aggregator_`
-
-## Event Tickets
-
-**Hook Prefix:** `tribe_tickets_`
+| Product | Hook prefix | Notes |
+|---------|-------------|-------|
+| Tribe Common | `tribe_` | |
+| Event Aggregator | `tribe_aggregator_` | Despite being embedded within the-events-calendar, Event Aggregator deserves (and gets) its own prefix. |
+| The Events Calendar | `tribe_events_` | |
+| The Events Calendar PRO | `tribe_events_pro_` | |
+| Community Events | `tribe_events_community_` | |
+| Community Tickets | `tribe_ct_` | _This needs to be revisited so that it conforms to our other plugins_ |
+| Eventbrite Tickets | `tribe_events_eventbrite_` | |
+| Filter Bar | `tribe_events_filter_` | |
+| Event Tickets | `tribe_tickets_` | |
+| Event Tickets Plus | `tribe_tickets_plus_` | |
