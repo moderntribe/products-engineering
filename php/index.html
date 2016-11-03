@@ -236,6 +236,8 @@ Constants should only be used when a site owner will want to set a setting site-
 
 _**NOTE:** if a Modern Tribe developer would like to suggest a constant be used, they will need to bring it up during the code review that happens once per release cycle. Pull requests that add constants to the codebase will also need to be discussed on Modern Tribe's internal code review before they are accepted._
 
+#### Hooking from Within Objects
+Very often an object will need to add a number of actions and filters of its own. As a rule of thumb, any `add_action()` or `add_filter()` calls should be contained inside a `hook()` method and should **not** be setup from within the constructor.
 
 ### <a id="php-wordpress-deprecation"></a>How to deprecate
 
