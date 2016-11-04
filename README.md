@@ -1,6 +1,6 @@
 # Products Engineering docs
 
-This is a GitHub Pages site.
+This is a GitHub Pages site that can be seen at [http://moderntribe.github.io/products-engineering/](http://moderntribe.github.io/products-engineering/).
 
 ## Running locally
 
