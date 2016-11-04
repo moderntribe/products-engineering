@@ -4,6 +4,8 @@ This is a GitHub Pages site that can be seen at [http://moderntribe.github.io/pr
 
 ## Running locally
 
+You'll need the pre-requisites as indicated on the [GitHub Pages docs](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/). Once you have those, you can get this site up and running locally pretty easily.
+
 ### Clone the repo
 
 ```
