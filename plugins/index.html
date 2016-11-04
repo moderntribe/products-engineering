@@ -4,15 +4,47 @@ title: Plugins
 tags: plugins
 ---
 
-| Product | Hook prefix | Notes |
+Each plugin and major product area has its own prefix for hooks and `tribe()` container slugs. The
+prefixes are as follows:
+
+| Product | Hook prefix | Container prefix | Notes |
 |---------|-------------|-------|
-| Tribe Common | `tribe_` | |
-| Event Aggregator | `tribe_aggregator_` | Despite being embedded within the-events-calendar, Event Aggregator deserves (and gets) its own prefix. |
-| The Events Calendar | `tribe_events_` | |
-| The Events Calendar PRO | `tribe_events_pro_` | |
-| Community Events | `tribe_events_community_` | |
-| Community Tickets | `tribe_ct_` | _This needs to be revisited so that it conforms to our other plugins_ |
-| Eventbrite Tickets | `tribe_events_eventbrite_` | |
-| Filter Bar | `tribe_events_filter_` | |
-| Event Tickets | `tribe_tickets_` | |
-| Event Tickets Plus | `tribe_tickets_plus_` | |
+| Tribe Common | `tribe_` | `common.` | |
+| Event Aggregator | `tribe_aggregator_` | `aggregator.` | Despite being embedded within the-events-calendar, Event Aggregator deserves (and gets) its own prefix. |
+| The Events Calendar | `tribe_events_` | `tec.` | |
+| The Events Calendar PRO | `tribe_events_pro_` | `pro.` | |
+| Community Events | `tribe_events_community_` | `community.` | |
+| Community Tickets | `tribe_community_tickets_` | `community-tickets.` | |
+| Eventbrite Tickets | `tribe_events_eventbrite_` | `eventbrite.` | |
+| Filter Bar | `tribe_events_filter_` | `filterbar.` | |
+| Event Tickets | `tribe_tickets_` | `tickets.` | |
+| Event Tickets Plus | `tribe_tickets_plus_` | `tickets-plus.` | |
+
+## Hook examples
+
+<pre>
+// hook in tribe common for firing the bacon action
+do_action( 'tribe_bacon' );
+
+// hook in TEC for firing the potato action
+do_action( 'tribe_events_potato' );
+
+// hook in the Event Aggregator section of TEC for firing the squid action
+do_action( 'tribe_aggregator_squid' );
+</pre>
+
+## Container slug examples
+
+<pre>
+// declare singleton for the panda class in tribe-common, then call it
+tribe_singleton( 'common.panda', 'Tribe__Panda' );
+tribe( 'common.panda' );
+
+// declare singleton for the squirrel admin class in TEC, then call it
+tribe_singleton( 'tec.admin.squirrel', 'Tribe__Events__Admin__Squirrel' );
+tribe( 'tec.admin.squirrel' );
+
+// declare singleton for the baboon class in the Event Aggregator code within TEC, then call it
+tribe_singleton( 'aggregator.baboon', 'Tribe__Events__Aggregator__Baboon' );
+tribe( 'aggregator.baboon' );
+</pre>
