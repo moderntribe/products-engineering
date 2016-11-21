@@ -48,3 +48,12 @@ tribe( 'tec.admin.squirrel' );
 tribe_singleton( 'aggregator.baboon', 'Tribe__Events__Aggregator__Baboon' );
 tribe( 'aggregator.baboon' );
 </pre>
+
+## Style and script slugs
+
+When registering and enqueuing scripts and styles, we should append `-css` in the case of stylesheets. Example:
+
+| Asset slug              | Asset type |
+|-------------------------|------------|
+| `tribe_post_editor`     | JS         |
+| `tribe_post_editor_css` | CSS        |

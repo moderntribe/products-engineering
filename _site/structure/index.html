@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<title>Structure | Modern Tribe: Products Engineering</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/normalize.css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="//cloud.typography.com/689960/768184/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/foundation.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/app.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/github-light.css" media="screen">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body class="internal">
+<nav id="primary-nav">
+	<a class="logo" href="">
+		<img src="/images/logo.png" class="logo-image" itemprop="logo" alt="Modern Tribe logo">
+		<span class="logo-anchor-text">
+			Products Engineering
+		</span>
+	</a>
+	<ul class="links">
+		<li><a href="/guidelines/" class="">Guidelines</a></li>
+		<li><a href="/git/" class="">Git</a></li>
+		<li><a href="/php/" class="">PHP</a></li>
+		<li><a href="/js/" class="">JS</a></li>
+		<li><a href="/css/" class="">CSS</a></li>
+		<li><a href="/html/" class="">HTML</a></li>
+		<li><a href="/plugins/" class="">Plugins</a></li>
+		<li><a href="/structure/" class="active">Structure</a></li>
+	</ul>
+</nav>
+<section class="page-header">
+	
+		<h1 class="project-name">Structure</h1>
+	
+</section>
+<section class="main-content row">
+	<div class="small-12">
+
+<h2 id="file-naming">File Naming</h2>
+
+<p>It should also be rare that you need to create a new file. Note that file naming is one of the few areas where we depart from the published WordPress coding standards.</p>
+
+<p><strong>PHP Class Files</strong> - <code class="highlighter-rouge">Class_Name.php</code> (please note, only one class per file. The filename needs to match exactly the final portion of the actual class name, i.e. the portion after the last double underscore)<br />
+<strong>Javascript Files</strong> - <code class="highlighter-rouge">some-descriptor.js</code> (use a dash to separate segments)</p>
+
+<h2 id="directory-structure">Directory structure</h2>
+
+<p>It’ll be rare that new directories will need to be created, but please adhere to the following structure:</p>
+
+<pre>
+plugin-directory/
+  lang/                 ← translations go here
+  src/                  ← all new code will go in here
+    Tribe/              ← all the Modern Tribe php classes
+    admin-views/        ← plugin dashboard view files
+    deprecated/         ← deprecated logic goes here
+    functions/          ← files containing global functions for public use
+      template-tags/    ← files containing template tags
+    resources/          ← any static assets, including js, css, and images
+      css/              ← compiled CSS goes here
+      images/           ← images and icons
+      js/               ← javascript goes here
+      scss/             ← SCSS goes here
+    views/              ← plugin view files
+  tests/                ← unit tests go here
+  vendor/               ← 3rd party libraries should be added here
+</pre>
+
+		<footer class="site-footer">
+			<span class="site-footer-owner"><a href="https://github.com/moderntribe/products-engineering">Products Engineering</a> is maintained by <a href="https://github.com/moderntribe/products-engineering/graphs/contributors">Triberians</a>.</span>
+		</footer>
+	</div>
+</section>
+<script src="/js/foundation.min.js"></script>
+</body>
+</html>
+

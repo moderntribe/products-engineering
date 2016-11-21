@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<title>PHP | Modern Tribe: Products Engineering</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/normalize.css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="//cloud.typography.com/689960/768184/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/foundation.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/app.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/github-light.css" media="screen">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body class="internal">
+<nav id="primary-nav">
+	<a class="logo" href="">
+		<img src="/images/logo.png" class="logo-image" itemprop="logo" alt="Modern Tribe logo">
+		<span class="logo-anchor-text">
+			Products Engineering
+		</span>
+	</a>
+	<ul class="links">
+		<li><a href="/guidelines/" class="">Guidelines</a></li>
+		<li><a href="/git/" class="">Git</a></li>
+		<li><a href="/php/" class="active">PHP</a></li>
+		<li><a href="/js/" class="">JS</a></li>
+		<li><a href="/css/" class="">CSS</a></li>
+		<li><a href="/html/" class="">HTML</a></li>
+		<li><a href="/plugins/" class="">Plugins</a></li>
+		<li><a href="/structure/" class="">Structure</a></li>
+	</ul>
+</nav>
+<section class="page-header">
+	
+		<h1 class="project-name">PHP</h1>
+	
+</section>
+<section class="main-content row">
+	<div class="small-12">
+
+<div id="page-index">
+	<ol>
+		<li>
+			<a href="#php-basics">The basics</a>
+		</li>
+		<li>
+			<a href="#php-codestyle">Code style</a>
+			<ol>
+				<li><a href="#php-overview">Overview</a></li>
+				<li>
+					<a href="#php-general">General</a>
+					<ol>
+						<li><a href="#php-general-files">Files</a></li>
+						<li><a href="#php-general-keywords">Keywords and true/false/null</a></li>
+					</ol>
+				</li>
+				<li><a href="#php-namespace">Namespace and use declarations</a></li>
+				<li>
+					<a href="#php-classes">Classes, properties, and methods</a>
+					<ol>
+						<li><a href="#php-classes-naming">Class naming</a></li>
+						<li><a href="#php-classes-properites">Properties</a></li>
+						<li><a href="#php-classes-constants">Constants</a></li>
+						<li><a href="#php-classes-methods">Methods</a></li>
+						<li><a href="#php-classes-method-args">Method arguments</a></li>
+						<li><a href="#php-classes-abstract">Abstract, final, and static</a></li>
+						<li><a href="#php-classes-calls">Method and function calls</a></li>
+					</ol>
+				</li>
+				<li><a href="#php-functions">Functions</a></li>
+				<li>
+					<a href="#php-control">Control structures</a>
+					<ol>
+						<li><a href="#php-control-switch">Switch, case</a></li>
+					</ol>
+				</li>
+				<li><a href="#php-closures">Closures</a></li>
+			</ol>
+		</li>
+		<li>
+			<a href="#php-wordpress">WordPress</a>
+			<ol>
+				<li><a href="#php-wordpress-hooks">Hooks &amp; constants</a></li>
+				<li><a href="#php-wordpress-deprecation">How to deprecate</a></li>
+			</ol>
+		</li>
+	</ol>
+</div>
+
+<h2 id="a-idphp-basicsa-the-basics"><a id="php-basics"></a> The Basics</h2>
+
+<p>First and foremost, we make an attempt to adhere to the <a href="http://make.wordpress.org/core/handbook/coding-standards/php/">WordPress PHP coding standards</a>. Additionally, we attempt to follow a number of <a href="http://www.php-fig.org/psr/psr-2/">PSR-2 standards</a> where they don’t conflict with WordPress.</p>
+
+<h2 id="a-idphp-codestylea-code-style"><a id="php-codestyle"></a> Code style</h2>
+
+<h3 id="a-idphp-overviewa-overview"><a id="php-overview"></a> Overview</h3>
+
+<ul>
+  <li>Visibility MUST be declared on all properties and methods; abstract and final MUST be declared before the visibility; static MUST be declared after the visibility.</li>
+  <li>The soft limit on line length MUST be 120 characters; automated style checkers MUST warn but MUST NOT error at the soft limit.</li>
+</ul>
+
+<h3 id="a-idphp-generala-general"><a id="php-general"></a> General</h3>
+
+<h4 id="a-idphp-general-filesa-files"><a id="php-general-files"></a> Files</h4>
+
+<ul>
+  <li>All PHP files MUST use the Unix LF (linefeed) line ending.</li>
+  <li>The closing <code class="highlighter-rouge">?&gt;</code> tag MUST be omitted from files containing only or ending in PHP.</li>
+</ul>
+
+<h4 id="a-idphp-general-keywordsa-keywords-and-truefalsenull"><a id="php-general-keywords"></a> Keywords and true/false/null</h4>
+
+<ul>
+  <li>PHP keywords MUS be in lowercase.</li>
+  <li>The PHP constants <code class="highlighter-rouge">true</code>, <code class="highlighter-rouge">false</code>, and <code class="highlighter-rouge">null</code> MUST be in lowercase.</li>
+</ul>
+
+<h3 id="a-idphp-namespacea-namespace-and-use-declarations"><a id="php-namespace"></a> Namespace and use declarations</h3>
+
+<p>Where we are able to use Namespaces (tests, SaaS code, etc), we should adhere to the <a href="http://www.php-fig.org/psr/psr-2/#3-namespace-and-use-declarations">PSR-2 standards for Namespaces and Use Declarations</a>.</p>
+
+<h3 id="a-idphp-classesaclasses-properties-and-methods"><a id="php-classes"></a>Classes, properties, and methods</h3>
+
+<p>When creating a new class, please try to ensure that the class has a single responsibility. Use inheritance when possible to keep things simple, organized and DRY.</p>
+
+<h4 id="a-idphp-classes-namingaclass-naming"><a id="php-classes-naming"></a>Class naming</h4>
+
+<p>Classes should be named with the Modern Tribe namespace (“Tribe”), the plugin namespace (“Events”), and then the classname. Those three parts should be separated by double underscores (which will translate to directory slashes in the autoloader). Since we’re using double underscores as namespace separators, you can (and should) use single underscores in the class names.</p>
+
+<p><strong>Example: Naming a Class</strong></p>
+
+<p>Wrong (not namespaced, uses CamelCase):</p>
+
+<pre>
+class DateUtilities {
+	// define some things
+}
+</pre>
+
+<p>Right:</p>
+
+<p>Classes should be namespaced with a hierarchy that is separated by double-underscores (__). The hierarchy is as such: src/Tribe/Class_Name. In the class name, that translates to:</p>
+
+<pre>
+class Tribe__Events__Date_Utilities {
+	// define some things
+}
+</pre>
+
+<h4 id="a-idphp-classes-propertiesaproperties"><a id="php-classes-properties"></a>Properties</h4>
+
+<p>We adhere to the <a href="http://www.php-fig.org/psr/psr-2/#4-2-properties">PSR-2 guidelines for properties</a>.</p>
+
+<h4 id="a-idphp-classes-constantsaconstants"><a id="php-classes-constants"></a>Constants</h4>
+
+<p>Due to the difficulty of deprecating constants (<code class="highlighter-rouge">const</code>), we prefer the use of <code class="highlighter-rouge">public static</code> class properties. This way, if we wish to deprecate the property, we can communicate that deprecation via magic <code class="highlighter-rouge">__get()</code> methods.</p>
+
+<pre>
+// bad
+const BACON = 'yummy';
+
+// preferred
+public static $bacon = 'yummy';
+</pre>
+
+<h4 id="a-idphp-classes-methodsamethods"><a id="php-classes-methods"></a>Methods</h4>
+
+<ul>
+  <li>Visibility MUST be declared on all methods.</li>
+  <li>Method names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility.</li>
+  <li>Method names MUST NOT be declared with a space after the method name.</li>
+  <li>For public methods that we want to deter public use, use the <code class="highlighter-rouge">@internal</code> docblock tag rather than an underscore prefix.</li>
+  <li>The default visibility for class members should be <code class="highlighter-rouge">private</code>. Increase the visibility incrementally (to protected, and then public), as needed.</li>
+  <li>Static methods and properties should be used sparingly and avoided whenever possible.</li>
+  <li>Be as DRY as possible.</li>
+</ul>
+
+<h4 id="a-idphp-classes-method-argsamethod-arguments"><a id="php-classes-method-args"></a>Method arguments</h4>
+
+<p>Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line.</p>
+
+<p>When the argument list is split across multiple lines, the closing parenthesis and opening brace MUST be placed together on their own line with one space between them.</p>
+
+<p>Example:</p>
+<pre>
+public function star_wars(
+  $episode,
+  $character,
+  $species,
+  $weapon
+) {
+  // do stuff
+}
+</pre>
+
+<h4 id="a-idphp-classes-abstracta-abstract-final-and-static"><a id="php-classes-abstract"></a> Abstract, final, and static</h4>
+
+<p>We adhere to the <a href="http://www.php-fig.org/psr/psr-2/#4-5-abstract-final-and-static">PSR-2 guidelines for abstract, final and static</a>.</p>
+
+<h4 id="a-idphp-classes-callsa-method-and-function-calls"><a id="php-classes-calls"></a> Method and function calls</h4>
+
+<p>Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line.</p>
+
+<p>Example:</p>
+
+<pre>
+star_wars(
+  'IV',
+  'Greedo',
+  'Rodian',
+  'DT-12'
+);
+</pre>
+
+<h3 id="a-idphp-functionsa-functions"><a id="php-functions"></a> Functions</h3>
+
+<h4 id="when-to-create-global-functions">When to create global functions</h4>
+<p>If there is a piece of code that is frequently referenced throughout the addons, or could be useful to users who want to create custom templates or addons, that’s when it’s appropriate to create a global function.</p>
+
+<p>Keep in mind that whenever a global function is created and released, from that point on, it’ll be “in the wild”. Customers may be using it in their themes or plugins, and we will need to support it from that point on. With this in mind, please be sure not to create unnecessary functions that we won’t want to support.</p>
+
+<h4 id="where-to-put-function-code">Where to put function code</h4>
+<p>There are template tag files for most areas of the plugin. They are located in the <code class="highlighter-rouge">template-tags/</code> directory. Take care in selecting the appropriate file for your new function, and place the new function at the end of the file. If it closely references another function in the file, place it next to that function.</p>
+
+<p>It’s usually appropriate to place the logic for a function into a class, and then use a function as a wrapper for the class method. When you have some code that you’d like to make publicly available, but it would also make sense as a method of one of our classes, you should make the method within the class, and then make a global function that calls that method and returns its result.</p>
+
+<h4 id="echo-or-return">Echo or return?</h4>
+<p>When a function returns a scalar value that might be used in templates, be sure to return the value instead of echoing it. There is no need to take <code class="highlighter-rouge">$echo</code> as a boolean argument to the function; if a user wants to echo the value, they can simply directly echo the function’s result in their template.</p>
+
+<h4 id="applying-filters-to-the-result">Applying filters to the result</h4>
+<p>Note that whenever you create a global function, be sure to run <code class="highlighter-rouge">apply_filters()</code> on the result before it’s returned.</p>
+
+<p>The filter should have the same name as the function, and should be passed the return value, followed by (at minimum), all parameters that were passed to the function initially.</p>
+
+<h4 id="function-naming">Function naming</h4>
+<p>Since we’re creating code that is distributed, has been downloaded over 1 million times, and will be installed alongside myriad themes and plugins, it’s very important that you prefix your global namespace definitions with <code class="highlighter-rouge">tribe_</code> – so there’s far less chance another plugin’s or theme’s definitions will have the same name.</p>
+
+<p><strong>Example: Naming a Global Function</strong></p>
+
+<p>Wrong (not namespaced, uses camelCase):</p>
+
+<pre>
+function getEventStartTime() {
+	// do something
+}
+</pre>
+
+<p>Right (prefixed with <code class="highlighter-rouge">tribe_</code>, uses underscores):</p>
+
+<pre>
+function tribe_get_event_start_time() {
+	// do something
+}
+</pre>
+
+<h3 id="a-idphp-controla-control-structures"><a id="php-control"></a> Control structures</h3>
+
+<h4 id="a-idphp-control-switchaswitch-case"><a id="php-control-switch"></a>Switch, case</h4>
+
+<p>We adhere to the <a href="http://www.php-fig.org/psr/psr-2/#5-2-switch-case">PSR-2 guidelines for <code class="highlighter-rouge">switch</code> and <code class="highlighter-rouge">case</code> statements</a> <em>except</em> for the standards around spacing within parentheses.</p>
+
+<h3 id="a-idphp-closuresa-closures"><a id="php-closures"></a> Closures</h3>
+
+<p>We adhere to the <a href="http://www.php-fig.org/psr/psr-2/#6-closures">PSR-2 guidelines for closuers</a> <em>except</em> for the standards around spacing within parentheses.</p>
+
+<h2 id="a-idphp-wordpressawordpress"><a id="php-wordpress"></a>WordPress</h2>
+
+<h3 id="a-idphp-wordpress-hooksahooks-vs-constants"><a id="php-wordpress-hooks"></a>Hooks vs constants</h3>
+
+<p>Occasionally we may have a request or an idea for a setting that could be useful to advanced users, but that isn’t something we’d want to expose to everyone in the plugin’s settings pages. In those cases, we’ll usually want to create a “hidden” setting that is available for users to set the value of via a hook or a constant.</p>
+
+<h4 id="when-to-use-a-hook">When to Use a Hook</h4>
+<p>Most of the time hooks should be used to create these hidden settings. A user will then be able to create a line in their functions.php which sets the value.</p>
+
+<h4 id="when-to-use-a-constant">When to Use a Constant</h4>
+<p>Constants should only be used when a site owner will want to set a setting site-wide, no matter what theme or plugins are in use, and no theme or plugin should be allowed to override this value. A user will then be able to create a line in their wp-config.php which sets the value.</p>
+
+<p><em><strong>NOTE:</strong> if a Modern Tribe developer would like to suggest a constant be used, they will need to bring it up during the code review that happens once per release cycle. Pull requests that add constants to the codebase will also need to be discussed on Modern Tribe’s internal code review before they are accepted.</em></p>
+
+<h4 id="hooking-from-within-objects">Hooking from Within Objects</h4>
+<p>Very often an object will need to add a number of actions and filters of its own. As a rule of thumb, any <code class="highlighter-rouge">add_action()</code> or <code class="highlighter-rouge">add_filter()</code> calls should be contained inside a <code class="highlighter-rouge">hook()</code> method and should <strong>not</strong> be setup from within the constructor.</p>
+
+<h3 id="a-idphp-wordpress-deprecationahow-to-deprecate"><a id="php-wordpress-deprecation"></a>How to deprecate</h3>
+
+<p>When a global function or hook needs to be renamed or taken out of use, please take the following steps:</p>
+
+<ul>
+  <li>For functions, move the function to the <code class="highlighter-rouge">deprecated.php</code> file</li>
+  <li>Place an <code class="highlighter-rouge">@deprecated</code> phpDoc docblock tag in the documentation for the function or hook</li>
+  <li>Place an <code class="highlighter-rouge">@todo</code> in the phpDoc docblock that describes when to remove the function. It should be a minimum of two versions into the future.</li>
+  <li>For functions, run WordPress’ <code class="highlighter-rouge">_deprecated_function()</code> just inside function</li>
+  <li>For hooks, check <code class="highlighter-rouge">has_filter()</code>, and if it returns true, run the WordPress <code class="highlighter-rouge">_deprecated_function()</code> just above the hook</li>
+</ul>
+
+<p><em><strong>NOTE:</strong> private and protected class members don’t need to be deprecated.</em></p>
+
+
+		<footer class="site-footer">
+			<span class="site-footer-owner"><a href="https://github.com/moderntribe/products-engineering">Products Engineering</a> is maintained by <a href="https://github.com/moderntribe/products-engineering/graphs/contributors">Triberians</a>.</span>
+		</footer>
+	</div>
+</section>
+<script src="/js/foundation.min.js"></script>
+</body>
+</html>
+

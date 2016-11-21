@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<title>HTML | Modern Tribe: Products Engineering</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/normalize.css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="//cloud.typography.com/689960/768184/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/foundation.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/app.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/github-light.css" media="screen">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body class="internal">
+<nav id="primary-nav">
+	<a class="logo" href="">
+		<img src="/images/logo.png" class="logo-image" itemprop="logo" alt="Modern Tribe logo">
+		<span class="logo-anchor-text">
+			Products Engineering
+		</span>
+	</a>
+	<ul class="links">
+		<li><a href="/guidelines/" class="">Guidelines</a></li>
+		<li><a href="/git/" class="">Git</a></li>
+		<li><a href="/php/" class="">PHP</a></li>
+		<li><a href="/js/" class="">JS</a></li>
+		<li><a href="/css/" class="">CSS</a></li>
+		<li><a href="/html/" class="active">HTML</a></li>
+		<li><a href="/plugins/" class="">Plugins</a></li>
+		<li><a href="/structure/" class="">Structure</a></li>
+	</ul>
+</nav>
+<section class="page-header">
+	
+		<h1 class="project-name">HTML</h1>
+	
+</section>
+<section class="main-content row">
+	<div class="small-12">
+
+<div id="page-index">
+	<ol>
+		<li>
+			<a href="#html-basics">The basics</a>
+		</li>
+		<li>
+			<a href="#html-codestyle">Code style</a>
+			<ol>
+				<li><a href="#html-multiline-attributes">Multiline attributes</a></li>
+			</ol>
+		</li>
+	</ol>
+</div>
+
+<h2 id="a-idhtml-basicsa-the-basics"><a id="html-basics"></a> The basics</h2>
+
+<p>First and foremost, we make an attempt to adhere to the <a href="https://make.wordpress.org/core/handbook/best-practices/coding-standards/html/">WordPress HTML coding standards</a>.</p>
+
+<h2 id="a-idhtml-codestylea-code-style"><a id="html-codestyle"></a> Code style</h2>
+
+<ul>
+  <li>HTML blocks should be nested and indented logically</li>
+  <li>The initial indent should consist only of tabs and not spaces</li>
+  <li>PHP blocks are indented according to the same rules as HTML elements</li>
+  <li>Single line segments of PHP like our <code class="highlighter-rouge">esc_html_e()</code> call still terminate with a semi-colon</li>
+</ul>
+
+<p>Example:</p>
+
+<pre>
+&lt;div id="component"&gt;
+	&lt;div class="part"&gt;
+		&lt;?php if ( 'met' === $condition ): ?&gt;
+			&lt;a href="#"&gt;&lt;?php esc_html_e( 'Follow this link', 'textdomain' ); ?&gt;&lt;/a&gt;
+		&lt;?php endif; ?&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+<h3 id="a-idhtml-multiline-attributes-multiline-attributes"><a id="html-multiline-attributes"> Multiline attributes</a></h3>
+
+<p>Just as with PHP or Javascript, we should strive to avoid overly-long lines of code as this can harm readability.
+In particular, if there are a large number of attributes for a given element then it can be desirable to break them
+up over multiple lines. In such a case we use the following convention:</p>
+
+<pre>
+&lt;div
+	id="some-id"
+	class="some-class"
+	data-some-data="1"
+&gt;
+	&lt;!-- Inner HTML --&gt;
+&lt;/div&gt;
+</pre>
+
+		<footer class="site-footer">
+			<span class="site-footer-owner"><a href="https://github.com/moderntribe/products-engineering">Products Engineering</a> is maintained by <a href="https://github.com/moderntribe/products-engineering/graphs/contributors">Triberians</a>.</span>
+		</footer>
+	</div>
+</section>
+<script src="/js/foundation.min.js"></script>
+</body>
+</html>
+
