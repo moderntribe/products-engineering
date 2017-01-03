@@ -18,3 +18,10 @@ git clone git@github.com:moderntribe/products-engineering.git
 cd products-engineering
 bundle exec jekyll serve
 ```
+
+Should you experience problems with your local development server such as unstyled content, it may be that you need
+to adjust that final command to:
+
+```
+bundle exec jekyll serve --host localhost
+```
