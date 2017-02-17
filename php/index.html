@@ -222,62 +222,64 @@ We adhere to the [PSR-2 guidelines for `switch` and `case` statements](http://ww
 
 Conditionals MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first conditional in the list MUST be on the next line, and there MUST be only one conditional per line.
 
-**Good**
+**Yup!**
 <pre>
 // simple
 if (
-	$a == $b
-	&& $b == $c
+  $a == $b
+  && $b == $c
 ) {
-	// do stuff
+  // do stuff
 }
 
 // something a bit more complex
 if (
-	(
-		$a == $b
-		|| $a == c
-	)
-	&& $b == $d
-	&& $q == $banana_pancake
+  (
+    $a == $b
+    || $a == c
+  )
+  && $b == $d
+  && $q == $banana_pancake
 ) {
-	// do stuff
+  // do stuff
 }
 </pre>
 
-**Not so good**
+**Nope!**
 <pre>
 if ( $a == $b
-	&& $b == $c
+  && $b == $c
 ) {
-	// do stuff
+  // do stuff
 }
 
 if ( $a == $b
-			&& $b == $c
+     && $b == $c
 ) {
-	// do stuff
+  // do stuff
 }
 
 if (
-	$a == $b &&
-	$b == $c
+  $a == $b &&
+  $b == $c
 ) {
-	// do stuff
+  // do stuff
 }
 
 if (
-	   $a == $b
-	&& $b == $c
+     $a == $b
+  && $b == $c
 ) {
-	// do stuff
+  // do stuff
 }
 
+// something a bit more complex
 if (
-		$a == $b
-	&& $b == $c
+  ( $a == $b || $a == c )
+  && $b == $d
+  && $q == $banana_pancake
 ) {
-	// do stuff
+  // do stuff
 }
 </pre>
 
