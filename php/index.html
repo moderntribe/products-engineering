@@ -248,18 +248,21 @@ if (
 
 **Nope!**
 <pre>
+// this only looks pretty when your tabs are set to 2 spaces
 if ( $a == $b
   && $b == $c
 ) {
   // do stuff
 }
 
+// alignment beyond a single tab can be fraught with differences between devs
 if ( $a == $b
      && $b == $c
 ) {
   // do stuff
 }
 
+// this one causes needless churn in Git as conditionals are added to the control structure
 if (
   $a == $b &&
   $b == $c
@@ -267,6 +270,7 @@ if (
   // do stuff
 }
 
+// since we use tabs, we could be bitten by the tab/space nature of alignment here
 if (
      $a == $b
   && $b == $c
@@ -274,7 +278,7 @@ if (
   // do stuff
 }
 
-// something a bit more complex
+// something a bit more complex - this violates the 1 conditional per line rule
 if (
   ( $a == $b || $a == c )
   && $b == $d
