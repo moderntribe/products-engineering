@@ -218,6 +218,70 @@ function tribe_get_event_start_time() {
 
 We adhere to the [PSR-2 guidelines for `switch` and `case` statements](http://www.php-fig.org/psr/psr-2/#5-2-switch-case) _except_ for the standards around spacing within parentheses.
 
+#### <a id="php-control-multi"></a>Multi-line control structures
+
+Conditionals MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first conditional in the list MUST be on the next line, and there MUST be only one conditional per line.
+
+**Good**
+<pre>
+// simple
+if (
+	$a == $b
+	&& $b == $c
+) {
+	// do stuff
+}
+
+// something a bit more complex
+if (
+	(
+		$a == $b
+		|| $a == c
+	)
+	&& $b == $d
+	&& $q == $banana_pancake
+) {
+	// do stuff
+}
+</pre>
+
+**Not so good**
+<pre>
+if ( $a == $b
+	&& $b == $c
+) {
+	// do stuff
+}
+
+if ( $a == $b
+			&& $b == $c
+) {
+	// do stuff
+}
+
+if (
+	$a == $b &&
+	$b == $c
+) {
+	// do stuff
+}
+
+if (
+	   $a == $b
+	&& $b == $c
+) {
+	// do stuff
+}
+
+if (
+		$a == $b
+	&& $b == $c
+) {
+	// do stuff
+}
+</pre>
+
+
 ### <a id="php-closures"></a> Closures
 
 We adhere to the [PSR-2 guidelines for closuers](http://www.php-fig.org/psr/psr-2/#6-closures) _except_ for the standards around spacing within parentheses.
