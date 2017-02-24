@@ -23,17 +23,28 @@ tags: git
 ### Master branch
 
 The `master` branch contains the public, currently released version of the plugin. At the end of a
-release cycle, the `develop` branch is merged into the master branch. The `master`
+release cycle, release branches are merged into the master branch. The `master`
 branch should generally not be committed to, except by the developer in charge of releasing the plugin.
 
 _**NOTE:** if you need to test something against the currently released version of the plugin, a
 simple way to switch to that version is by checking out the master branch. Just be sure to switch
 back to your working branch before you make any commits!_
 
-### Develop branch
-The `develop` branch is the current working branch for the next major release. All public Pull
-Requests should be submitted to that branch. If the PR fixes a bug, it may find its way into a
-Maintenance Release branch.
+### Major feature branches
+
+Major feature branches are where we work on new development for our products. These branches act as
+a shared location for developers to Pull Request work specific to the feature being developed. Major
+feature branches should have a Milestone associated with them in GitHub that specifies the branch name.
+When a major feature is determined, it should be branched from the latest Tagged release and _all_
+code for that feature should be Pull Requested into that branch rather than direct committed and pushed.
+
+When major/maintenance releases are released, the developers that are leading the feature work
+are in charge of merging `master` into their respective feature branches.
+
+### Major release branches
+
+When one or more features are ready for release prep, a `release/x.y` branch should be created from
+the latest tagged release and the feature branches should be Pull Requested into that release branch.
 
 ### Maintenance release branches
 
