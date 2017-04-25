@@ -42,6 +42,8 @@ _**NOTE:** Watch for implicit globals when declaring your variables. This is a v
 especially with iterators in javascript loops. Leaking these to global scope can yield unexpected
 results._
 
+Variables that point to a jQuery object should have their name prefixed with a `$` sign, per the examples above.
+
 Utility functions, state, tests and options for the main plugins should be stored in
 `tribe-events.js` and `tribe-events-pro.js`. 
 
