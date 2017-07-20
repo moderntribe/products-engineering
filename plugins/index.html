@@ -55,6 +55,8 @@ tribe( 'aggregator.baboon' );
 
 When implementing bigger Modules inside of a given plugin we should introduce service providers to allow better initialization of the child classes from that module.
 
+To use a Service Provider you will need to register it first, E.g.: `tribe_register_provider( 'Tribe__Events__Panda__Service_Provider' );`
+
 Example:
 
 {% highlight php %}
