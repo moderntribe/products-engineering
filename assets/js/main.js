@@ -9,8 +9,6 @@ jQuery(function() {
 
 	var $el;
 
-	var href = $sidebar.find('a').first().attr("href");
-
 	function setSidebar() {
 		var offset = window.scrollY;
 
@@ -24,12 +22,32 @@ jQuery(function() {
 		} );
 	}
 
+	function configureSidebar() {
+		var $list = $sidebar.children( 'ul' );
+		var $headings = $( '.tutorial-content' ).find( 'h2, h3' );
+
+		$headings.each( function () {
+			var $heading = $( this );
+			var $item = $( '<li>' );
+			var $link = $( '<a>' );
+			var type = $heading.prop( 'nodeName' ).toLowerCase();
+			$item.addClass( 'type-' + type );
+			$link.attr( 'href', '#' + $heading.attr( 'id' ) );
+			$link.html( $heading.html() );
+			$item.append( $link );
+
+			$list.append( $item );
+		} );
+	}
+
 	function setActiveSidebarLink() {
 		$('.sidebar a').removeClass('active');
 		var $closest = getClosestHeader();
 		$closest.addClass('active');
 	}
+	configureSidebar();
 
+	var href = $sidebar.find('a').first().attr("href");
 	if (href !== undefined && href.charAt(0) === "#") {
 		$(window).on("scroll", function() {
 			setSidebar();
@@ -38,6 +56,17 @@ jQuery(function() {
 			}, 100)();
 		}).trigger( 'scroll' );
 	}
+
+	var headings = $( '.tutorial-content' ).find( "h2[id], h3[id]" );
+	for (var i = 0; i < headings.length; i++) {
+		var anchorLink = document.createElement("a");
+		anchorLink.innerText = "#";
+		anchorLink.href = "#" + headings[i].id;
+		anchorLink.classList.add("header-link");
+
+		headings[i].append(anchorLink);
+	}
+
 });
 
 function getClosestHeader() {

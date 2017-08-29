@@ -15,10 +15,6 @@ author:
   name: Modern Tribe
   email:
   twitter: moderntribeinc
-social:
-  name: Base Template
-  links:
-    - https://github.com/CloudCannon/base-jekyll-template
 
 # -----
 # Build
@@ -29,20 +25,12 @@ gems:
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-feed
-  - jekyll-archives
 
 exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
   - LICENCE
-
-collections:
-  sets:
-
-
-jekyll-archives:
-  enabled: ['categories']
 
 defaults:
   -
@@ -66,23 +54,3 @@ defaults:
       path: "index.html"
     values:
       body_class: "show_hero_search"
-# -----------
-# CloudCannon
-
-social_icons:
-  - Facebook
-  - Google Plus
-  - Instagram
-  - LinkedIn
-  - Pinterest
-  - Tumblr
-  - Twitter
-  - YouTube
-  - Email
-  - RSS
-
-types:
-  - Document
-  - Video
-
-_comments:
