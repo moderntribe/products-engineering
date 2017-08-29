@@ -3,7 +3,7 @@
 
 title: Products Engineering
 url: "http://moderntribe.github.io/products-engineering/"
-baseurl:
+baseurl: "/products-engineering"
 google_analytics_key:
 disqus_shortname:
 newsletter_action:
