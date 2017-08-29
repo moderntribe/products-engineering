@@ -6,102 +6,62 @@ categories:
 description: Plugin conventions for Namespaces, Assets and Classes
 icon: fa-file-text-o
 ---
-Jekyll is a simple, blog-aware, static site generator. It takes a template directory containing raw text files in various formats, runs it through a converter (like Markdown) and our Liquid renderer, and spits out a complete, ready-to-publish static website suitable for serving with your favorite web server.
+Each plugin and major product area has its own prefix for hooks and `tribe()` container slugs. The
+prefixes are as follows:
 
-If you already have a full Ruby development environment with all headers and RubyGems installed, you can create a new Jekyll site by doing the following:
+| Product | Hook prefix | Container prefix |
+|---------|-------------|-------|
+| Tribe Common | `tribe_` | `common.` |
+| Event Aggregator | `tribe_aggregator_` | `aggregator.` |
+| The Events Calendar | `tribe_events_` | `tec.` |
+| The Events Calendar PRO | `tribe_events_pro_` | `pro.` |
+| Community Events | `tribe_events_community_` | `community.` |
+| Community Tickets | `tribe_community_tickets_` | `community-tickets.` |
+| Eventbrite Tickets | `tribe_events_eventbrite_` | `eventbrite.` |
+| Filter Bar | `tribe_events_filter_` | `filterbar.` |
+| Event Tickets | `tribe_tickets_` | `tickets.` |
+| Event Tickets Plus | `tribe_tickets_plus_` | `tickets-plus.` |
+| Image Widget | `tribe_image_` | `image.` |
+| Image Widget Plus | `tribe_image_plus_` | `image-plus.` |
 
-## How to install
+_Despite being embedded within the-events-calendar, Event Aggregator deserves (and gets) its own prefix._
 
-~~~ bash
-# Install Jekyll and Bundler gems through RubyGems
-~ $ gem install jekyll bundler
+## Hook examples
 
-# Create a new Jekyll site at ./myblog
-~ $ jekyll new myblog
+<pre>
+// hook in tribe common for firing the bacon action
+do_action( 'tribe_bacon' );
 
-# Change into your new directory
-~ $ cd myblog
+// hook in TEC for firing the potato action
+do_action( 'tribe_events_potato' );
 
-# Build the site on the preview server
-~/myblog $ bundle exec jekyll serve
+// hook in the Event Aggregator section of TEC for firing the squid action
+do_action( 'tribe_aggregator_squid' );
+</pre>
 
-# Now browse to http://localhost:4000
-~~~
+## Container slug examples
 
-## Next steps
+<pre>
+// declare singleton for the panda class in tribe-common, then call it
+tribe_singleton( 'common.panda', 'Tribe__Panda' );
+tribe( 'common.panda' );
 
-Building a Jekyll site with the default theme is just the first step. The real magic happens when you start creating blog posts, using the front matter to control templates and layouts, and taking advantage of all the awesome configuration options Jekyll makes available.
+// declare singleton for the squirrel admin class in TEC, then call it
+tribe_singleton( 'tec.admin.squirrel', 'Tribe__Events__Admin__Squirrel' );
+tribe( 'tec.admin.squirrel' );
 
-## Basic usage
+// declare singleton for the baboon class in the Event Aggregator code within TEC, then call it
+tribe_singleton( 'aggregator.baboon', 'Tribe__Events__Aggregator__Baboon' );
+tribe( 'aggregator.baboon' );
+</pre>
 
-The Jekyll gem makes a `jekyll` executable available to you in your Terminal window. You can use this command in a number of ways:
+## Style and script slugs
 
-~~~ bash
-$ jekyll build
-# => The current folder will be generated into ./_site
+When registering and enqueuing scripts and styles, we should append `-css` in the case of stylesheets. Example:
 
-$ jekyll build --destination <destination>
-# => The current folder will be generated into <destination>
+| Asset slug              | Asset type |
+|-------------------------|------------|
+| `tribe-post-editor`     | JS         |
+| `tribe-post-editor-css` | CSS        |
 
-$ jekyll build --source <source> --destination <destination>
-# => The <source> folder will be generated into <destination>
-
-$ jekyll build --watch
-# => The current folder will be generated into ./_site,
-#    watched for changes, and regenerated automatically.
-~~~
-
-## Directory structure
-
-Jekyll is, at its core, a text transformation engine. The concept behind the system is this: you give it text written in your favorite markup language, be that Markdown, Textile, or just plain HTML, and it churns that through a layout or a series of layout files. Throughout that process you can tweak how you want the site URLs to look, what data gets displayed in the layout, and more. This is all done through editing text files; the static web site is the final product.
-
-A basic Jekyll site usually looks something like this:
-
-~~~ bash
-.
-├── _config.yml
-├── _data
-|   └── members.yml
-├── _drafts
-|   ├── begin-with-the-crazy-ideas.md
-|   └── on-simplicity-in-technology.md
-├── _includes
-|   ├── footer.html
-|   └── header.html
-├── _layouts
-|   ├── default.html
-|   └── post.html
-├── _posts
-|   ├── 2007-10-29-why-every-programmer-should-play-nethack.md
-|   └── 2009-04-26-barcamp-boston-4-roundup.md
-├── _sass
-|   ├── _base.scss
-|   └── _layout.scss
-├── _site
-├── .jekyll-metadata
-└── index.html # can also be an 'index.md' with valid YAML Frontmatter
-~~~
-
-## Front matter
-
-The front matter is where Jekyll starts to get really cool. Any file that contains a YAML front matter block will be processed by Jekyll as a special file. The front matter must be the first thing in the file and must take the form of valid YAML set between triple-dashed lines. Here is a basic example:
-
-~~~ html
----
-layout: post
-title: Blogging Like a Hacker
----
-~~~
-
-Between these triple-dashed lines, you can set predefined variables (see below for a reference) or even create custom ones of your own. These variables will then be available to you to access using Liquid tags both further down in the file and also in any layouts or includes that the page or post in question relies on.
-
-![Example image](https://images.unsplash.com/photo-1481487196290-c152efe083f5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920&h=1080&fit=crop&s=80308172730757a7db0434987fa985f3)
-
-## Where additional pages live
-
-Where you put HTML or Markdown files for pages depends on how you want the pages to work. There are two main ways of creating pages:
-
-* Place named HTML or Markdown files for each page in your site’s root folder.
-* Place pages inside folders and subfolders named whatever you want.
-
-Both methods work fine (and can be used in conjunction with each other), with the only real difference being the resulting URLs. By default, pages retain the same folder structure in `_site` as they do in the source directory.
+_Note that in this instance we prefer hyphens over underscores._

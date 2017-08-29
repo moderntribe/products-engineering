@@ -12,7 +12,7 @@ First and foremost, we make an attempt to adhere to the [WordPress JS coding sta
 
 ## <a id="js-style"></a> Code style
 
-All javascript should be well documented. Functions, namespaces should adhere to the jsdoc 3 standard, available here: [[http://usejsdoc.org/about-getting-started.html]].
+All javascript should be well documented. Functions, namespaces should adhere to the jsdoc 3 standard, [available here](http://usejsdoc.org/about-getting-started.html).
 
 Inside functions declare additional comments with the // syntax.
 
