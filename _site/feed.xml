@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-08-29T09:17:53-04:00</updated><id>http://localhost:4000/</id><title type="html">Products Engineering</title><subtitle>Modern Tribe knowledge base for Developers</subtitle><author><name>Modern Tribe</name></author><entry><title type="html">WordPress</title><link href="http://localhost:4000/code-standards/wordpress/" rel="alternate" type="text/html" title="WordPress" /><published>2017-08-28T00:00:00-04:00</published><updated>2017-08-28T00:00:00-04:00</updated><id>http://localhost:4000/code-standards/wordpress</id><content type="html" xml:base="http://localhost:4000/code-standards/wordpress/">&lt;h3 id=&quot;hooks-vs-constants&quot;&gt;&lt;a id=&quot;php-wordpress-hooks&quot;&gt;&lt;/a&gt;Hooks vs constants&lt;/h3&gt;
+
+&lt;p&gt;Occasionally we may have a request or an idea for a setting that could be useful to advanced users, but that isn’t something we’d want to expose to everyone in the plugin’s settings pages. In those cases, we’ll usually want to create a “hidden” setting that is available for users to set the value of via a hook or a constant.&lt;/p&gt;
+
+&lt;h4 id=&quot;when-to-use-a-hook&quot;&gt;When to Use a Hook&lt;/h4&gt;
+&lt;p&gt;Most of the time hooks should be used to create these hidden settings. A user will then be able to create a line in their functions.php which sets the value.&lt;/p&gt;
+
+&lt;h4 id=&quot;when-to-use-a-constant&quot;&gt;When to Use a Constant&lt;/h4&gt;
+&lt;p&gt;Constants should only be used when a site owner will want to set a setting site-wide, no matter what theme or plugins are in use, and no theme or plugin should be allowed to override this value. A user will then be able to create a line in their wp-config.php which sets the value.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; if a Modern Tribe developer would like to suggest a constant be used, they will need to bring it up during the code review that happens once per release cycle. Pull requests that add constants to the codebase will also need to be discussed on Modern Tribe’s internal code review before they are accepted.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;hooking-from-within-objects&quot;&gt;Hooking from Within Objects&lt;/h4&gt;
+&lt;p&gt;Very often an object will need to add a number of actions and filters of its own. As a rule of thumb, any &lt;code class=&quot;highlighter-rouge&quot;&gt;add_action()&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;add_filter()&lt;/code&gt; calls should be contained inside a &lt;code class=&quot;highlighter-rouge&quot;&gt;hook()&lt;/code&gt; method and should &lt;strong&gt;not&lt;/strong&gt; be setup from within the constructor.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-to-deprecate&quot;&gt;&lt;a id=&quot;php-wordpress-deprecation&quot;&gt;&lt;/a&gt;How to deprecate&lt;/h3&gt;
+
+&lt;p&gt;When a global function or hook needs to be renamed or taken out of use, please take the following steps:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For functions, move the function to the &lt;code class=&quot;highlighter-rouge&quot;&gt;deprecated.php&lt;/code&gt; file&lt;/li&gt;
+  &lt;li&gt;Place an &lt;code class=&quot;highlighter-rouge&quot;&gt;@deprecated&lt;/code&gt; phpDoc docblock tag in the documentation for the function or hook&lt;/li&gt;
+  &lt;li&gt;Place an &lt;code class=&quot;highlighter-rouge&quot;&gt;@todo&lt;/code&gt; in the phpDoc docblock that describes when to remove the function. It should be a minimum of two versions into the future.&lt;/li&gt;
+  &lt;li&gt;For functions, run WordPress’ &lt;code class=&quot;highlighter-rouge&quot;&gt;_deprecated_function()&lt;/code&gt; just inside function&lt;/li&gt;
+  &lt;li&gt;For hooks, check &lt;code class=&quot;highlighter-rouge&quot;&gt;has_filter()&lt;/code&gt;, and if it returns true, run the WordPress &lt;code class=&quot;highlighter-rouge&quot;&gt;_deprecated_function()&lt;/code&gt; just above the hook&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; private and protected class members don’t need to be deprecated.&lt;/em&gt;&lt;/p&gt;</content><author><name>Modern Tribe</name></author><summary type="html">Hooks vs constants</summary></entry><entry><title type="html">Structure</title><link href="http://localhost:4000/guidelines/structure/" rel="alternate" type="text/html" title="Structure" /><published>2017-08-28T00:00:00-04:00</published><updated>2017-08-28T00:00:00-04:00</updated><id>http://localhost:4000/guidelines/structure</id><content type="html" xml:base="http://localhost:4000/guidelines/structure/">&lt;h2 id=&quot;file-naming&quot;&gt;File Naming&lt;/h2&gt;
+
+&lt;p&gt;It should also be rare that you need to create a new file. Note that file naming is one of the few areas where we depart from the published WordPress coding standards.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;PHP Class Files&lt;/strong&gt; - &lt;code class=&quot;highlighter-rouge&quot;&gt;Class_Name.php&lt;/code&gt; (please note, only one class per file. The filename needs to match exactly the final portion of the actual class name, i.e. the portion after the last double underscore)
+&lt;strong&gt;Javascript Files&lt;/strong&gt; - &lt;code class=&quot;highlighter-rouge&quot;&gt;some-descriptor.js&lt;/code&gt; (use a dash to separate segments)&lt;/p&gt;
+
+&lt;h2 id=&quot;directory-structure&quot;&gt;Directory structure&lt;/h2&gt;
+
+&lt;p&gt;It’ll be rare that new directories will need to be created, but please adhere to the following structure:&lt;/p&gt;
+
+&lt;pre&gt;
+plugin-directory/
+  lang/                 ← translations go here
+  src/                  ← all new code will go in here
+    Tribe/              ← all the Modern Tribe php classes
+    admin-views/        ← plugin dashboard view files
+    deprecated/         ← deprecated logic goes here
+    functions/          ← files containing global functions for public use
+      template-tags/    ← files containing template tags
+    resources/          ← any static assets, including js, css, and images
+      css/              ← compiled CSS goes here
+      images/           ← images and icons
+      js/               ← javascript goes here
+      scss/             ← SCSS goes here
+    views/              ← plugin view files
+  tests/                ← unit tests go here
+  vendor/               ← 3rd party libraries should be added here
+&lt;/pre&gt;</content><author><name>Modern Tribe</name></author><summary type="html">File Naming</summary></entry><entry><title type="html">Plugin Namespacing</title><link href="http://localhost:4000/guidelines/plugins-namespacing/" rel="alternate" type="text/html" title="Plugin Namespacing" /><published>2017-08-28T00:00:00-04:00</published><updated>2017-08-28T00:00:00-04:00</updated><id>http://localhost:4000/guidelines/plugins-namespacing</id><content type="html" xml:base="http://localhost:4000/guidelines/plugins-namespacing/">&lt;p&gt;Jekyll is a simple, blog-aware, static site generator. It takes a template directory containing raw text files in various formats, runs it through a converter (like Markdown) and our Liquid renderer, and spits out a complete, ready-to-publish static website suitable for serving with your favorite web server.&lt;/p&gt;
+
+&lt;p&gt;If you already have a full Ruby development environment with all headers and RubyGems installed, you can create a new Jekyll site by doing the following:&lt;/p&gt;
+
+&lt;h2 id=&quot;how-to-install&quot;&gt;How to install&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Install Jekyll and Bundler gems through RubyGems&lt;/span&gt;
+~ &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gem install jekyll bundler
+
+&lt;span class=&quot;c&quot;&gt;# Create a new Jekyll site at ./myblog&lt;/span&gt;
+~ &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jekyll new myblog
+
+&lt;span class=&quot;c&quot;&gt;# Change into your new directory&lt;/span&gt;
+~ &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;myblog
+
+&lt;span class=&quot;c&quot;&gt;# Build the site on the preview server&lt;/span&gt;
+~/myblog &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
+
+&lt;span class=&quot;c&quot;&gt;# Now browse to http://localhost:4000&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;next-steps&quot;&gt;Next steps&lt;/h2&gt;
+
+&lt;p&gt;Building a Jekyll site with the default theme is just the first step. The real magic happens when you start creating blog posts, using the front matter to control templates and layouts, and taking advantage of all the awesome configuration options Jekyll makes available.&lt;/p&gt;
+
+&lt;h2 id=&quot;basic-usage&quot;&gt;Basic usage&lt;/h2&gt;
+
+&lt;p&gt;The Jekyll gem makes a &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll&lt;/code&gt; executable available to you in your Terminal window. You can use this command in a number of ways:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll build
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; The current folder will be generated into ./_site&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll build --destination &amp;lt;destination&amp;gt;
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; The current folder will be generated into &amp;lt;destination&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll build --source &amp;lt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&amp;gt; --destination &amp;lt;destination&amp;gt;
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; The &amp;lt;source&amp;gt; folder will be generated into &amp;lt;destination&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll build --watch
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; The current folder will be generated into ./_site,&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#    watched for changes, and regenerated automatically.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;directory-structure&quot;&gt;Directory structure&lt;/h2&gt;
+
+&lt;p&gt;Jekyll is, at its core, a text transformation engine. The concept behind the system is this: you give it text written in your favorite markup language, be that Markdown, Textile, or just plain HTML, and it churns that through a layout or a series of layout files. Throughout that process you can tweak how you want the site URLs to look, what data gets displayed in the layout, and more. This is all done through editing text files; the static web site is the final product.&lt;/p&gt;
+
+&lt;p&gt;A basic Jekyll site usually looks something like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.
+├── _config.yml
+├── _data
+|   └── members.yml
+├── _drafts
+|   ├── begin-with-the-crazy-ideas.md
+|   └── on-simplicity-in-technology.md
+├── _includes
+|   ├── footer.html
+|   └── header.html
+├── _layouts
+|   ├── default.html
+|   └── post.html
+├── _posts
+|   ├── 2007-10-29-why-every-programmer-should-play-nethack.md
+|   └── 2009-04-26-barcamp-boston-4-roundup.md
+├── _sass
+|   ├── _base.scss
+|   └── _layout.scss
+├── _site
+├── .jekyll-metadata
+└── index.html &lt;span class=&quot;c&quot;&gt;# can also be an 'index.md' with valid YAML Frontmatter&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;front-matter&quot;&gt;Front matter&lt;/h2&gt;
+
+&lt;p&gt;The front matter is where Jekyll starts to get really cool. Any file that contains a YAML front matter block will be processed by Jekyll as a special file. The front matter must be the first thing in the file and must take the form of valid YAML set between triple-dashed lines. Here is a basic example:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+layout: post
+title: Blogging Like a Hacker
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Between these triple-dashed lines, you can set predefined variables (see below for a reference) or even create custom ones of your own. These variables will then be available to you to access using Liquid tags both further down in the file and also in any layouts or includes that the page or post in question relies on.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://images.unsplash.com/photo-1481487196290-c152efe083f5?ixlib=rb-0.3.5&amp;amp;q=80&amp;amp;fm=jpg&amp;amp;crop=entropy&amp;amp;cs=tinysrgb&amp;amp;w=1920&amp;amp;h=1080&amp;amp;fit=crop&amp;amp;s=80308172730757a7db0434987fa985f3&quot; alt=&quot;Example image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;where-additional-pages-live&quot;&gt;Where additional pages live&lt;/h2&gt;
+
+&lt;p&gt;Where you put HTML or Markdown files for pages depends on how you want the pages to work. There are two main ways of creating pages:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Place named HTML or Markdown files for each page in your site’s root folder.&lt;/li&gt;
+  &lt;li&gt;Place pages inside folders and subfolders named whatever you want.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Both methods work fine (and can be used in conjunction with each other), with the only real difference being the resulting URLs. By default, pages retain the same folder structure in &lt;code class=&quot;highlighter-rouge&quot;&gt;_site&lt;/code&gt; as they do in the source directory.&lt;/p&gt;</content><author><name>Modern Tribe</name></author><summary type="html">Jekyll is a simple, blog-aware, static site generator. It takes a template directory containing raw text files in various formats, runs it through a converter (like Markdown) and our Liquid renderer, and spits out a complete, ready-to-publish static website suitable for serving with your favorite web server.</summary></entry><entry><title type="html">PHP</title><link href="http://localhost:4000/code-standards/php/" rel="alternate" type="text/html" title="PHP" /><published>2017-08-28T00:00:00-04:00</published><updated>2017-08-28T00:00:00-04:00</updated><id>http://localhost:4000/code-standards/php</id><content type="html" xml:base="http://localhost:4000/code-standards/php/">&lt;h2 id=&quot;-the-basics&quot;&gt;&lt;a id=&quot;basics&quot;&gt;&lt;/a&gt; The Basics&lt;/h2&gt;
+
+&lt;p&gt;First and foremost, we make an attempt to adhere to the &lt;a href=&quot;http://make.wordpress.org/core/handbook/coding-standards/php/&quot;&gt;WordPress PHP coding standards&lt;/a&gt;. Additionally, we attempt to follow a number of &lt;a href=&quot;http://www.php-fig.org/psr/psr-2/&quot;&gt;PSR-2 standards&lt;/a&gt; where they don’t conflict with WordPress.&lt;/p&gt;
+
+&lt;h2 id=&quot;-overview&quot;&gt;&lt;a id=&quot;overview&quot;&gt;&lt;/a&gt; Overview&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Visibility MUST be declared on all properties and methods; abstract and final MUST be declared before the visibility; static MUST be declared after the visibility.&lt;/li&gt;
+  &lt;li&gt;The soft limit on line length MUST be 120 characters; automated style checkers MUST warn but MUST NOT error at the soft limit.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-general&quot;&gt;&lt;a id=&quot;general&quot;&gt;&lt;/a&gt; General&lt;/h2&gt;
+
+&lt;h3 id=&quot;-files&quot;&gt;&lt;a id=&quot;general-files&quot;&gt;&lt;/a&gt; Files&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;All PHP files MUST use the Unix LF (linefeed) line ending.&lt;/li&gt;
+  &lt;li&gt;The closing &lt;code class=&quot;highlighter-rouge&quot;&gt;?&amp;gt;&lt;/code&gt; tag MUST be omitted from files containing only or ending in PHP.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-keywords-and-truefalsenull&quot;&gt;&lt;a id=&quot;general-keywords&quot;&gt;&lt;/a&gt; Keywords and true/false/null&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;PHP keywords MUS be in lowercase.&lt;/li&gt;
+  &lt;li&gt;The PHP constants &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;null&lt;/code&gt; MUST be in lowercase.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-namespace-and-use-declarations&quot;&gt;&lt;a id=&quot;namespace&quot;&gt;&lt;/a&gt; Namespace and use declarations&lt;/h3&gt;
+
+&lt;p&gt;Where we are able to use Namespaces (tests, SaaS code, etc), we should adhere to the &lt;a href=&quot;http://www.php-fig.org/psr/psr-2/#3-namespace-and-use-declarations&quot;&gt;PSR-2 standards for Namespaces and Use Declarations&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;classes-properties-and-methods&quot;&gt;&lt;a id=&quot;classes&quot;&gt;&lt;/a&gt;Classes, properties, and methods&lt;/h3&gt;
+
+&lt;p&gt;When creating a new class, please try to ensure that the class has a single responsibility. Use inheritance when possible to keep things simple, organized and DRY.&lt;/p&gt;
+
+&lt;h3 id=&quot;class-naming&quot;&gt;&lt;a id=&quot;classes-naming&quot;&gt;&lt;/a&gt;Class naming&lt;/h3&gt;
+
+&lt;p&gt;Classes should be named with the Modern Tribe namespace (“Tribe”), the plugin namespace (“Events”), and then the classname. Those three parts should be separated by double underscores (which will translate to directory slashes in the autoloader). Since we’re using double underscores as namespace separators, you can (and should) use single underscores in the class names.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example: Naming a Class&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Wrong (not namespaced, uses CamelCase):&lt;/p&gt;
+
+&lt;pre&gt;
+class DateUtilities {
+	// define some things
+}
+&lt;/pre&gt;
+
+&lt;p&gt;Right:&lt;/p&gt;
+
+&lt;p&gt;Classes should be namespaced with a hierarchy that is separated by double-underscores (__). The hierarchy is as such: src/Tribe/Class_Name. In the class name, that translates to:&lt;/p&gt;
+
+&lt;pre&gt;
+class Tribe__Events__Date_Utilities {
+	// define some things
+}
+&lt;/pre&gt;
+
+&lt;h3 id=&quot;properties&quot;&gt;&lt;a id=&quot;classes-properties&quot;&gt;&lt;/a&gt;Properties&lt;/h3&gt;
+
+&lt;p&gt;We adhere to the &lt;a href=&quot;http://www.php-fig.org/psr/psr-2/#4-2-properties&quot;&gt;PSR-2 guidelines for properties&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;constants&quot;&gt;&lt;a id=&quot;classes-constants&quot;&gt;&lt;/a&gt;Constants&lt;/h3&gt;
+
+&lt;p&gt;Due to the difficulty of deprecating constants (&lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt;), we prefer the use of &lt;code class=&quot;highlighter-rouge&quot;&gt;public static&lt;/code&gt; class properties. This way, if we wish to deprecate the property, we can communicate that deprecation via magic &lt;code class=&quot;highlighter-rouge&quot;&gt;__get()&lt;/code&gt; methods.&lt;/p&gt;
+
+&lt;pre&gt;
+// bad
+const BACON = 'yummy';
+
+// preferred
+public static $bacon = 'yummy';
+&lt;/pre&gt;
+
+&lt;h3 id=&quot;methods&quot;&gt;&lt;a id=&quot;classes-methods&quot;&gt;&lt;/a&gt;Methods&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Visibility MUST be declared on all methods.&lt;/li&gt;
+  &lt;li&gt;Method names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility.&lt;/li&gt;
+  &lt;li&gt;Method names MUST NOT be declared with a space after the method name.&lt;/li&gt;
+  &lt;li&gt;For public methods that we want to deter public use, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;@internal&lt;/code&gt; docblock tag rather than an underscore prefix.&lt;/li&gt;
+  &lt;li&gt;The default visibility for class members should be &lt;code class=&quot;highlighter-rouge&quot;&gt;private&lt;/code&gt;. Increase the visibility incrementally (to protected, and then public), as needed.&lt;/li&gt;
+  &lt;li&gt;Static methods and properties should be used sparingly and avoided whenever possible.&lt;/li&gt;
+  &lt;li&gt;Be as DRY as possible.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;method-arguments&quot;&gt;&lt;a id=&quot;classes-method-args&quot;&gt;&lt;/a&gt;Method arguments&lt;/h3&gt;
+
+&lt;p&gt;Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line.&lt;/p&gt;
+
+&lt;p&gt;When the argument list is split across multiple lines, the closing parenthesis and opening brace MUST be placed together on their own line with one space between them.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre&gt;
+public function star_wars(
+  $episode,
+  $character,
+  $species,
+  $weapon
+) {
+  // do stuff
+}
+&lt;/pre&gt;
+
+&lt;h3 id=&quot;-abstract-final-and-static&quot;&gt;&lt;a id=&quot;classes-abstract&quot;&gt;&lt;/a&gt; Abstract, final, and static&lt;/h3&gt;
+
+&lt;p&gt;We adhere to the &lt;a href=&quot;http://www.php-fig.org/psr/psr-2/#4-5-abstract-final-and-static&quot;&gt;PSR-2 guidelines for abstract, final and static&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;-method-and-function-calls&quot;&gt;&lt;a id=&quot;classes-calls&quot;&gt;&lt;/a&gt; Method and function calls&lt;/h3&gt;
+
+&lt;p&gt;Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;
+star_wars(
+  'IV',
+  'Greedo',
+  'Rodian',
+  'DT-12'
+);
+&lt;/pre&gt;
+
+&lt;h2 id=&quot;-functions&quot;&gt;&lt;a id=&quot;functions&quot;&gt;&lt;/a&gt; Functions&lt;/h2&gt;
+
+&lt;h3 id=&quot;when-to-create-global-functions&quot;&gt;When to create global functions&lt;/h3&gt;
+&lt;p&gt;If there is a piece of code that is frequently referenced throughout the addons, or could be useful to users who want to create custom templates or addons, that’s when it’s appropriate to create a global function.&lt;/p&gt;
+
+&lt;p&gt;Keep in mind that whenever a global function is created and released, from that point on, it’ll be “in the wild”. Customers may be using it in their themes or plugins, and we will need to support it from that point on. With this in mind, please be sure not to create unnecessary functions that we won’t want to support.&lt;/p&gt;
+
+&lt;h3 id=&quot;where-to-put-function-code&quot;&gt;Where to put function code&lt;/h3&gt;
+&lt;p&gt;There are template tag files for most areas of the plugin. They are located in the &lt;code class=&quot;highlighter-rouge&quot;&gt;template-tags/&lt;/code&gt; directory. Take care in selecting the appropriate file for your new function, and place the new function at the end of the file. If it closely references another function in the file, place it next to that function.&lt;/p&gt;
+
+&lt;p&gt;It’s usually appropriate to place the logic for a function into a class, and then use a function as a wrapper for the class method. When you have some code that you’d like to make publicly available, but it would also make sense as a method of one of our classes, you should make the method within the class, and then make a global function that calls that method and returns its result.&lt;/p&gt;
+
+&lt;h3 id=&quot;echo-or-return&quot;&gt;Echo or return?&lt;/h3&gt;
+&lt;p&gt;When a function returns a scalar value that might be used in templates, be sure to return the value instead of echoing it. There is no need to take &lt;code class=&quot;highlighter-rouge&quot;&gt;$echo&lt;/code&gt; as a boolean argument to the function; if a user wants to echo the value, they can simply directly echo the function’s result in their template.&lt;/p&gt;
+
+&lt;h3 id=&quot;applying-filters-to-the-result&quot;&gt;Applying filters to the result&lt;/h3&gt;
+&lt;p&gt;Note that whenever you create a global function, be sure to run &lt;code class=&quot;highlighter-rouge&quot;&gt;apply_filters()&lt;/code&gt; on the result before it’s returned.&lt;/p&gt;
+
+&lt;p&gt;The filter should have the same name as the function, and should be passed the return value, followed by (at minimum), all parameters that were passed to the function initially.&lt;/p&gt;
+
+&lt;h3 id=&quot;function-naming&quot;&gt;Function naming&lt;/h3&gt;
+&lt;p&gt;Since we’re creating code that is distributed, has been downloaded over 1 million times, and will be installed alongside myriad themes and plugins, it’s very important that you prefix your global namespace definitions with &lt;code class=&quot;highlighter-rouge&quot;&gt;tribe_&lt;/code&gt; – so there’s far less chance another plugin’s or theme’s definitions will have the same name.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example: Naming a Global Function&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Wrong (not namespaced, uses camelCase):&lt;/p&gt;
+
+&lt;pre&gt;
+function getEventStartTime() {
+	// do something
+}
+&lt;/pre&gt;
+
+&lt;p&gt;Right (prefixed with &lt;code class=&quot;highlighter-rouge&quot;&gt;tribe_&lt;/code&gt;, uses underscores):&lt;/p&gt;
+
+&lt;pre&gt;
+function tribe_get_event_start_time() {
+	// do something
+}
+&lt;/pre&gt;
+
+&lt;h2 id=&quot;-control-structures&quot;&gt;&lt;a id=&quot;control&quot;&gt;&lt;/a&gt; Control structures&lt;/h2&gt;
+
+&lt;h3 id=&quot;switch-case&quot;&gt;&lt;a id=&quot;control-switch&quot;&gt;&lt;/a&gt;Switch, case&lt;/h3&gt;
+
+&lt;p&gt;We adhere to the &lt;a href=&quot;http://www.php-fig.org/psr/psr-2/#5-2-switch-case&quot;&gt;PSR-2 guidelines for &lt;code class=&quot;highlighter-rouge&quot;&gt;switch&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;case&lt;/code&gt; statements&lt;/a&gt; &lt;em&gt;except&lt;/em&gt; for the standards around spacing within parentheses.&lt;/p&gt;
+
+&lt;h3 id=&quot;multi-line-control-structures&quot;&gt;&lt;a id=&quot;control-multi&quot;&gt;&lt;/a&gt;Multi-line control structures&lt;/h3&gt;
+
+&lt;p&gt;Conditionals MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first conditional in the list MUST be on the next line, and there MUST be only one conditional per line.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Yup!&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;
+// simple
+if (
+  $a == $b
+  &amp;amp;&amp;amp; $b == $c
+) {
+  // do stuff
+}
+
+// something a bit more complex
+if (
+  (
+    $a == $b
+    || $a == c
+  )
+  &amp;amp;&amp;amp; $b == $d
+  &amp;amp;&amp;amp; $q == $banana_pancake
+) {
+  // do stuff
+}
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Nope!&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;
+// this only looks pretty when your tabs are set to 2 spaces
+if ( $a == $b
+  &amp;amp;&amp;amp; $b == $c
+) {
+  // do stuff
+}
+
+// alignment beyond a single tab can be fraught with differences between devs
+if ( $a == $b
+     &amp;amp;&amp;amp; $b == $c
+) {
+  // do stuff
+}
+
+// this one causes needless churn in Git as conditionals are added to the control structure
+if (
+  $a == $b &amp;amp;&amp;amp;
+  $b == $c
+) {
+  // do stuff
+}
+
+// since we use tabs, we could be bitten by the tab/space nature of alignment here
+if (
+     $a == $b
+  &amp;amp;&amp;amp; $b == $c
+) {
+  // do stuff
+}
+
+// something a bit more complex - this violates the 1 conditional per line rule
+if (
+  ( $a == $b || $a == c )
+  &amp;amp;&amp;amp; $b == $d
+  &amp;amp;&amp;amp; $q == $banana_pancake
+) {
+  // do stuff
+}
+&lt;/pre&gt;
+
+&lt;h2 id=&quot;-closures&quot;&gt;&lt;a id=&quot;closures&quot;&gt;&lt;/a&gt; Closures&lt;/h2&gt;
+
+&lt;p&gt;We adhere to the &lt;a href=&quot;http://www.php-fig.org/psr/psr-2/#6-closures&quot;&gt;PSR-2 guidelines for closuers&lt;/a&gt; &lt;em&gt;except&lt;/em&gt; for the standards around spacing within parentheses.&lt;/p&gt;</content><author><name>Modern Tribe</name></author><summary type="html">The Basics</summary></entry><entry><title type="html">JavaScript</title><link href="http://localhost:4000/code-standards/javascript/" rel="alternate" type="text/html" title="JavaScript" /><published>2017-08-28T00:00:00-04:00</published><updated>2017-08-28T00:00:00-04:00</updated><id>http://localhost:4000/code-standards/javascript</id><content type="html" xml:base="http://localhost:4000/code-standards/javascript/">&lt;h2 id=&quot;-the-basics&quot;&gt;&lt;a id=&quot;js-basics&quot;&gt;&lt;/a&gt; The Basics&lt;/h2&gt;
+
+&lt;p&gt;First and foremost, we make an attempt to adhere to the &lt;a href=&quot;https://make.wordpress.org/core/handbook/best-practices/coding-standards/javascript/&quot;&gt;WordPress JS coding standards&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;-code-style&quot;&gt;&lt;a id=&quot;js-style&quot;&gt;&lt;/a&gt; Code style&lt;/h2&gt;
+
+&lt;p&gt;All javascript should be well documented. Functions, namespaces should adhere to the jsdoc 3 standard, available here: [[http://usejsdoc.org/about-getting-started.html]].&lt;/p&gt;
+
+&lt;p&gt;Inside functions declare additional comments with the // syntax.&lt;/p&gt;
+
+&lt;h3 id=&quot;variable-declaration&quot;&gt;Variable declaration&lt;/h3&gt;
+
+&lt;p&gt;While not a fully ratified standard, nor heavily enforced, comma separated variable declarations should be discouraged.&lt;/p&gt;
+
+&lt;p&gt;Icky:&lt;/p&gt;
+
+&lt;pre&gt;
+var v, x, y;
+
+var $this = $(this),
+  $that = $(that),
+  i = 0;
+&lt;/pre&gt;
+
+&lt;p&gt;Preferred:&lt;/p&gt;
+
+&lt;pre&gt;
+var v;
+var x;
+var y;
+
+var $this = $( this );
+var $that = $( that );
+var i     = 0;
+&lt;/pre&gt;
+
+&lt;h4 id=&quot;heres-borkwebs-reasoning-for-separate-var-statements&quot;&gt;Here’s @borkweb’s reasoning for separate var statements&lt;/h4&gt;
+
+&lt;p&gt;Personally, I’d prefer separating the function declarations from the variable declaration chain. One of the following would allow proper docblocks without chunking up the declarations and avoid funky-looking nesting:&lt;/p&gt;
+
+&lt;pre&gt;
+var date_to_ymd = function( date ) {
+  // ...
+};
+&lt;/pre&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;pre&gt;
+function date_to_ymd( date ) {
+  // ...
+}
+&lt;/pre&gt;
+
+&lt;p&gt;I still am not a fan of chained declaration in general. Here’s my reasoning:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Chained declarations deter comments being added for individual variables and sorta hurt readability:&lt;/p&gt;
+
+    &lt;pre&gt;
+ var
+   /**
+    * This variable does something interesting
+    *
+    * @private
+    **/
+   variable_x = 1,
+
+   /**
+    * This variable does something else entirely
+    *
+    * @private
+    **/
+   variable_y = 2;
+ &lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Chained declaration statements make them harder to move around and causes needless churn in diffs and increases the possibility of merge conflicts:&lt;/p&gt;
+
+    &lt;pre&gt;
+ var x = 1,
+   z = 3,
+   y = 2;
+
+ // changing it to the following would result in 2 changed lines:
+
+ var x = 1,
+   y = 2,
+   z = 3;
+ &lt;/pre&gt;
+
+    &lt;p&gt;vs the following:&lt;/p&gt;
+
+    &lt;pre&gt;
+ var x = 1;
+ var z = 3;
+ var y = 2;
+
+ // change it to the following would result in 1 changed line:
+
+ var x = 1;
+ var y = 2;
+ var z = 3;
+ &lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Variable alignment of chained declarations is unpleasing to my brain (I know I could solve this by setting my tabs to 4…but that’s not going to happen):&lt;/p&gt;
+
+    &lt;pre&gt;
+ // compare this
+ var x = 1,
+   y = 2,
+   z = 3;
+
+ // to:
+ var x = 1;
+ var y = 2;
+ var z = 3;
+ &lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Our unminified code should be all about readability and not saving bytes. Good minifiers turn multiple var statements into comma separated ones.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;On the topic of saving bytes…In the event that the non-minified version of the JS file is served up to the user…two var statements gzip better than a single var with a comma. (via Isaac of NPM - &lt;a href=&quot;https://gist.github.com/isaacs/357981#gistcomment-2406&quot;&gt;source&lt;/a&gt;)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;jquery-var-names&quot;&gt;jQuery var names&lt;/h3&gt;
+
+&lt;p&gt;Variables that point to a jQuery object should have their name prefixed with a &lt;code class=&quot;highlighter-rouge&quot;&gt;$&lt;/code&gt; sign, per the examples above.&lt;/p&gt;
+
+&lt;p&gt;Utility functions, state, tests and options for the main plugins should be stored in
+&lt;code class=&quot;highlighter-rouge&quot;&gt;tribe-events.js&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;tribe-events-pro.js&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If functions or portions of functionality move between plugins, make sure all associated js code
+moves to that new area with them.&lt;/p&gt;
+
+&lt;h2 id=&quot;-event-namespacing&quot;&gt;&lt;a id=&quot;js-event-namespacing&quot;&gt;&lt;/a&gt; Event namespacing&lt;/h2&gt;
+
+&lt;p&gt;To promote flexible event handling within jQuery, &lt;a href=&quot;https://api.jquery.com/event.namespace/&quot;&gt;namespacing events&lt;/a&gt; is preferred over prefixing custom event names.&lt;/p&gt;
+
+&lt;h3 id=&quot;why&quot;&gt;Why?&lt;/h3&gt;
+
+&lt;p&gt;Namespacing allows a developer to add and remove events in an isolated fashion.  CSS-Tricks has &lt;a href=&quot;https://css-tricks.com/namespaced-events-jquery/&quot;&gt;an excellent write-up&lt;/a&gt; about why they are awesome.&lt;/p&gt;
+
+&lt;h3 id=&quot;namespacing-conventions&quot;&gt;Namespacing conventions&lt;/h3&gt;
+
+&lt;p&gt;Namespaced custom events should use the following convention:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[event name].tribe
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;event-name&quot;&gt;[event name]&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;[event name]&lt;/code&gt; should be something that indicates the action that is occurring. If saving a ticket, an event name of &lt;code class=&quot;highlighter-rouge&quot;&gt;save-ticket&lt;/code&gt; would be appropriate - &lt;code class=&quot;highlighter-rouge&quot;&gt;fry-bacon&lt;/code&gt; would not.&lt;/p&gt;
+
+&lt;h4 id=&quot;tribe&quot;&gt;tribe&lt;/h4&gt;
+
+&lt;p&gt;This is the piece of the namespace that should be present everywhere. It separates our events from those of other plugins.&lt;/p&gt;</content><author><name>Modern Tribe</name></author><summary type="html">The Basics</summary></entry><entry><title type="html">HTML</title><link href="http://localhost:4000/code-standards/html/" rel="alternate" type="text/html" title="HTML" /><published>2017-08-28T00:00:00-04:00</published><updated>2017-08-28T00:00:00-04:00</updated><id>http://localhost:4000/code-standards/html</id><content type="html" xml:base="http://localhost:4000/code-standards/html/">&lt;h2 id=&quot;-the-basics&quot;&gt;&lt;a id=&quot;html-basics&quot;&gt;&lt;/a&gt; The basics&lt;/h2&gt;
+
+&lt;p&gt;First and foremost, we make an attempt to adhere to the &lt;a href=&quot;https://make.wordpress.org/core/handbook/best-practices/coding-standards/html/&quot;&gt;WordPress HTML coding standards&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;-code-style&quot;&gt;&lt;a id=&quot;html-codestyle&quot;&gt;&lt;/a&gt; Code style&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;HTML blocks should be nested and indented logically&lt;/li&gt;
+  &lt;li&gt;The initial indent should consist only of tabs and not spaces&lt;/li&gt;
+  &lt;li&gt;PHP blocks are indented according to the same rules as HTML elements&lt;/li&gt;
+  &lt;li&gt;Single line segments of PHP like our &lt;code class=&quot;highlighter-rouge&quot;&gt;esc_html_e()&lt;/code&gt; call still terminate with a semi-colon&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;
+&amp;lt;div id=&quot;component&quot;&amp;gt;
+	&amp;lt;div class=&quot;part&quot;&amp;gt;
+		&amp;lt;?php if ( 'met' === $condition ): ?&amp;gt;
+			&amp;lt;a href=&quot;#&quot;&amp;gt;&amp;lt;?php esc_html_e( 'Follow this link', 'textdomain' ); ?&amp;gt;&amp;lt;/a&amp;gt;
+		&amp;lt;?php endif; ?&amp;gt;
+	&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+
+&lt;h3 id=&quot;-multiline-attributes&quot;&gt;&lt;a id=&quot;html-multiline-attributes&quot;&gt; Multiline attributes&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Just as with PHP or Javascript, we should strive to avoid overly-long lines of code as this can harm readability.
+In particular, if there are a large number of attributes for a given element then it can be desirable to break them
+up over multiple lines. In such a case we use the following convention:&lt;/p&gt;
+
+&lt;pre&gt;
+&amp;lt;div
+	id=&quot;some-id&quot;
+	class=&quot;some-class&quot;
+	data-some-data=&quot;1&quot;
+&amp;gt;
+	&amp;lt;!-- Inner HTML --&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;</content><author><name>Modern Tribe</name></author><summary type="html">The basics</summary></entry><entry><title type="html">Ground Rules</title><link href="http://localhost:4000/guidelines/ground-rules/" rel="alternate" type="text/html" title="Ground Rules" /><published>2017-08-28T00:00:00-04:00</published><updated>2017-08-28T00:00:00-04:00</updated><id>http://localhost:4000/guidelines/ground-rules</id><content type="html" xml:base="http://localhost:4000/guidelines/ground-rules/">&lt;p&gt;In these pages we’re going to cover a set of coding guidelines that aim to make Modern Tribe’s plugin
+code more efficient, easier to read and understand, and more organized.&lt;/p&gt;
+
+&lt;p&gt;Having a more readable, consistent, and organized codebase will help with many things. Most notably,
+it’ll make it easier and faster for our team to to plan and execute adding new features, and new
+contributors will be able to get up to speed more quickly. Customers will also be able to develop
+their own customizations more easily.&lt;/p&gt;
+
+&lt;p&gt;Existing code may not follow these guidelines, but new code is expected to. As you are working on
+The Events Calendar codebase, if you see any blocks of code that don’t follow these guidelines, feel
+free to update and improve them to bring them in line with our style.&lt;/p&gt;
+
+&lt;h2 id=&quot;ground-rules&quot;&gt;Ground Rules&lt;/h2&gt;
+
+&lt;p&gt;While everyone has their own way of solving problems and writing algorithms, there are some basic
+guidelines we should all strive to follow.&lt;/p&gt;
+
+&lt;h3 id=&quot;rule-1-make-sure-your-code-is-written-in-such-a-way-that-another-developer-could-look-at-it-and-know-what-it-does-without-much-effort&quot;&gt;Rule 1: Make sure your code is written in such a way that another developer could look at it and know what it does without much effort.&lt;/h3&gt;
+
+&lt;p&gt;This includes not making overly complex or nested loop structures and conditional statements –
+remember to K.I.S.S. (Keep It Simple, Stupid!).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example: Nested Levels &amp;amp; Excess Comparisons&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Right:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// this does the exact same thing!
+if ( empty ( $date ) ) {
+	return false;
+}
+
+if ( $date &amp;gt; $date1 ) {
+	// do something
+} else if ( $date &amp;lt; $date 2 ) {
+	// do something else
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Wrong:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// too many nested levels and convoluted logic
+if (  ! empty ( $date ) &amp;amp;&amp;amp; ( $date &amp;gt; $date1 || $date &amp;lt; $date2 ) ) {
+	if ( $date &amp;gt; $date1 ) {
+		// do something
+	} else if ($date &amp;lt; $date2 ) {
+		// do something else
+	}
+} else {
+	if ( empty ( $date) ) {
+	return false;
+} }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Example: Sacrificing Readability for Being Clever&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Right:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// this does the same thing.. a few extra lines, but it’s far more readable:
+$tribe_events_template = tribe_get_option( 'tribeEventsTemplate', 'default' );
+if ( $tribe_events_template == 'default' ) {
+	$tribe_events_template = 'page.php';
+}
+$template = locate_template( $tribe_events_template );
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Wrong:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// believe it or not, this is all in one line:
+$template = locate_template( tribe_get_option( 'tribeEventsTemplate', 'default' ) == 'default' ? 'page.php' : tribe_get_option( 'tribeEventsTemplate', 'default' ) );
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;rule-2-name-your-functions-and-variables-plainly-and-descriptively&quot;&gt;Rule 2: Name your functions and variables plainly and descriptively.&lt;/h3&gt;
+
+&lt;p&gt;If you’re good at this, sometimes comments and confusion can both be avoided!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Ex. 3, Function &amp;amp; variable naming&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Right:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// clearly named variables and function
+$days_between = tribe_calc_days_between( $start_date, $end_date );
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Wrong:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// non-descript variable and function names
+$x = how_many($y, $z);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;rule-3-dry-dont-repeat-yourself&quot;&gt;Rule 3: D.R.Y. (Don’t Repeat Yourself).&lt;/h3&gt;
+
+&lt;p&gt;If you ever find yourself duplicating a line of code, there’s probably something wrong. Go back and
+figure out how you can solve the problem without any duplicate code (i.e. create a function or a
+variable that you can reuse).&lt;/p&gt;
+
+&lt;p&gt;When developing Modern Tribe products, following the D.R.Y. rule also means: don’t write new code
+when there already exists functionality in PHP, WordPress, or elsewhere in the products suite, which
+does the same thing. Before writing a new function, please do your due diligence and check that the
+functionality you need doesn’t already exist somewhere else.&lt;/p&gt;
+
+&lt;h3 id=&quot;rule-4-be-sure-to-include-clear-and-accurate-comments&quot;&gt;Rule 4: Be sure to include clear and accurate comments.&lt;/h3&gt;
+
+&lt;p&gt;Occasionally a complex solution to a problem will be required, and when you realize that it’s not
+immediately clear what a block of your code is doing, you should add an extra line break above it,
+and enter a comment, for the benefit of your teammates who might encounter this block of code in the
+future. Keep in mind that it’ll only take you 30 seconds, but could save someone else 5 minutes or
+more.&lt;/p&gt;
+
+&lt;p&gt;Note that comments are usually added as a quick afterthought, and are therefore prone to containing
+typos. Please take a moment to double check your comments for spelling mistakes and clarity.&lt;/p&gt;</content><author><name>Modern Tribe</name></author><summary type="html">In these pages we’re going to cover a set of coding guidelines that aim to make Modern Tribe’s plugin code more efficient, easier to read and understand, and more organized.</summary></entry><entry><title type="html">CSS</title><link href="http://localhost:4000/code-standards/css/" rel="alternate" type="text/html" title="CSS" /><published>2017-08-28T00:00:00-04:00</published><updated>2017-08-28T00:00:00-04:00</updated><id>http://localhost:4000/code-standards/css</id><content type="html" xml:base="http://localhost:4000/code-standards/css/">&lt;h2 id=&quot;-postcss&quot;&gt;&lt;a id=&quot;postcss&quot;&gt;&lt;/a&gt; PostCSS&lt;/h2&gt;
+
+&lt;p&gt;The CSS within Modern Tribe plugins built/transformed with &lt;a href=&quot;https://github.com/postcss/postcss&quot;&gt;PostCSS&lt;/a&gt;. When contributing CSS changes to our plugins, please
+be sure to edit files within &lt;code&gt;src/resources/postcss&lt;/code&gt; rather than &lt;code&gt;src/resources/css&lt;/code&gt;. Getting your environment set up to work with our
+PostCSS configuration is fairly simple:&lt;/p&gt;
+
+&lt;p&gt;Prequisite: &lt;a href=&quot;https://nodejs.org/&quot;&gt;Install node.js&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;In the root directory of the plugin, type &lt;code&gt;npm install&lt;/code&gt;. If you have already run that command, it is always advised to run &lt;code&gt;npm update&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Edit PostCSS (&lt;code&gt;.pcss&lt;/code&gt;) files in &lt;code&gt;src/resources/postcss&lt;/code&gt; to your heart’s content&lt;/li&gt;
+  &lt;li&gt;Compile the PostCSS into CSS by running &lt;code&gt;gulp&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;-postcss-plugins&quot;&gt;&lt;a id=&quot;postcss-plugins&quot;&gt;&lt;/a&gt; PostCSS plugins&lt;/h3&gt;
+
+&lt;p&gt;We employ a number of PostCSS plugins to transform our &lt;code&gt;.pcss&lt;/code&gt; files into CSS. They are as follows:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://cssnext.io/&quot;&gt;PostCSS CSSNext&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;PostCSS-cssnext is a PostCSS plugin that helps you to use the latest CSS syntax today. It transforms
+new CSS specs into more compatible CSS so you don’t need to wait for browser support.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/postcss/postcss-import&quot;&gt;PostCSS Import&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This plugin allows you to &lt;code&gt;@import&lt;/code&gt; rules from another file. Simply add &lt;code&gt;@import 'somefile.css';&lt;/code&gt;
+and it will inject the contents of &lt;code&gt;somefile.css&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/postcss/postcss-nested&quot;&gt;PostCSS Nested&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;PostCSS plugin to unwrap nested rules like how Sass does it. Basically…it provides support for rule nesting.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/postcss/postcss-mixins&quot;&gt;PostCSS Mixins&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This plugin adds support for mixins similar to Sass, however the syntax is a bit different. You define mixins via &lt;code&gt;@define-mixin mixinname {}&lt;/code&gt;
+and you include the mixin via &lt;code&gt;@mixin mixinname;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/hail2u/node-css-mqpacker&quot;&gt;PostCSS MediaQuery Packer&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This plugin merges identical media queries during compilation into CSS.&lt;/p&gt;
+
+&lt;h2 id=&quot;-css-basics&quot;&gt;&lt;a id=&quot;css-basics&quot;&gt;&lt;/a&gt; CSS Basics&lt;/h2&gt;
+
+&lt;p&gt;First and foremost, we make an attempt to adhere to the &lt;a href=&quot;http://make.wordpress.org/core/handbook/coding-standards/css/&quot;&gt;WordPress CSS coding standards&lt;/a&gt;.
+There is an exception to this rule, however…&lt;strong&gt;Property Ordering&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;-property-ordering&quot;&gt;&lt;a id=&quot;css-property-ordering&quot;&gt;&lt;/a&gt; Property ordering&lt;/h2&gt;
+
+&lt;p&gt;There are a few strategies for ordering CSS properties out in the wild. The approach we take is alphabetical ordering of properties.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Avoid&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+.thing {
+  color: #555;
+  border: 1px solid #ddd;
+  background: #eee;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  position: absolute;
+  top: 20px;
+  left: 10px;
+}
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Prefer&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+.thing {
+  background: #eee;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  color: #555;
+  left: 10px;
+  position: absolute;
+  top: 20px;
+}
+&lt;/pre&gt;
+
+&lt;h2 id=&quot;-specificity&quot;&gt;&lt;a id=&quot;css-specificity&quot;&gt;&lt;/a&gt; Specificity&lt;/h2&gt;
+
+&lt;p&gt;Be sure to use &lt;a href=&quot;http://csswizardry.com/2011/09/writing-efficient-css-selectors/&quot;&gt;efficient selectors&lt;/a&gt;.
+Classes have a nice balance between reusability and efficiency, so their use is preferred over other
+selectors if possible.&lt;/p&gt;
+
+&lt;h3 id=&quot;important&quot;&gt;!important&lt;/h3&gt;
+
+&lt;p&gt;As a general rule, don’t use &lt;code class=&quot;highlighter-rouge&quot;&gt;!important&lt;/code&gt; unless you absolutely must. Be prepared to justify its
+usage during the code review process.&lt;/p&gt;</content><author><name>Modern Tribe</name></author><summary type="html">PostCSS</summary></entry><entry><title type="html">Branching</title><link href="http://localhost:4000/git/branching/" rel="alternate" type="text/html" title="Branching" /><published>2017-08-28T00:00:00-04:00</published><updated>2017-08-28T00:00:00-04:00</updated><id>http://localhost:4000/git/branching</id><content type="html" xml:base="http://localhost:4000/git/branching/">&lt;h2 id=&quot;-git-flow&quot;&gt;&lt;a id=&quot;git-flow&quot;&gt;&lt;/a&gt; Git flow&lt;/h2&gt;
+
+&lt;h3 id=&quot;master-branch&quot;&gt;Master branch&lt;/h3&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch contains the public, currently released version of the plugin. At the end of a
+release cycle, release branches are merged into the master branch. The &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt;
+branch should generally not be committed to, except by the developer in charge of releasing the plugin.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; if you need to test something against the currently released version of the plugin, a
+simple way to switch to that version is by checking out the master branch. Just be sure to switch
+back to your working branch before you make any commits!&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;major-feature-branches&quot;&gt;Major feature branches&lt;/h3&gt;
+
+&lt;p&gt;Major feature branches are where we work on new development for our products. These branches act as
+a shared location for developers to Pull Request work specific to the feature being developed. Major
+feature branches should have a Milestone associated with them in GitHub that specifies the branch name.
+When a major feature is determined, it should be branched from the latest Tagged release and &lt;em&gt;all&lt;/em&gt;
+code for that feature should be Pull Requested into that branch rather than direct committed and pushed.&lt;/p&gt;
+
+&lt;p&gt;When major/maintenance releases are released, the developers that are leading the feature work
+are in charge of merging &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; into their respective feature branches.&lt;/p&gt;
+
+&lt;h3 id=&quot;major-release-branches&quot;&gt;Major release branches&lt;/h3&gt;
+
+&lt;p&gt;When one or more features are ready for release prep, a &lt;code class=&quot;highlighter-rouge&quot;&gt;release/x.y&lt;/code&gt; branch should be created from
+the latest tagged release and the feature branches should be Pull Requested into that release branch.&lt;/p&gt;
+
+&lt;h3 id=&quot;maintenance-release-branches&quot;&gt;Maintenance release branches&lt;/h3&gt;
+
+&lt;p&gt;While working on a maintenance release, most code should be developed in the corresponding release
+branch (&lt;code class=&quot;highlighter-rouge&quot;&gt;release/x.y.z&lt;/code&gt;). This should be considered the primary working branch during every
+maintenance release cycle.&lt;/p&gt;
+
+&lt;h3 id=&quot;other-branches&quot;&gt;Other branches&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; The following instructions are for internal use only, if you’re sending a pull request,
+it’ll already be in its own branch.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;If you find yourself assigned to a ticket you anticipate may need extreme QA effort, break other
+areas of the plugin, or has the potential (for any reason) not to be finished in a single release
+cycle, please create a branch off of develop, and do your work in there.&lt;/p&gt;
+
+&lt;p&gt;The naming convention for new branches should be as such - &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;feature|fix&amp;gt;/&amp;lt;ticket number&amp;gt;-&amp;lt;brief-description&amp;gt;&lt;/code&gt;. For example:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;feature/24343-activation-page&lt;/code&gt;
+or
+&lt;code class=&quot;highlighter-rouge&quot;&gt;fix/28363-list-view-eod-cutoff&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Please ensure that the prefix (“feature” or “bugfix”) corresponds to the issue tracker selected in
+the ticket.&lt;/p&gt;
+
+&lt;h2 id=&quot;-code-reviews&quot;&gt;&lt;a id=&quot;git-code-review&quot;&gt;&lt;/a&gt; Code reviews&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;All code that is intended to be merged to &lt;code class=&quot;highlighter-rouge&quot;&gt;develop&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt;, or a &lt;code class=&quot;highlighter-rouge&quot;&gt;release&lt;/code&gt; branch must first
+undergo code review.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Code reviews must be done by a core product engineer. (Barry, Gustavo, Matt, or Zach)&lt;/p&gt;
+
+&lt;p&gt;When an engineer has code ready for merging, they should create a pull request that includes a link
+back to the ticket in Modern Tribe’s Internal Central Tickets (“Central”).  If the request is coming
+from a 3rd party contributor, a Modern Tribe representative should create a ticket in Central to
+track this change and add a link in a comment on the pull request.  In Central, a reciprocal link
+should be added to link back to any pull requests associated with the ticket and the ticket status
+should be set to “Pending Code Review”.&lt;/p&gt;
+
+&lt;p&gt;Reviewers should consider the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Does this code meet &lt;a href=&quot;/&quot;&gt;our standards&lt;/a&gt;?&lt;/li&gt;
+  &lt;li&gt;Is the pull request against the correct branch?&lt;/li&gt;
+  &lt;li&gt;Does the solution make sense?&lt;/li&gt;
+  &lt;li&gt;Will this solution lead to other problems? (compatibility, performance, etc)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Once a reviewer has approved a pull request, they should leave a comment on the pull request and
+change the Central ticket status to “Pending QA”.  At this point it should undergo QA.  Assuming QA
+passes, the status on the ticket should be changed to “Pending Merge”.  Once the original requestor
+(or Modern Tribe representative) gets approval, they should merge the code and change the status in
+the ticket to “Pending Smoketest” or “Pending Release” as appropriate.&lt;/p&gt;
+
+&lt;h3 id=&quot;-labels-for-pull-requests&quot;&gt;&lt;a id=&quot;git-labels&quot;&gt;&lt;/a&gt; Labels for pull requests&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Label&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Who&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;code review&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;The PR is awaiting code review.&lt;/td&gt;
+      &lt;td&gt;Added by the pull request submitter. Removed by code reviewer.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;in-qa&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;The code was approved and now is ready to be QA’d&lt;/td&gt;
+      &lt;td&gt;Added by the code reviewer. Removed when &lt;code class=&quot;highlighter-rouge&quot;&gt;merge&lt;/code&gt; label is added or if fails QA.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;merge&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Work on the ticket has been reviewed and tested.  Go ahead and merge!&lt;/td&gt;
+      &lt;td&gt;Added by the person who did the QA.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;question&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;The PR has a question that needs lovin’. Work is blocked until the question has been answered.&lt;/td&gt;
+      &lt;td&gt;Typically assigned to the person that can answer the question. Typically removed by the person who answers the question.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;hold&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Don’t move forward with the next status. See comments for details.&lt;/td&gt;
+      &lt;td&gt;Typically added by a PM or lead dev. Confirm with Matt, Rob, or Zach before removing.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bug&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;There is a bug in the code submitted in this PR.&lt;/td&gt;
+      &lt;td&gt;Added by the code reviewer. Removed once the bug is resolved.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;enhance&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;There is a recommended enhancement to the code.&lt;/td&gt;
+      &lt;td&gt;Added by the code reviewer.  Removed if the enhancement is done or it is agreed that it should not be done.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Modern Tribe</name></author><summary type="html">Git flow</summary></entry></feed>
