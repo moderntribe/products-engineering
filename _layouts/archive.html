@@ -27,7 +27,7 @@ $( document ).ready( function() {
 		return;
 	}
 
-	var category = window.location.hash.replace( '#', '' );
+	var category = window.location.hash.replace( '#', '' ).replace( '/', '' );
 	var $categories = $( '.archive-category' ).hide();
 	var $active = $categories.filter( '.archive-category-' + category );
 
