@@ -39,6 +39,8 @@ $( document ).ready( function() {
 		return;
 	}
 
+	document.title = document.title.replace( '%s', $active.find( 'h2' ).text() );
+
 	$active.show();
 } );
 </script>
