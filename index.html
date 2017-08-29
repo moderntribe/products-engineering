@@ -1,31 +1,30 @@
 ---
-layout: front
-tags: front
 ---
 
-## Pull requests
+<section class="categories">
+	{% assign categories = site.categories | sort %}
+	{% for category in categories %}
+		{% assign name = category[0] %}
+		{% assign posts = category[1] %}
+		{% assign size = posts | size %}
+		<section class="category">
+			<h3>
+				<a href="{{ site.baseurl }}/category/{{ name | slugify }}/">{{ name | replace: "-", " " }}</a>
+			</h3>
 
-We love pull requests and merging code from the community! We will thoughtfully review your code and work with you to get it primed and ready for release.  There are a few things that are worth knowing about that process:
-
-1. **Please fork the `develop` and submit your pull requests against that branch.** This is the branch with the latest code we are working on. Pull requests to the master branch can't be merged automatically and may be closed.
-
-2. **We love details!** When submitting pull requests, be as detailed as you can in describing what you are fixing and why - it will help expedite the review process!
-
-3. **Don't be scared of our friendly tr1b0t!** We use a bot to codesniff pull requests and alert Modern Tribe developers when we need to create/associate the PR with a ticket in our internal ticket tracking system. Feel free to fix codesniffer issues, but don't sweat the ticket notice :)
-
-4. **When developing apply `define('SCRIPT_DEBUG', true)` in your wp-config.php**. This will load unminified versions of our js assets and give you some debugging information in your dev console.
-
-5. **Familiarize yourself with the dev folder, its readme and run the appropriate Grunt tasks before committing**. JS minification, CSS minification, debug code removal, linting and more should be performed as you develop. Its all done with the grunt tasks defined in the dev folder.
-
-## Some other items of note
-
-1. **Please submit support issues and bug reports to designated locations.** Bug reports can be made at [WordPress.org](http://wordpress.org/support/plugin/the-events-calendar). If you have purchased any of our premium add-ons, you may create an account and submit support requests in our [Support Forums](http://m.tri.be/kj).
-
-2. **Lastly: We don't recommend using the develop branch on production sites!** You’re welcome to give it a shot, but it is totally unrecommended - and we cannot provide any support if things go wrong. You’re on your own if you run develop code on your site.
-
-That's all! please have fun and code responsibly :)
-
-## Further Information
-
-* **Support**: https://theeventscalendar.com/support
-* **Documentation**: https://theeventscalendar.com/functions/
+			<ul class="category-post-list">
+				{% assign items = posts | sort: "title" %}
+				{% for item in items limit: 4 %}
+					<li>
+						<a href="{{ site.baseurl }}{{ item.url }}">
+							<i class="fa {{ item.icon }}" aria-hidden="true"></i> {{ item.title }}
+						</a>
+					</li>
+				{% endfor %}
+				{% if size > 4 %}
+					<li><a href="{{ site.baseurl }}/category/{{ name | slugify }}/">{{ size | minus: 4 }} more...</a></li>
+				{% endif %}
+			</ul>
+		</section>
+	{% endfor %}
+</section>

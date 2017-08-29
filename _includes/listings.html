@@ -1,0 +1,15 @@
+<ul class="listing">
+	{% for item in include.listings %}
+		<li {% if item.url == page.url %}class="active"{% endif %}>
+			<a href="{{ site.baseurl }}{{ item.url }}">
+				<div class="icon"><i class="fa {{ item.icon }}" aria-hidden="true"></i></div>
+				<article>
+					<div>
+						<h3>{% if include.numbered %}{{ forloop.index }}. {% endif %}{{ item.title }}</h3>
+						<p class="description">{{ item.description }}</p>
+					</div>
+				</article>
+			</a>
+		</li>
+	{% endfor %}
+</ul>
