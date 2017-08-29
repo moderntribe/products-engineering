@@ -22,7 +22,7 @@
 					</li>
 				{% endfor %}
 				{% if size > 4 %}
-					<li><a href="{{ site.baseurl }}/category/{{ name | slugify }}/">{{ size | minus: 4 }} more...</a></li>
+					<li><a href="{{ site.baseurl }}/category#{{ name | slugify }}">{{ size | minus: 4 }} more...</a></li>
 				{% endif %}
 			</ul>
 		</section>
