@@ -1,0 +1,56 @@
+# ----
+# Site
+
+title: Products Engineering
+url: "http://moderntribe.github.io/products-engineering/"
+baseurl: "/products-engineering"
+google_analytics_key:
+disqus_shortname:
+newsletter_action:
+
+# Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
+logo: /siteicon.png
+description: Modern Tribe knowledge base for Developers
+author:
+  name: Modern Tribe
+  email:
+  twitter: moderntribeinc
+
+# -----
+# Build
+
+permalink: /:categories/:title/
+
+gems:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENCE
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+  -
+    scope:
+      type: "posts"
+    values:
+      layout: "post"
+      comments: true
+  -
+    scope:
+      type: "sets"
+    values:
+      _hide_content: true
+  -
+    scope:
+      path: "index.html"
+    values:
+      body_class: "show_hero_search"
