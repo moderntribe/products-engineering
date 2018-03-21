@@ -21,8 +21,13 @@
 						</a>
 					</li>
 				{% endfor %}
+<<<<<<< HEAD
 				{% if size > 5 %}
 					<li><a href="{{ site.baseurl }}/category/{{ name | slugify }}/">{{ size | minus: 5 }} more...</a></li>
+=======
+				{% if size > 4 %}
+					<li><a href="{{ site.baseurl }}/category#{{ name | slugify }}">{{ size | minus: 4 }} more...</a></li>
+>>>>>>> 6dabb2eb06a29bbdef6f59e81328b65bba446c0a
 				{% endif %}
 			</ul>
 		</section>
