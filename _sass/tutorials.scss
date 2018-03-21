@@ -82,7 +82,7 @@
 		padding: 0 20px 0 0;
 		position: absolute;
 		top: 0;
-		left: -120px;
+		left: -240px;
 		width: 200px;
 
 		@media #{$bigger-screen} {
@@ -118,20 +118,29 @@
 			display: block;
 			-webkit-transition: transform .2s ease;
 			line-height: 1.3em;
+			position: relative;
+
+
+			&:before {
+				@include fa-icon();
+				position: absolute;
+				left: -22px;
+				top: 6px;
+				color: #aaa;
+				font-size: 16px;
+			}
 
 			&.active {
 				color: $link-color;
-				transform: translateX(5px);
+				&:before {
+					content: $fa-var-play;
+				}
 			}
 		}
 	}
 
 	.tutorial-content {
 		width: 100%;
-
-		@media #{$bigger-screen} {
-			margin-left: 105px;
-		}
 	}
 }
 

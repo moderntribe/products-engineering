@@ -6,9 +6,8 @@ categories:
 description: Git strategy for Branching and Pull Requests
 icon: fa-file-text-o
 ---
-## <a id="git-flow"></a> Git flow
 
-### Master branch
+## Master branch
 
 The `master` branch contains the public, currently released version of the plugin. At the end of a
 release cycle, release branches are merged into the master branch. The `master`
@@ -18,7 +17,7 @@ _**NOTE:** if you need to test something against the currently released version 
 simple way to switch to that version is by checking out the master branch. Just be sure to switch
 back to your working branch before you make any commits!_
 
-### Major feature branches
+## Bucket branches
 
 Major feature branches are where we work on new development for our products. These branches act as
 a shared location for developers to Pull Request work specific to the feature being developed. Major
@@ -29,18 +28,18 @@ code for that feature should be Pull Requested into that branch rather than dire
 When major/maintenance releases are released, the developers that are leading the feature work
 are in charge of merging `master` into their respective feature branches.
 
-### Major release branches
+## Major releases
 
-When one or more features are ready for release prep, a `release/x.y` branch should be created from
+When one or more features are ready for release prep, a `release/FYY.XX` branch should be created from
 the latest tagged release and the feature branches should be Pull Requested into that release branch.
 
-### Maintenance release branches
+## Maintenance releases
 
 While working on a maintenance release, most code should be developed in the corresponding release
-branch (`release/x.y.z`). This should be considered the primary working branch during every
+branch (`release/MYY.XX`). This should be considered the primary working branch during every
 maintenance release cycle.
 
-### Other branches
+## Ticket branches
 
 _**NOTE:** The following instructions are for internal use only, if you're sending a pull request,
 it'll already be in its own branch._
@@ -49,21 +48,25 @@ If you find yourself assigned to a ticket you anticipate may need extreme QA eff
 areas of the plugin, or has the potential (for any reason) not to be finished in a single release
 cycle, please create a branch off of develop, and do your work in there.
 
-The naming convention for new branches should be as such - `<feature|fix>/<ticket number>-<brief-description>`. For example:
+The naming convention for new branches should be as such
+```
+<feature|fix>/<ticket number>-<brief-description>
+```
 
-`feature/24343-activation-page`
-or
-`fix/28363-list-view-eod-cutoff`
+**For example:**
+- `feature/24343-activation-page`
+- `fix/28363-list-view-eod-cutoff`
+- `hotfix/very-minor-text-change`
 
-Please ensure that the prefix (“feature” or “bugfix”) corresponds to the issue tracker selected in
+Please ensure that the prefix (_“feature”_ or _“fix”_) corresponds to the issue tracker selected in
 the ticket.
 
-## <a id="git-code-review"></a> Code reviews
+## Code reviews
 
-**All code that is intended to be merged to `develop`, `master`, or a `release` branch must first
+**All code that is intended to be merged to `master`, `release` or `bucket` branch must first
 undergo code review.**
 
-Code reviews must be done by a core product engineer. (Barry, Gustavo, Matt, or Zach)
+Code reviews must be done by a core product engineer.
 
 When an engineer has code ready for merging, they should create a pull request that includes a link
 back to the ticket in Modern Tribe's Internal Central Tickets ("Central").  If the request is coming
@@ -86,11 +89,11 @@ passes, the status on the ticket should be changed to “Pending Merge”.  Once
 the ticket to “Pending Smoketest” or “Pending Release” as appropriate.
 
 
-### <a id="git-labels"></a> Labels for pull requests
+### Labels for pull requests
 
 | Label | Description | Who |
 | ----- | ----------- | --- |
-| `code review` | The PR is awaiting code review. | Added by the pull request submitter. Removed by code reviewer. |
+| `code-review` | The PR is awaiting code review. | Added by the pull request submitter. Removed by code reviewer. |
 | `in-qa` | The code was approved and now is ready to be QA’d | Added by the code reviewer. Removed when `merge` label is added or if fails QA. |
 | `merge` | Work on the ticket has been reviewed and tested.  Go ahead and merge! | Added by the person who did the QA. |
 | `question` | The PR has a question that needs lovin'. Work is blocked until the question has been answered. | Typically assigned to the person that can answer the question. Typically removed by the person who answers the question. |

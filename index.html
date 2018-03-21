@@ -14,15 +14,15 @@
 
 			<ul class="category-post-list">
 				{% assign items = posts | sort: "title" %}
-				{% for item in items limit: 4 %}
+				{% for item in items limit: 5 %}
 					<li>
 						<a href="{{ site.baseurl }}{{ item.url }}">
 							<i class="fa {{ item.icon }}" aria-hidden="true"></i> {{ item.title }}
 						</a>
 					</li>
 				{% endfor %}
-				{% if size > 4 %}
-					<li><a href="{{ site.baseurl }}/category/{{ name | slugify }}/">{{ size | minus: 4 }} more...</a></li>
+				{% if size > 5 %}
+					<li><a href="{{ site.baseurl }}/category/{{ name | slugify }}/">{{ size | minus: 5 }} more...</a></li>
 				{% endif %}
 			</ul>
 		</section>

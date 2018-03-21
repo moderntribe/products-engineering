@@ -7,6 +7,7 @@ baseurl: "/products-engineering"
 google_analytics_key:
 disqus_shortname:
 newsletter_action:
+highlighter: rouge
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
 logo: /siteicon.png
