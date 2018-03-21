@@ -1,16 +1,16 @@
 ---
 date: 2017-08-28
 title: JavaScript
-categories:
-  - Code-Standards
 description: JavaScript Code Standards
 icon: fa-file-text-o
+categories:
+  - Code-Standards
 ---
-## <a id="js-basics"></a> The Basics
+## The Basics
 
 First and foremost, we make an attempt to adhere to the [WordPress JS coding standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/javascript/).
 
-## <a id="js-style"></a> Code style
+## Code style
 
 All javascript should be well documented. Functions, namespaces should adhere to the jsdoc 3 standard, [available here](http://usejsdoc.org/about-getting-started.html).
 
@@ -138,7 +138,7 @@ Utility functions, state, tests and options for the main plugins should be store
 If functions or portions of functionality move between plugins, make sure all associated js code
 moves to that new area with them.
 
-## <a id="js-event-namespacing"></a> Event namespacing
+## Event namespacing
 
 To promote flexible event handling within jQuery, [namespacing events](https://api.jquery.com/event.namespace/) is preferred over prefixing custom event names.
 

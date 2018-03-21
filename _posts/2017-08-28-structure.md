@@ -3,6 +3,7 @@ date: 2017-08-28
 title: Structure
 categories:
   - Guidelines
+
 description: Plugin file Structure
 icon: fa-file-text-o
 ---
@@ -17,7 +18,7 @@ It should also be rare that you need to create a new file. Note that file naming
 
 It’ll be rare that new directories will need to be created, but please adhere to the following structure:
 
-<pre>
+```
 plugin-directory/
   lang/                 ← translations go here
   src/                  ← all new code will go in here
@@ -34,4 +35,4 @@ plugin-directory/
     views/              ← plugin view files
   tests/                ← unit tests go here
   vendor/               ← 3rd party libraries should be added here
-</pre>
+```

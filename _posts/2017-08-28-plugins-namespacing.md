@@ -3,6 +3,7 @@ date: 2017-08-28
 title: Plugin Namespacing
 categories:
   - Guidelines
+
 description: Plugin conventions for Namespaces, Assets and Classes
 icon: fa-file-text-o
 ---
@@ -28,7 +29,8 @@ _Despite being embedded within the-events-calendar, Event Aggregator deserves (a
 
 ## Hook examples
 
-<pre>
+```php
+<?php
 // hook in tribe common for firing the bacon action
 do_action( 'tribe_bacon' );
 
@@ -37,11 +39,12 @@ do_action( 'tribe_events_potato' );
 
 // hook in the Event Aggregator section of TEC for firing the squid action
 do_action( 'tribe_aggregator_squid' );
-</pre>
+```
 
 ## Container slug examples
 
-<pre>
+```php
+<?php
 // declare singleton for the panda class in tribe-common, then call it
 tribe_singleton( 'common.panda', 'Tribe__Panda' );
 tribe( 'common.panda' );
@@ -53,7 +56,7 @@ tribe( 'tec.admin.squirrel' );
 // declare singleton for the baboon class in the Event Aggregator code within TEC, then call it
 tribe_singleton( 'aggregator.baboon', 'Tribe__Events__Aggregator__Baboon' );
 tribe( 'aggregator.baboon' );
-</pre>
+```
 
 ## Style and script slugs
 
