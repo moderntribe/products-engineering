@@ -32,5 +32,5 @@ Feature release may be a patch version too.
 
 ## Hotfix
 
-Hotfix version bump (`x.y.x.W`) will only happen when during a Feature or Maintenance Release unexpected breaking changes
-were introduced or a important security patch needs to be addressed.
+Hotfix version bump (`x.y.x.W`) will only happen when during a Feature or Maintenance Release, unexpected breaking changes
+were introduced or an important security patch needs to be addressed.
