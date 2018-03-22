@@ -1,5 +1,5 @@
 ---
-date: 2018-03-21
+date: 2018-03-22
 title: Plugin Versions
 description: How to change Plugin Versions at Modern Tribe
 icon: fa-file-text-o
