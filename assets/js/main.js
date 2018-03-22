@@ -41,38 +41,35 @@ jQuery(function() {
 	}
 
 	function setActiveSidebarLink() {
-		$('.sidebar a').removeClass('active');
+		$( '.sidebar a' ).removeClass( 'active' );
 		var $closest = getClosestHeader();
-		$closest.addClass('active');
+		$closest.addClass( 'active' );
 	}
+
 	configureSidebar();
 
-	var href = $sidebar.find('a').first().attr("href");
-	if (href !== undefined && href.charAt(0) === "#") {
-		$(window).on("scroll", function() {
-			setSidebar();
-			throttle(function(){
-				setActiveSidebarLink();
-			}, 100)();
-		}).trigger( 'scroll' );
+	var href = $sidebar.find( 'a' ).first().attr( 'href' );
+	if ( href !== undefined && href.charAt( 0 ) === "#" ) {
+		$( window ).on( 'scroll', _.debounce( setActiveSidebarLink, 100) );
+		$( window ).on( 'scroll', setSidebar );
 	}
 
-	var headings = $( '.tutorial-content' ).find( "h2[id], h3[id]" );
-	for (var i = 0; i < headings.length; i++) {
+	var headings = $( '.tutorial-content' ).find( 'h2[id], h3[id]' );
+	for ( var i = 0; i < headings.length; i++ ) {
 		var anchorLink = document.createElement("a");
-		anchorLink.innerText = "#";
-		anchorLink.href = "#" + headings[i].id;
-		anchorLink.classList.add("header-link");
+		anchorLink.innerText = '#';
+		anchorLink.href = '#' + headings[ i ].id;
+		anchorLink.classList.add( 'header-link' );
 
-		headings[i].append(anchorLink);
+		headings[ i ].append( anchorLink );
 	}
 
 });
 
 function getClosestHeader() {
 	var $links = $( '.sidebar a' );
-	var $selected = $links.first();
-	var $content = $(".tutorial-content");
+	var $selected = $( '' );
+	var $content = $( '.tutorial-content' );
 
 	var contentHeight = $content.offset().top + $content.height();
 	var top = window.scrollY;
@@ -81,7 +78,7 @@ function getClosestHeader() {
 		return $selected;
 	}
 
-	if ( top + window.innerHeight >= contentHeight ) {
+	if ( top + ( window.innerHeight / 6 ) >= contentHeight ) {
 		return $links.last();
 	}
 
@@ -105,23 +102,8 @@ function getClosestHeader() {
 			return;
 		}
 
-		$selected =  $link;
+		$selected = $link;
 	} );
 
 	return $selected;
-}
-
-function throttle (callback, limit) {
-
-	var wait = false;
-	return function () {
-		if (!wait) {
-
-			callback.apply(null, arguments);
-			wait = true;
-			setTimeout(function () {
-				wait = false;
-			}, limit);
-		}
-	};
 }
