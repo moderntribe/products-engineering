@@ -1,37 +1,48 @@
 ---
 date: 2017-08-28
 title: Branching
+description: Git strategy for Branching on Plugins for Modern Tribe
+icon: fa-file-text-o
 categories:
   - Git
-description: Git strategy for Branching and Pull Requests
-icon: fa-file-text-o
 ---
 
 ## Master branch
 
-The `master` branch contains the public, currently released version of the plugin. At the end of a
-release cycle, release branches are merged into the master branch. The `master`
-branch should generally not be committed to, except by the developer in charge of releasing the plugin.
+The `master` branch contains the public and stable, currently released version of the plugin. At the end of a
+release cycle, release branches are merged into the master branch. The `master` branch should
+generally not be committed to, except by the developer in charge of releasing the plugin.
 
 _**NOTE:** if you need to test something against the currently released version of the plugin, a
-simple way to switch to that version is by checking out the master branch. Just be sure to switch
+simple way to switch to that version is by checking out the `master` branch. Just be sure to switch
 back to your working branch before you make any commits!_
 
 ## Bucket branches
 
-Major feature branches are where we work on new development for our products. These branches act as
-a shared location for developers to Pull Request work specific to the feature being developed. Major
-feature branches should have a Milestone associated with them in GitHub that specifies the branch name.
-When a major feature is determined, it should be branched from the latest Tagged release and _all_
-code for that feature should be Pull Requested into that branch rather than direct committed and pushed.
+We are developing our features in what we call bucket branches, they allow us to work on the major feature
+changes in separate and parallel to other development.
 
-When major/maintenance releases are released, the developers that are leading the feature work
-are in charge of merging `master` into their respective feature branches.
+These branches should have a Milestone associated with them in GitHub that specifies the branch name, via
+it's description. That will allow the bot to sync Tribe Common with the correct version. _E.g.:_
 
-## Major releases
+![Bucket Milestone Edit]({{ "/assets/images/posts/branches/bucket-milestone.png" | absolute_url }})
 
-When one or more features are ready for release prep, a `release/FYY.XX` branch should be created from
-the latest tagged release and the feature branches should be Pull Requested into that release branch.
+When a bucket is determined, it should be branched from the latest Tagged release and _all_ code for that
+feature should be Pull Requested into that branch rather than direct committed and pushed. See the article
+about [plugin versions]({{ site.baseurl }}/guidelines/plugin-versions) to see how to what file changes are required.
+
+Eventually every bucket branch will become a Feature release once we get into smoketesting phase.
+
+On feature/maintenance releases, the developers that are leading the feature work are in charge of merging
+`master` into their respective feature branches.
+
+## Feature releases
+
+Once a bucket branch reaches the Smoketest phase we need to branch out of that `bucket/name` into `release/FYY.XX`.
+
+Important to note that version numbers on this stage of the release a version change might be noted with a release
+candidate pre-release tag as `x.y.z-RC`, which denotes that we are publicly shipping this to customers. See more
+on [plugin versions]({{ site.baseurl }}/guidelines/plugin-versions).
 
 ## Maintenance releases
 
@@ -60,43 +71,3 @@ The naming convention for new branches should be as such
 
 Please ensure that the prefix (_“feature”_ or _“fix”_) corresponds to the issue tracker selected in
 the ticket.
-
-## Code reviews
-
-**All code that is intended to be merged to `master`, `release` or `bucket` branch must first
-undergo code review.**
-
-Code reviews must be done by a core product engineer.
-
-When an engineer has code ready for merging, they should create a pull request that includes a link
-back to the ticket in Modern Tribe's Internal Central Tickets ("Central").  If the request is coming
-from a 3rd party contributor, a Modern Tribe representative should create a ticket in Central to
-track this change and add a link in a comment on the pull request.  In Central, a reciprocal link
-should be added to link back to any pull requests associated with the ticket and the ticket status
-should be set to “Pending Code Review”.
-
-Reviewers should consider the following:
-
-* Does this code meet [our standards](/)?
-* Is the pull request against the correct branch?
-* Does the solution make sense?
-* Will this solution lead to other problems? (compatibility, performance, etc)
-
-Once a reviewer has approved a pull request, they should leave a comment on the pull request and
-change the Central ticket status to “Pending QA”.  At this point it should undergo QA.  Assuming QA
-passes, the status on the ticket should be changed to “Pending Merge”.  Once the original requestor
-(or Modern Tribe representative) gets approval, they should merge the code and change the status in
-the ticket to “Pending Smoketest” or “Pending Release” as appropriate.
-
-
-### Labels for pull requests
-
-| Label | Description | Who |
-| ----- | ----------- | --- |
-| `code-review` | The PR is awaiting code review. | Added by the pull request submitter. Removed by code reviewer. |
-| `in-qa` | The code was approved and now is ready to be QA’d | Added by the code reviewer. Removed when `merge` label is added or if fails QA. |
-| `merge` | Work on the ticket has been reviewed and tested.  Go ahead and merge! | Added by the person who did the QA. |
-| `question` | The PR has a question that needs lovin'. Work is blocked until the question has been answered. | Typically assigned to the person that can answer the question. Typically removed by the person who answers the question. |
-| `hold` | Don't move forward with the next status. See comments for details. | Typically added by a PM or lead dev. Confirm with Matt, Rob, or Zach before removing. |
-| `bug` | There is a bug in the code submitted in this PR. | Added by the code reviewer. Removed once the bug is resolved. |
-| `enhance` | There is a recommended enhancement to the code. | Added by the code reviewer.  Removed if the enhancement is done or it is agreed that it should not be done. |

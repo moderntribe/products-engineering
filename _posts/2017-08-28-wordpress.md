@@ -1,13 +1,13 @@
 ---
 date: 2017-08-28
 title: WordPress
-categories:
-  - Code-Standards
 description: WordPress Code Standards
 icon: fa-file-text-o
+categories:
+  - Code-Standards
 ---
 
-### <a id="php-wordpress-hooks"></a>Hooks vs constants
+### Hooks vs constants
 
 Occasionally we may have a request or an idea for a setting that could be useful to advanced users, but that isn’t something we’d want to expose to everyone in the plugin’s settings pages. In those cases, we’ll usually want to create a “hidden” setting that is available for users to set the value of via a hook or a constant.
 
@@ -22,7 +22,7 @@ _**NOTE:** if a Modern Tribe developer would like to suggest a constant be used,
 #### Hooking from Within Objects
 Very often an object will need to add a number of actions and filters of its own. As a rule of thumb, any `add_action()` or `add_filter()` calls should be contained inside a `hook()` method and should **not** be setup from within the constructor.
 
-### <a id="php-wordpress-deprecation"></a>How to deprecate
+### How to deprecate
 
 When a global function or hook needs to be renamed or taken out of use, please take the following steps:
 

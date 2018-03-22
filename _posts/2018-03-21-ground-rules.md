@@ -1,11 +1,11 @@
 ---
 date: 2018-03-21
 title: Ground Rules
+description: Ground Rules for Coding at Modern Tribe
+icon: fa-file-text-o
 categories:
   - Guidelines
 
-description: Ground Rules for Coding at Modern Tribe
-icon: fa-file-text-o
 ---
 In these pages we’re going to cover a set of coding guidelines that aim to make Modern Tribe’s plugin
 code more efficient, easier to read and understand, and more organized.
