@@ -9,18 +9,22 @@ categories:
 ---
 
 Service providers are the central piece of each one of the modules used in our plugins. When introducing a new
-feature or editing a existing module _(Aggregator)_ we are looking to create or edit a Service Provider to do
-the bootstraping of the required services.
+feature or editing a existing module we are looking to create or edit a Service Provider to do the bootstraping
+of the required singletons, bindings, middleware, assets and Hooks.
 
-The general meaning of this relates to the registering of singletons, bindings, middleware, assets and Hooks.
+Modules are a group of classes that are providing or adding support to a given functionality, such as Aggregator.
 
-They are also a very good way to allow users to toggle on and off a specific part of a plugin by using one simple
+They also add a very good way to allow users to toggle on and off a specific part of a plugin by using one simple
 filter with `__return_false`.
+
+Service Providers should completely encapsulate a set of functionalities that can be then removed or replaced with
+another Service Provider. As a rule of thumb if you start grouping classes and functions in a sub-folder that's a
+good indication all those classes and functions should be bootstrapped/managed by the same service provider.
 
 ## Di52
 
 Since we are bound to version 5.2 of PHP on WordPress, Luca Tumedei created a [dependency injection container](https://github.com/lucatume/di52) heavily
-inspired by Laravel IOC and Pimple, that we are using on all of our products as the bases for loading Singletons and
+inspired by Laravel IOC and Pimple, that we are using on all of our products as the basis for loading Singletons and
 modules.
 
 Below you will find a list of some of the global functions exposed by our APIs to allow a simple registering of a few
@@ -31,6 +35,9 @@ things into our Container for Tribe Plugins.
 Loading any classes registred into our Container is simplified by using the `tribe()` global function, which will map
 to `tad_DI52_Container::make()`, but specific to our global Tribe Container.
 
+Calling the `tribe()` function with no arguments will return the container itself. That is an instance of the `Tribe__Container`
+class extending the `tad_DI52_Container` one: any method available on **di52** will be available on that instance.
+
 _Example_
 ```php
 $records = tribe( 'aggregator.records' )->get_latest_records();
@@ -38,23 +45,23 @@ $records = tribe( 'aggregator.records' )->get_latest_records();
 
 ## tribe_singleton
 
-On Plugins most of the classes are sinlgetons that will initiallize some piece of functionality on WordPress, by setting
-some Assets and hooking some of it's methods to actions and filters.
+In Plugins most of the classes are singletons that will initialize some piece of functionality in WordPress, by setting
+some Assets and hooking some of its methods to actions and filters.
 
 **Register Singleton using Strings**
 ```php
 <?php
 tribe_singleton( 'aggregator.records', 'Tribe__Events__Aggregator__Records', array( 'hook' ) )
 ```
-On this example, we will create a new instance of `Tribe__Events__Aggregator__Records` when `tribe( 'aggregator.records' )`
-is called and call the method `hook` from that class. Note that `hook` will only be called once the `tribe()` is called.
+In this example, we will create a new instance of `Tribe__Events__Aggregator__Records` when `tribe( 'aggregator.records' )`
+is called and call the method `hook` the registered class. Note that `hook` will only be called once the `tribe()` is called.
 
 **Register Singleton with Setup methods**
 ```php
 <?php
 tribe_singleton( 'aggregator.records', 'Tribe__Events__Aggregator__Records', array( 'hook', 'assets' ) )
 ```
-On this example, we will call the methods `hook` and `assets` from that class. Note that setup methods will only be called
+In this example, we will call the methods `hook` and `assets` from that class. Note that setup methods will only be called
 once the `tribe()` is called.
 
 **Register Singleton with instance of Class**
@@ -62,7 +69,7 @@ once the `tribe()` is called.
 <?php
 tribe_singleton( 'aggregator.records', new Tribe__Events__Aggregator__Records )
 ```
-On this example, we will save an instance of `Tribe__Events__Aggregator__Records` into the `aggregator.records` key of the
+In this example, we will save an instance of `Tribe__Events__Aggregator__Records` into the `aggregator.records` key of the
 container. Avoid using this method unless you have a specific reason to be creating the instance before it gets called.
 
 **Register Singleton with setup function**
@@ -77,7 +84,7 @@ public function setup_records() {
 	return new Tribe__Events__Aggregator__Records( $backend_engine );
 }
 ```
-On this example we are creating a more complex class that requires some parameters to be passed when creating the instance.
+In this example we are creating a more complex class that requires some parameters to be passed when creating the instance.
 
 ## tribe_callback
 
@@ -112,7 +119,7 @@ This has limited usage but it makes overwriting a given template or filter on th
 
 ## tribe_register_provider
 
-When loading more complex modules or features we want to isolate the loading of all it's components by create a Service Provider
+When loading more complex modules or features we want to isolate the loading of all its components by creating a Service Provider
 class and passing it to this method.
 
 ```php
@@ -122,10 +129,10 @@ tribe_register_provider( 'Tribe__Events__Pro__Series__Service_Provider' );
 
 ### Example of Class
 
-Below you will find an extacted piece of the code from the Service Provider created for Series on Events Pro,
-it should give you a bunch of examples to create your own.
+Below you will find an extracted piece of the code from the Service Provider created for Series on Events Pro,
+this can serve as a guide to creating your own.
 
-On this example we are not registering any Assets, but it's a good idea to either call the `tribe_asset` methods
+In this example we are not registering any Assets, but it's a good idea to either call the `tribe_asset` methods
 from this class or create a another class and use the provider to set it up.
 
 ```php
@@ -136,13 +143,13 @@ class Tribe__Events__Pro__Series__Service_Provider
 	 * Binds and sets up implementations.
 	 */
 	public function register() {
-		// Registering with the instance of a class
+		// Registering the instance of a class
 		$this->container->singleton(
 			'pro.series',
 			new Tribe__Events__Pro__Series()
 		);
 
-		// Register with a method from the current class
+		// Register a method from the current class
 		$this->container->singleton(
 			'pro.series.template',
 			array( $this, 'build_template' )
@@ -155,7 +162,7 @@ class Tribe__Events__Pro__Series__Service_Provider
 			array( 'hook' )
 		);
 
-		// A Class that is not an Singleton
+		// A class that is not an Singleton
 		$this->container->bind( 'pro.series.instance-engine' );
 	}
 
@@ -180,7 +187,7 @@ class Tribe__Events__Pro__Series__Service_Provider
 	/**
 	 * Builds the Template Class
 	 *
-	 * Work-around lack of closures in PHP 5.2
+	 * Work-around for lack of closures in PHP 5.2
 	 *
 	 * @since  TBD
 	 *
