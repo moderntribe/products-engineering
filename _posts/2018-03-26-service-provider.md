@@ -155,7 +155,7 @@ class Tribe__Events__Pro__Series__Service_Provider
 			array( $this, 'build_template' )
 		);
 
-		// Passing the name of the class as a string and call a method when creating the instance for the first time
+		// Passing the name of the class as a string then call a method when creating the instance for the first time
 		$this->container->singleton(
 			'pro.series.admin-page',
 			'Tribe__Events__Pro__Series__Admin_Page',
@@ -167,7 +167,7 @@ class Tribe__Events__Pro__Series__Service_Provider
 	}
 
 	/**
-	 * Any hooking any class needs happen here.
+	 * Hooking for any registered classes needs to happen here
 	 *
 	 * In place of delegating the hooking responsibility to the single classes they are all hooked here.
 	 */
