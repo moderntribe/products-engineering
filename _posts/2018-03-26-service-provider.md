@@ -12,7 +12,7 @@ Service providers are the central piece of each one of the modules used in our p
 feature or editing a existing module we are looking to create or edit a Service Provider to do the bootstraping
 of the required singletons, bindings, middleware, assets and Hooks.
 
-Modules are a group of classes that are providing or adding support to a given functionality, such as Aggregator.
+Modules are a group of classes that provide or add support to a given functionality, such as Aggregator.
 
 They also add a very good way to allow users to toggle on and off a specific part of a plugin by using one simple
 filter with `__return_false`.
@@ -36,7 +36,7 @@ Loading any classes registred into our Container is simplified by using the `tri
 to `tad_DI52_Container::make()`, but specific to our global Tribe Container.
 
 Calling the `tribe()` function with no arguments will return the container itself. That is an instance of the `Tribe__Container`
-class extending the `tad_DI52_Container` one: any method available on **di52** will be available on that instance.
+class extending the `tad_DI52_Container` one: any method available on **DI52** will be available on that instance.
 
 _Example_
 ```php
@@ -53,15 +53,15 @@ some Assets and hooking some of its methods to actions and filters.
 <?php
 tribe_singleton( 'aggregator.records', 'Tribe__Events__Aggregator__Records', array( 'hook' ) )
 ```
-In this example, we will create a new instance of `Tribe__Events__Aggregator__Records` when `tribe( 'aggregator.records' )`
-is called and call the method `hook` the registered class. Note that `hook` will only be called once the `tribe()` is called.
+In this example, we create a new instance of `Tribe__Events__Aggregator__Records` when `tribe( 'aggregator.records' )`
+is called and call the method `hook` from the registered class. Note that `hook` will only be called once the `tribe()` is called.
 
 **Register Singleton with Setup methods**
 ```php
 <?php
 tribe_singleton( 'aggregator.records', 'Tribe__Events__Aggregator__Records', array( 'hook', 'assets' ) )
 ```
-In this example, we will call the methods `hook` and `assets` from that class. Note that setup methods will only be called
+In this example, we call the methods `hook` and `assets` from that class. Note that setup methods will only be called
 once the `tribe()` is called.
 
 **Register Singleton with instance of Class**
@@ -75,10 +75,10 @@ container. Avoid using this method unless you have a specific reason to be creat
 **Register Singleton with setup function**
 ```php
 <?php
-// At the Loading
+// On load
 tribe_singleton( 'aggregator.records', array( $this, 'setup_records' ) );
 
-// At the definition of the class
+// On definition of the class
 public function setup_records() {
 	$backend_engine = tribe( 'aggregator.engine' )
 	return new Tribe__Events__Aggregator__Records( $backend_engine );
