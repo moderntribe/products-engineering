@@ -33,38 +33,29 @@ Here is the usual stuff: the plugin header.
 /*
 Plugin Name: Queue Example
 */
-```
 
-Since we might be loading before any Modern Tribe plugin, the existence and setup of the `common` package cannot be assumed: we set up autoloading here. Mind that The Events Calendar is activated on the site.
-
-```php
+// Since we might be loading before any Modern Tribe plugin, the existence and setup of the `common` package cannot be assumed: we set up autoloading
+// here. Mind that The Events Calendar is activated on the site.
 include_once dirname( __DIR__ ) . '/the-events-calendar/common/vendor/autoload.php';
 include_once dirname( __DIR__ ) . '/the-events-calendar/common/tribe-autoload.php';
-```
 
-Here we add the REST API endpoint: hitting `/wp-json/q/start` will trigger the processing.
-
-```php
+// Here we add the REST API endpoint: hitting `/wp-json/q/start` will trigger the processing.
 add_action( 'rest_api_init', function () {
     register_rest_route( 'q', '/start', [
         'method'   => WP_REST_Server::CREATABLE,
         'callback' => 'q_create',
     ] );
 } );
-```
 
-The `names()` function will merely read a file specifying a list of 100 names.
-
-```php
+// The `names()` function will merely read a file specifying a list of 100 names.
 function names() {
     return include __DIR__ . '/data/100-names.php';
 }
-```
 
-This function is in charge of creating an asynchronous process for each name. The `Async_Process` class is defined below but it will just call `wp_insert_post` for each name.  
-Each process instance will run in its own, separate, PHP process; it's important to provide each process with **all** the information and data it might need to accomplish its task; each process should be **completely independent** of the creating process or any other asynchronous process.
-
-```php
+// This function is in charge of creating an asynchronous process for each name. The `Async_Process` class is defined below but it will just call 
+// `wp_insert_post` for each name.  
+// Each process instance will run in its own, separate, PHP process; it's important to provide each process with **all** the information and data it
+// might need to accomplish its task; each process should be **completely independent** of the creating process or any other asynchronous process.
 function q_create() {
     $start = microtime( true );
 
@@ -83,12 +74,10 @@ function q_create() {
 
     wp_send_json( array_merge( [ 'Time: ' . ( microtime( true ) - $start ) ], $response ) );
 }
-```
 
-In the `common` library we avoid trying to handle **all** the asynchronous processes and try to be *smart* in hooking them.  
-Hooking on the `tribe_process_handlers` filter we tell common we would like it to manage the `Async_Process` class; mind that this is only possible because the `Async_Process` extends teh `Tribe__Process__Handler` class.
-
-```php
+// In the `common` library we avoid trying to handle **all** the asynchronous processes and try to be *smart* in hooking them.  
+// Hooking on the `tribe_process_handlers` filter we tell common we would like it to manage the `Async_Process` class; mind that this is only possible
+// because the `Async_Process` extends teh `Tribe__Process__Handler` class.
 add_filter( 'tribe_process_handlers', function ( $handlers = [] ) {
     $handlers[] = Async_Process::class;
 
@@ -102,6 +91,7 @@ In the simple implementation below there is no difference between the two.
 The parent class will provide the `handle` method its input via the `$_POST` superglobal array; that's why in the `sync_handle` method we default to it.
 
 ```php
+<?php
 class Async_Process extends Tribe__Process__Handler {
 
     /**
@@ -186,13 +176,10 @@ add_action( 'rest_api_init', function () {
 function names() {
     return include __DIR__ . '/data/100-names.php';
 }
-```
 
-In place of creating a process instance for each name we create one queue only and add all the names as items to it.  
-The `save()` method will persist the queue data to the database while the `dispatch()` method will kick it off.  
-Notice the asynchronous process did not require any persistence operation, just add data and dispatch it.
-
-```php
+// In place of creating a process instance for each name we create one queue only and add all the names as items to it.  
+// The `save()` method will persist the queue data to the database while the `dispatch()` method will kick it off.  
+// Notice the asynchronous process did not require any persistence operation, just add data and dispatch it.
 function q_create() {
     $start = microtime( true );
 
@@ -210,11 +197,8 @@ function q_create() {
 
     wp_send_json( array_merge( [ 'Time: ' . ( microtime( true ) - $start ) ], $response ) );
 }
-```
-
-This time we filter the queue classes to add ours. Not much different from before but keep in mind that asynchronous processes and queues are not the same.
-
-```php
+// This time we filter the queue classes to add ours. Not much different from before but keep in mind that asynchronous processes and queues 
+// are not the same.
 add_filter( 'tribe_process_queues', function ( $queues = [] ) {
     $queues[] = Example_Queue::class;
 
@@ -228,6 +212,7 @@ Differently from the asynchronous process class it must implement a `task()` met
 In the `task` method the return value answers the question "Should this item be processed again?": if the `task` method return `false` then the queue will assume the task is complete otherwise it will run the task again on the return value.
 
 ```php
+<?php
 class Example_Queue extends Tribe__Process__Queue {
 
     /**
