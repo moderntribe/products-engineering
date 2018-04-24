@@ -26,6 +26,7 @@ The new paradigm that should be adopted is "compute first, execute later"; in co
 ### Example one - asynchronous processing
 The following example plugin is stupid in its functionalities but useful for the purpose of illustrating how asynchronous processing works.  
 The plugin will read a list of names and will either create or update a post in the database for each; to simplify the example there is no UI involved and the plugin processing will be kickstarted visiting the `/wp-json/q/start` REST API endpoint.  
+Since there is no authentication logic in place to make the example plugin work you should visit the `/wp-json/q/start` endpoint while logged out.
 Here is the usual stuff: the plugin header.
 
 ```php
