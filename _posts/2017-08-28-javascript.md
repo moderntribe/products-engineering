@@ -47,7 +47,7 @@ var i     = 0;
 Personally, I'd prefer separating the function declarations from the variable declaration chain. One of the following would allow proper docblocks without chunking up the declarations and avoid funky-looking nesting:
 
 <pre>
-var date_to_ymd = function( date ) {
+var dateToYmd = function( date ) {
   // ...
 };
 </pre>
@@ -55,7 +55,7 @@ var date_to_ymd = function( date ) {
 or
 
 <pre>
-function date_to_ymd( date ) {
+function dateToYmd( date ) {
   // ...
 }
 </pre>
@@ -71,14 +71,14 @@ I still am not a fan of chained declaration in general. Here's my reasoning:
        *
        * @private
        **/
-      variable_x = 1,
+      variableX = 1,
 
       /**
        * This variable does something else entirely
        *
        * @private
        **/
-      variable_y = 2;
+      variableY = 2;
     </pre>
 
 
