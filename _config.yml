@@ -16,6 +16,8 @@ author:
 # -----
 # Build
 
+remote_theme: pmarsceill/just-the-docs
+
 permalink: pretty
 
 # Enable or disable the site search
