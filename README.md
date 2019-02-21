@@ -25,3 +25,11 @@ to adjust that final command to:
 ```
 bundle exec jekyll serve --host localhost
 ```
+
+### Rebuilding search results
+
+The documents are searchable and to rebuild the search results, you'll need to run:
+
+```
+bundle exec just-the-docs rake search:init
+```

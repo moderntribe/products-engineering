@@ -7,13 +7,12 @@ nav_order: 2
 ---
 
 # Code Standards
+{: .no_toc }
 
 The standards that we follow as we craft our plugins.
 {: .fs-6 .fw-300 }
 
 ---
-
-{: .no_toc }
 
 ## Table of contents
 {: .no_toc .text-delta }
