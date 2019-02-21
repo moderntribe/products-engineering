@@ -118,7 +118,7 @@ function initSearch() {
             var resultsLink = document.createElement('a');
             var resultsUrlDesc = document.createElement('span');
             var resultsUrl = store[results[i].ref].url;
-            var resultsRelUrl = store[results[i].ref].relUrl;
+            var resultsRelUrl = store[results[i].ref].description;
             var resultsTitle = store[results[i].ref].title;
 
             resultsLink.setAttribute('href', resultsUrl);
