@@ -1,83 +1,75 @@
 <!DOCTYPE html>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v{{ jekyll.version }}">
+<html lang="en-us">
+{% include head.html %}
+<body>
 
-		<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/screen.css">
+  <div class="page-wrap">
+    <div class="side-bar">
+      <a href="{{ site.url }}{{ site.baseurl }}" class="site-title fs-6 lh-tight">{{ site.title }}</a>
+      <span class="fs-3"><button class="js-main-nav-trigger navigation-list-toggle btn btn-outline" type="button" data-text-toggle="Hide">Menu</button></span>
+      <div class="navigation main-nav js-main-nav">
+        {% include nav.html %}
+      </div>
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="page-header">
+        <div class="main-content">
+          {% if site.search_enabled != nil %}
+          <div class="search js-search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search {{ site.title }}" aria-label="Search {{ site.title }}" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          {% endif %}
+          {% if site.aux_links != nil %}
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0 js-aux-nav aux-nav">
+              {% for link in site.aux_links %}
+                <li class="d-inline-block my-0{% unless forloop.last %} mr-2{% endunless %}"><a href="{{ link.last }}">{{ link.first }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+      <div class="main-content">
+        {% unless page.url == "/" %}
+          {% if page.parent %}
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                {% if page.grand_parent %}
+                  <li class="breadcrumb-nav-list-item"><a href="{{ first_level_url }}">{{ page.grand_parent }}</a></li>
+                  <li class="breadcrumb-nav-list-item"><a href="{{ second_level_url }}">{{ page.parent }}</a></li>
+                {% else %}
+                  <li class="breadcrumb-nav-list-item"><a href="{{ first_level_url }}">{{ page.parent }}</a></li>
+                {% endif %}
+                <li class="breadcrumb-nav-list-item"><span>{{ page.title }}</span></li>
+              </ol>
+            </nav>
+          {% endif %}
+        {% endunless %}
+        <div id="main-content" class="page-content" role="main">
+          {{ content }}
 
-		<link rel="apple-touch-icon" href="{{ site.baseurl }}/assets/images/apple-icon-iphone.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="{{ site.baseurl }}/assets/images/apple-icon-ipad-retina.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}/assets/images/apple-icon-iphone-plus.png">
-		<link rel="apple-touch-icon" sizes="167x167" href="{{ site.baseurl }}/assets/images/apple-icon-ipad-pro.png">
+          {% if page.has_children == true and page.has_toc != false %}
+          <hr>
+          <h2 class="text-delta">Table of contents</h2>
+          {% assign children_list = site.pages | sort:"nav_order" %}
+          <ul>
+            {% for child in children_list %}
+              {% if child.parent == page.title and child.title != page.title %}
+              <li>
+                <a href="{{ child.url | absolute_url }}">{{ child.title }}</a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
 
-		<link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/images/touch-icon.png" sizes="192x192">
-		<link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/images/favicon.png">
-
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/javascript" src="{{ site.baseurl }}/assets/js/lodash.min.js"></script>
-
-		{% seo %}
-		{% feed_meta %}
-
-		{% if jekyll.environment == 'production' and site.google_analytics_key != '' %}
-			<script>
-				(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
-				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-				})(window,document,"script","//www.google-analytics.com/analytics.js","ga");
-
-				ga("create", "{{ site.google_analytics_key }}", "auto");
-				ga("send", "pageview");
-			</script>
-		{% endif %}
-	</head>
-
-	<body class="{{ page.body_class }}">
-		<header>
-			<div class="top-bar">
-				<section class="wrapper">
-					<div class="logo"><a href="{{ site.baseurl }}/">{% include logo.html %}</a></div>
-					{% include navigation.html %}
-				</section>
-			</div>
-			<div class="hero_search">
-				<section class="wrapper">
-					<h1>Products Engineering Docs</h1>
-					<p>Almost everything you need to know about our development process at Modern Tribe.</p>
-					{% include search.html %}
-				</section>
-			</div>
-		</header>
-		<section class="content">
-			<div class="wrapper">
-				{{ content }}
-			</div>
-		</section>
-
-		{% include footer.html %}
-		<script>
-			$(function() {
-				$('a[href*=\\#]').not(".no-smooth").on('click', function(event){
-					var el = $(this.hash);
-					if (el.length > 0) {
-						// event.preventDefault();
-						$('html,body').animate({scrollTop:$(this.hash).offset().top - 50}, 500);
-					}
-				});
-
-				$('svg').click(function() {
-					$(this).parent('form').submit();
-				});
-			});
-
-			document.getElementById("open-nav").addEventListener("click", function (event) {
-				event.preventDefault();
-				document.body.classList.toggle("nav-open");
-			});
-		</script>
-
-	</body>
+</body>
 </html>
