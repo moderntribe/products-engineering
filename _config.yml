@@ -22,7 +22,7 @@ author:
 
 permalink: /:categories/:title/
 
-gems:
+plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-feed
