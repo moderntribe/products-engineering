@@ -17,10 +17,11 @@ Structure, versioning, and naming conventions for files and code within our plug
 
 * [The Events Calendar](https://wordpress.org/plugins/the-events-calendar/) ([GitHub](https://github.com/moderntribe/the-events-calendar))
 * [The Events Calendar PRO](https://theeventscalendar.com/product/wordpress-events-calendar-pro/)
-* [Eventbrite](https://theeventscalendar.com/product/wordpress-eventbrite-tickets/)
-* [Filter Bar](https://theeventscalendar.com/product/wordpress-events-filterbar/)
 * [Community Events](https://theeventscalendar.com/product/wordpress-community-events/)
 * [Community Tickets](https://theeventscalendar.com/product/community-tickets/)
+* [Elastic Events](https://theeventscalendar.com/product/elastic-events/)
+* [Eventbrite](https://theeventscalendar.com/product/wordpress-eventbrite-tickets/)
+* [Filter Bar](https://theeventscalendar.com/product/wordpress-events-filterbar/)
 
 ## Event Tickets
 
