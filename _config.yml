@@ -2,7 +2,7 @@
 # Site
 
 title: Tribe Engineering
-url: "http://moderntribe.github.io/products-engineering/"
+url: "http://moderntribe.github.io"
 baseurl: "/products-engineering"
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
