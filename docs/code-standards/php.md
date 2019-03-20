@@ -255,3 +255,8 @@ if (
 ## Closures
 
 We adhere to the [PSR-2 guidelines for closures](http://www.php-fig.org/psr/psr-2/#6-closures) _except_ for the standards around spacing within parentheses.
+
+
+## Documentation
+
+We encourage developers to extensively document functions, method, classes and hooks following the [WordPress PHP Documentation Standards](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/php/).
