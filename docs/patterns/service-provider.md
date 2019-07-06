@@ -37,8 +37,8 @@ When we were bound to PHP version 5.2, Luca Tumedei created the [DI52 dependency
 inspired by Laravel IOC and Pimple, that we are using on all of our products as the basis for loading Singletons and
 modules.
 
-Now that WordPress enforces using PHP version 5.6+, the "52" part of the name is less significant, but the library is still used
-because it works even better on newer versions of PHP, and it provides a Laravel Service Container API.
+Now that WordPress enforces using PHP version 5.6+, the "52" part of the name is less significant, but the library is
+still used because it works even better on newer versions of PHP, and it provides a Laravel Service Container API.
 
 Below you will find a list of some of the global functions exposed by our APIs to allow a simple registering of a few
 things into our Container for Tribe Plugins.
