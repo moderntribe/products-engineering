@@ -33,9 +33,12 @@ good indication all those classes and functions should be bootstrapped/managed b
 
 ## Di52
 
-Since we are bound to version 5.2 of PHP on WordPress, Luca Tumedei created a [dependency injection container](https://github.com/lucatume/di52) heavily
+When we were bound to PHP version 5.2, Luca Tumedei created the [DI52 dependency injection container](https://github.com/lucatume/di52) heavily
 inspired by Laravel IOC and Pimple, that we are using on all of our products as the basis for loading Singletons and
 modules.
+
+Now that WordPress enforces using PHP version 5.6+, the "52" part of the name is less significant, but the library is
+still used because it works even better on newer versions of PHP, and it provides a Laravel Service Container API.
 
 Below you will find a list of some of the global functions exposed by our APIs to allow a simple registering of a few
 things into our Container for Tribe Plugins.
