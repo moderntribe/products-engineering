@@ -42,7 +42,7 @@ First and foremost, we make an attempt to adhere to the [WordPress PHP coding st
 
 ### Namespace and use declarations
 
-Where we are able to use Namespaces (tests, SaaS code, etc), we should adhere to the [PSR-2 standards for Namespaces and Use Declarations](http://www.php-fig.org/psr/psr-2/#3-namespace-and-use-declarations).
+Where we are able to use Namespaces (tests, SaaS code, etc), we should adhere to the [PSR-12 standards for Namespaces and Use Declarations](https://www.php-fig.org/psr/psr-12/#3-declare-statements-namespace-and-import-statements).
 
 ### Classes, properties, and methods
 
