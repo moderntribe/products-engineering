@@ -29,38 +29,61 @@ _**NOTE:** if you need to test something against the currently released version 
 simple way to switch to that version is by checking out the `master` branch. Just be sure to switch
 back to your working branch before you make any commits!_
 
-## Bucket branches
+## Release branches
 
-We are developing our features in what we call bucket branches, they allow us to work on the major feature
-changes in separate and parallel to other development.
+We organize our releases on release branches by team. Release branches follow this naming scheme: `release/<T><Y>.<R>[.<H>]`, where:
 
-These branches should have a Milestone associated with them in GitHub that specifies the branch name, via
-it's description. That will allow the bot to sync Tribe Common with the correct version. _E.g.:_
+* T = team initial
+* Y = 2 digit year
+* R = release number
+* H = hotfix number
 
-![Bucket Milestone Edit]({{ "/assets/images/posts/branches/bucket-milestone.png" | absolute_url }})
+An example release from the 2nd release from Blue Team in 2020 would be: `release/B20.02` and a hotifx for that release
+would be: `release/B20.02.1`.
 
-When a bucket is determined, it should be branched from the latest Tagged release and _all_ code for that
-feature should be Pull Requested into that branch rather than direct committed and pushed. See the article
-about [plugin versions]({{ site.baseurl }}/guidelines/plugin-versions) to see how to what file changes are required.
+## Ticket branches
 
-Eventually every bucket branch will become a Feature release once we get into smoketesting phase.
+_**NOTE:** The following instructions are for internal use only, if you're sending a pull request,
+it'll already be in its own branch._
 
-On feature/maintenance releases, the developers that are leading the feature work are in charge of merging
-`master` into their respective feature branches.
+The naming convention for new branches should be as such
+```
+<feature|fix>/<ticket number>-<brief-description>
+```
 
-## Feature releases
+**For example:**
+- `feature/TEC-24343-activation-page`
+- `fix/TEC-28363-list-view-eod-cutoff`
+- `hotfix/TEC-123-very-minor-text-change`
 
-Once a bucket branch reaches the Smoketest phase we need to branch out of that `bucket/name` into `release/FYY.XX`.
+## Types of Pull Requests
 
-Important to note that version numbers on this stage of the release a version change might be noted with a release
-candidate pre-release tag as `x.y.z-RC`, which denotes that we are publicly shipping this to customers. See more
-on [plugin versions]({{ site.baseurl }}/guidelines/plugin-versions).
+### Features
 
-## Maintenance releases
+#### Major features
 
-While working on a maintenance release, most code should be developed in the corresponding release
-branch (`release/MYY.XX`). This should be considered the primary working branch during every
-maintenance release cycle.
+When working on features that require multiple devs, multiple sprints, or parts built in chunks, we consider this a major
+feature. Major features require "Bucket branches"–specifically, branches named `bucket/feature-name`. These bucket
+branches should be decided upon by the team, as all PRs related to that feature will be pull requested into that
+bucket branch.
+
+Major features are segregated into bucket branches to allow for focused QA effort _before_ being merged into a release
+branch, as major features carry the most risk of being delayed.
+
+#### Minor features
+
+Minor features can be developed using branches named `feature/TICKET-name-of-feature` and pull requested directly into
+release branches.
+
+### Fixes
+
+Fixes can be developed using branches named `fix/TICKET-name-of-fix` and pull requested directly into
+release branches.
+
+### Tweaks
+
+Tweaks–or small changes to functionality with low impact–can be developed using branches named `feature/TICKET-name-of-fix`
+and pull requested directly into release branches.
 
 ## Ticket branches
 
