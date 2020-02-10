@@ -52,12 +52,25 @@ the ticket to “Pending QA".
 
 ## Labels
 
+### Status Labels
+
 | Label | Description | Who |
 | ----- | ----------- | --- |
-| `code-review` | The PR is awaiting code review. | Added by the pull request submitter. Removed by code reviewer. |
-| `in-qa` | The code was approved and now is ready to be QA’d | Added by the code reviewer. Removed when `merge` label is added or if fails QA. |
-| `merge` | Work on the ticket has been reviewed and tested.  Go ahead and merge! | Added by the person who did the QA. |
-| `question` | The PR has a question that needs lovin'. Work is blocked until the question has been answered. | Typically assigned to the person that can answer the question. Typically removed by the person who answers the question. |
-| `hold` | Don't move forward with the next status. See comments for details. | Typically added by a PM or lead dev. Confirm with Matt, Rob, or Zach before removing. |
-| `bug` | There is a bug in the code submitted in this PR. | Added by the code reviewer. Removed once the bug is resolved. |
-| `enhance` | There is a recommended enhancement to the code. | Added by the code reviewer.  Removed if the enhancement is done or it is agreed that it should not be done. |
+| `code-review` | Status: requires a code review. | Added by the pull request submitter. Removed by code reviewer. |
+| `hold` | Status: on hold–do not proceed with other status items. | Typically added by a PM or lead dev. Confirm with Matt, Rob, or Zach before removing. |
+| `in-qa` | Status: requires QA before merging. | Added by the code reviewer. Removed when `merge` label is added or if fails QA. |
+| `merge` | Status: ready to merge. | Added by the reviewer or the person who did the QA. |
+
+### Review Labels
+
+| Label | Description | Who |
+| ----- | ----------- | --- |
+| `bug` | Contains a bug that needs resolution. | Added by the code reviewer. Removed once the bug is resolved. |
+| `enhance` | Code could use some enhancements before merging. | Added by the code reviewer.  Removed if the enhancement is done or it is agreed that it should not be done. |
+| `needs artifact` | A screencast, screenshot, or other artifact is needed before merging. | Added by code reviewer. |
+| `needs changelog` | Needs a changelog entry before merging. | Added by code reviewer. |
+| `needs release` | Needs an associated release in Jira before merging. | Added by code reviewer. |
+| `needs tests` | Needs tests before merging. | Added by code reviewer. |
+| `needs ticket` | Needs an associated Jira ticket before merging. | Added by code reviewer. |
+| `question` | Needs an answer to one or more questions before merging. | Typically assigned to the person that can answer the question. Typically removed by the person who answers the question. |
+| `translation` | Has translation issues that need to be resolved before merging. | Added by code reviewer. |
