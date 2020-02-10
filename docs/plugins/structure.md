@@ -39,11 +39,12 @@ plugin-directory/
     deprecated/         ← deprecated logic goes here
     functions/          ← files containing global functions for public use
       template-tags/    ← files containing template tags
+    modules/            ← block editor JS
     resources/          ← any static assets, including js, css, and images
       css/              ← compiled CSS goes here
       images/           ← images and icons
       js/               ← javascript goes here
-      scss/             ← SCSS goes here
+      postcss/          ← PostCSS goes here
     views/              ← plugin view files
   tests/                ← unit tests go here
   vendor/               ← 3rd party libraries should be added here
