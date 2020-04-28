@@ -24,7 +24,7 @@ Each plugin and major product area has its own prefix for hooks and `tribe()` co
 prefixes are as follows:
 
 | Product | Hook prefix | Container prefix | PHP namespace |
-|---------|-------------|-------|
+|---------|-------------|-------|-------|
 | Tribe Common | `tribe_` | `common.` | Tribe\Common |
 | Event Aggregator | `tribe_aggregator_` | `aggregator.` | Tribe\Aggregator |
 | The Events Calendar | `tribe_events_` | `tec.` | Tribe\Events |
