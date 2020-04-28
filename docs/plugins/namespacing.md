@@ -26,7 +26,7 @@ prefixes are as follows:
 | Product | Hook prefix | Container prefix | PHP namespace |
 |---------|-------------|-------|-------|
 | Tribe Common | `tribe_` | `common.` | Tribe\Common |
-| Event Aggregator | `tribe_aggregator_` | `aggregator.` | Tribe\Aggregator |
+| Event Aggregator | `tribe_aggregator_` | `aggregator.` | Tribe\Events\Aggregator |
 | The Events Calendar | `tribe_events_` | `tec.` | Tribe\Events |
 | The Events Calendar PRO | `tribe_events_pro_` | `pro.` | Tribe\Events\Pro |
 | Virtual Events | `tribe_events_virtual_` | `events-virtual.` | Tribe\Events\Virtual |
