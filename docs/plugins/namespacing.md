@@ -23,20 +23,20 @@ nav_order: 2
 Each plugin and major product area has its own prefix for hooks and `tribe()` container slugs. The
 prefixes are as follows:
 
-| Product | Hook prefix | Container prefix |
+| Product | Hook prefix | Container prefix | PHP namespace |
 |---------|-------------|-------|
-| Tribe Common | `tribe_` | `common.` |
-| Event Aggregator | `tribe_aggregator_` | `aggregator.` |
-| The Events Calendar | `tribe_events_` | `tec.` |
-| The Events Calendar PRO | `tribe_events_pro_` | `pro.` |
-| Community Events | `tribe_events_community_` | `community.` |
-| Community Tickets | `tribe_community_tickets_` | `community-tickets.` |
-| Eventbrite Tickets | `tribe_events_eventbrite_` | `eventbrite.` |
-| Filter Bar | `tribe_events_filter_` | `filterbar.` |
-| Event Tickets | `tribe_tickets_` | `tickets.` |
-| Event Tickets Plus | `tribe_tickets_plus_` | `tickets-plus.` |
-| Image Widget | `tribe_image_` | `image.` |
-| Image Widget Plus | `tribe_image_plus_` | `image-plus.` |
+| Tribe Common | `tribe_` | `common.` | Tribe\Common |
+| Event Aggregator | `tribe_aggregator_` | `aggregator.` | Tribe\Aggregator |
+| The Events Calendar | `tribe_events_` | `tec.` | Tribe\Events |
+| The Events Calendar PRO | `tribe_events_pro_` | `pro.` | Tribe\Events\Pro |
+| Community Events | `tribe_events_community_` | `community.` | Tribe\Events\Community |
+| Community Tickets | `tribe_community_tickets_` | `community-tickets.` | Tribe\Events\Community\Tickets |
+| Eventbrite Tickets | `tribe_events_eventbrite_` | `eventbrite.` | Tribe\Events\Eventbrite |
+| Filter Bar | `tribe_events_filter_` | `filterbar.` | Tribe\Events\Filter_Bar |
+| Event Tickets | `tribe_tickets_` | `tickets.` | Tribe\Tickets |
+| Event Tickets Plus | `tribe_tickets_plus_` | `tickets-plus.` | Tribe\Tickets\Plus |
+| Image Widget | `tribe_image_` | `image.` | Tribe\Image_Widget |
+| Image Widget Plus | `tribe_image_plus_` | `image-plus.` | Tribe\Image_Widget\Plus |
 
 _Despite being embedded within the-events-calendar, Event Aggregator deserves (and gets) its own prefix._
 
