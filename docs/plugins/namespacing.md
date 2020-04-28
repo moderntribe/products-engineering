@@ -29,6 +29,7 @@ prefixes are as follows:
 | Event Aggregator | `tribe_aggregator_` | `aggregator.` | Tribe\Aggregator |
 | The Events Calendar | `tribe_events_` | `tec.` | Tribe\Events |
 | The Events Calendar PRO | `tribe_events_pro_` | `pro.` | Tribe\Events\Pro |
+| Virtual Events | `tribe_events_virtual_` | `events-virtual.` | Tribe\Events\Virtual |
 | Community Events | `tribe_events_community_` | `community.` | Tribe\Events\Community |
 | Community Tickets | `tribe_community_tickets_` | `community-tickets.` | Tribe\Events\Community\Tickets |
 | Eventbrite Tickets | `tribe_events_eventbrite_` | `eventbrite.` | Tribe\Events\Eventbrite |
