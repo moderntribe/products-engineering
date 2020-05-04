@@ -34,6 +34,7 @@ First and foremost, we make an attempt to adhere to the [WordPress PHP coding st
 
 * All PHP files MUST use the Unix LF (linefeed) line ending.
 * The closing `?>` tag MUST be omitted from files containing only or ending in PHP.
+  * Unless it is a views template file - as these have customization filters run immediately after them.
 
 ### Keywords and true/false/null
 
