@@ -57,3 +57,23 @@ up over multiple lines. In such a case we use the following convention:
   <!-- Inner HTML -->
 </div>
 ```
+
+## Anchor tags
+
+### `_blank`
+
+When adding a new anchor tag with a `target="_blank"` attribute, simply adding that attribute [adds an additional attack vector](https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/) for folks with compromised site content.
+
+For our plugins, we must be sure to add `rel="noopener noreferrer"` to anchor tags that make use of `target="_blank"`.
+
+**Good**
+
+```html
+<a href="https://theeventscalendar.com" target="_blank" rel="noopener noreferrer">TEC</a>
+```
+
+**Bad**
+
+```html
+<a href="https://theeventscalendar.com" target="_blank">TEC</a>
+```
