@@ -180,9 +180,16 @@ being the lowest. Headings should not skip levels and there should be only one `
 <!-- content -->
 ```
 
-### Section and Article
+### Others
 
-[Section] and article
+There are a variety of other semantic elements that help convey meaning. These include
+[`<section>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section),
+[`<article>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article),
+[`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time),
+[`<address>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/address),
+[`<em>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/em),
+and many others. Using the appropriate element in the proper situations will help translate useful information
+to those users who do not browse the page visually.
 
 ## Anchor tags
 
