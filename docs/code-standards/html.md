@@ -53,6 +53,60 @@ First and foremost, we make an attempt to adhere to the [WordPress HTML coding s
 </div>
 ```
 
+### IDs and Classes
+
+Classes should follow the [Block Element Modifier (BEM)](http://getbem.com/naming/) format for
+naming consistency and ease of targetting in CSS. There are no hard rules for naming in BEM
+(other than what is provided in the link above). However, some ways are better than others and
+will usually come down to semantics of the HTML structure.
+
+**Bad**
+```html
+<div class="product-card">
+  <header class="card-header">
+    <img src="/tec-icon.png" class="product-image" />
+  </header>
+  <div class="card-content">
+    <h3 class="product-label">The Events Calendar</h3>
+    <p class="product-description">
+      Easily create and manage an events calendar on your website with The Events Calendar.
+      Whether your events are in-person or virtual events, this plugin boasts professional
+      features backed by our world-class team of developers and designers.
+    </p>
+  </div>
+</div>
+```
+
+**Good**
+```html
+<div class="product-card">
+  <header class="product-card__header">
+    <img src="/tec-icon.png" class="product-card__header-image" />
+  </header>
+  <div class="product-card__content">
+    <h3 class="product-card__label">The Events Calendar</h3>
+    <p class="product-card__description">
+      Easily create and manage an events calendar on your website with The Events Calendar.
+      Whether your events are in-person or virtual events, this plugin boasts professional
+      features backed by our world-class team of developers and designers.
+    </p>
+  </div>
+</div>
+
+<div class="product-card product-card--featured">
+  <header class="product-card__header">
+    <img src="/ecp-icon.png" class="product-card__header-image" />
+  </header>
+  <div class="product-card__content">
+    <h3 class="product-card__label">Events Calendar Pro</h3>
+    <p class="product-card__description">
+      When events are your business, you need a calendar with more than the basics. Events
+      Calendar Pro has all the features you need (and none of the junk you don’t).
+    </p>
+  </div>
+</div>
+```
+
 ### Attributes
 
 Attributes should always be lowercase and within quotes, even if they are booleans or numbers.
@@ -190,6 +244,236 @@ There are a variety of other semantic elements that help convey meaning. These i
 [`<em>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/em),
 and many others. Using the appropriate element in the proper situations will help translate useful information
 to those users who do not browse the page visually.
+
+## Accessibility
+
+We strive to write accessible HTML whenever possible. This means that we use the correct HTML
+elements for the intended purposes. Accessible HTML is very closely linked to semantics.
+
+### IDs
+
+We should aim to not use the `id` attribute. However, there are time when this will be unavoidable.
+When using the `id` attribute, a page cannot repeat an `id` more than once. This causes an accessibility
+violation.
+
+**Bad**
+```html
+<label for="name">Full name</label>
+<input type="text" id="name" name="name" />
+<label for="name">Pet name</label>
+<input type="text" id="name" name="name" />
+```
+
+**Good**
+```html
+<label for="name">Full name</label>
+<input type="text" id="name" name="name" />
+<label for="pet-name">Pet name</label>
+<input type="text" id="pet-name" name="petName" />
+```
+
+### Buttons and Links
+
+Buttons and links are focusable interactive elements that do something when clicked or selected.
+
+Links should be used when linking the user to another URL. They should not be used in place of a button.
+
+**Bad**
+```html
+<a href="#">Click me to open a modal</a>
+```
+
+**Good**
+```html
+<a href="https://theeventscalendar.com/">Visit TEC</a>
+```
+
+Buttons are used for a target to create interactive experiences, typically using JavaScript,
+for the user. We do not want to replace this with a link or another element.
+
+**Bad**
+```html
+<a href="#">Open menu</a>
+
+<div tabindex="0" onclick="function() { ... }">Click me</div>
+```
+
+**Good**
+<button>Open menu</button>
+```
+
+### Images
+
+Images should use the `alt` attribute whenever possible. For users who browse the web using
+assistive technology, they may not be able to view the image and will receive the text
+within the `alt` attribute instead.
+
+The exception to this is if an image is purely for decorative purposes. In this case, an
+empty `alt` attribute will convey this meaning.
+
+**Bad**
+```html
+<img src="/cute-puppy.jpg" />
+```
+
+**Good
+```html
+<img src="/cute-puppy.jpg" alt="cute puppy playing with toy." />
+
+<img src="/border-line.jpg" alt="" />
+```
+
+### Forms
+
+Forms are complex HTML structures that require a bit of attention to make them accessible.
+Fortunately, these are fairly easy to implement.
+
+The first is form labels and related inputs. Form inputs should have labels linked to them
+in order to convey this information properly to those using assistive technology. This can
+be done by setting an `id` attribute on the input and using the same value in the `for attribute
+of the label.
+
+**Bad**
+```html
+<label>Full Name</label>
+<input type="text" name="name" />
+```
+
+**Good**
+```html
+<label for="full-name">Full Name</label>
+<input type="text" id="full-name" name="name" />
+```
+
+The next is to not use placeholders in place of labels. Placeholders may visually look like a
+label, but do not convey the same information. For this reason, we always want a label associated
+with a form input.
+
+**Bad**
+```html
+<input type="tel" name="phone" placeholder="123-456-7890" />
+```
+
+**Good**
+```html
+<label for="phone">Phone</label>
+<input type="tel" id="phone" name="phone" placeholder="123-456-7890" />
+```
+
+### Headings
+
+As mentioned above in the semantics section, headings indicate the level of section headings and
+their relative importance. Headings should not skip levels and there should be only one `h1` per page.
+
+### ARIA Attributes
+
+Accessible Rich Internet Applications (ARIA) attributes help make applications, especially those
+using JavaScript functionality, more accessible to those using assistive technology. They supplement
+the existing HTML and are not meant to replace the built-in attributes.
+
+#### Disabled and Required
+
+When using HTML form inputs, we may use the `disabled` and `required` attributes depending on the
+situation. There are also, however, ARIA attributes with the same names: [`aria-disabled`](https://www.w3.org/WAI/PF/aria/states_and_properties#aria-disabled)
+and [`aria-required`](https://www.w3.org/WAI/PF/aria/states_and_properties#aria-required). With HTML5,
+we can now use the `disabled` and `required` attributes and do not need these ARIA attributes.
+
+**Bad**
+```html
+<label for="full-name">Full Name</label>
+<input type="text" id="full-name" name="name" aria-required="true" />
+
+<label for="phone">Phone</label>
+<input type="tel" id="phone" name="phone" placeholder="123-456-7890" aria-disabled="true" />
+```
+
+**Good**
+```html
+<label for="full-name">Full Name</label>
+<input type="text" id="full-name" name="name" required />
+
+<label for="phone">Phone</label>
+<input type="tel" id="phone" name="phone" placeholder="123-456-7890" disabled />
+```
+
+#### Hidden, Expanded, and Controls
+
+The ARIA attributes [`aria-hidden`](https://www.w3.org/WAI/PF/aria/states_and_properties#aria-hidden),
+[`aria-expanded`](https://www.w3.org/WAI/PF/aria/states_and_properties#aria-expanded), and
+[`aria-controls`](https://www.w3.org/WAI/PF/aria/states_and_properties#aria-controls) often work in
+combination with each other. This combination is often used for an accordion pattern or a custom
+dropdown pattern and changed using JavaScript. These attributes allow the user using assistive
+technology to understand how elements are linked together and what state they are in.
+
+**Bad**
+```html
+<button>Accordion header</button>
+<div class="u-hidden">
+  <span>Accordion content</span>
+</div>
+```
+
+**Good**
+``html
+<button
+  id="accordion-header"
+  aria-controls="accordion-content"
+  aria-expanded="false"
+>
+  Accordion header
+</button>
+<div
+  class="u-hidden"
+  id="accordion-content"
+  aria-hidden="true"
+  aria-labelledby="accordion-header"
+>
+  <span>Accordion content</span>
+</div>
+```
+
+#### Label and Labelledby
+
+The ARIA attributes [`aria-label`](https://www.w3.org/WAI/PF/aria/states_and_properties#aria-label) and
+[`aria-labelledby`](https://www.w3.org/WAI/PF/aria/states_and_properties#aria-labelledby) allow the user
+using assistive technology to receive an explanation associated with a specific element, much like a label
+would provide.
+
+**Bad**
+```html
+<!-- Navigations require a label to describe it -->
+<nav>
+  <!-- Navigation list -->
+</nav>
+
+<!-- Buttons require text to announce to assistive technology -->
+<button>
+  <svg><!-- SVG icon --></svg>
+</button>
+```
+
+**Good**
+```html
+<nav aria-label="Primary Navigation">
+  <!-- Navigation list -->
+</nav>
+
+<nav aria-labelledby="main-nav-heading">
+  <h2 id="main-nav-heading" class="u-visual-hide">Primary Navigation</h2>
+  <!-- Navigation list -->
+</nav>
+
+<!-- Using visually-hidden text is usually the best option here -->
+<button>
+  <svg><!-- SVG icon --></svg>
+  <span class="u-visual-hide">Close menu</span>
+</button>
+
+<!-- In cases where visually-hidden text is not possible -->
+<button aria-label="Close menu">
+  <svg><!-- SVG icon --></svg>
+</button>
+```
 
 ## Anchor tags
 
