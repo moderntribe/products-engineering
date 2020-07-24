@@ -53,22 +53,25 @@ First and foremost, we make an attempt to adhere to the [WordPress HTML coding s
 </div>
 ```
 
-### IDs and Classes
+### Classes and IDs
+
+#### Classes
 
 Classes should follow the [Block Element Modifier (BEM)](http://getbem.com/naming/) format for
 naming consistency and ease of targetting in CSS. There are no hard rules for naming in BEM
-(other than what is provided in the link above). However, some ways are better than others and
-will usually come down to semantics of the HTML structure.
+(other than what is provided in the link above). However, some ways are better than others. This
+will usually come down to semantics of the HTML structure. The better the structure, the clearer
+the names will be.
 
 **Bad**
 ```html
-<div class="product-card">
-  <header class="card-header">
-    <img src="/tec-icon.png" class="product-image" />
+<div class="Product-Card">
+  <header class="card_header">
+    <img src="/tec-icon.png" class="product-_image" />
   </header>
-  <div class="card-content">
-    <h3 class="product-label">The Events Calendar</h3>
-    <p class="product-description">
+  <div class="card__content">
+    <h3 class="product-LABEL">The Events Calendar</h3>
+    <p class="product_description">
       Easily create and manage an events calendar on your website with The Events Calendar.
       Whether your events are in-person or virtual events, this plugin boasts professional
       features backed by our world-class team of developers and designers.
@@ -79,7 +82,7 @@ will usually come down to semantics of the HTML structure.
 
 **Good**
 ```html
-<div class="product-card">
+<article class="product-card">
   <header class="product-card__header">
     <img src="/tec-icon.png" class="product-card__header-image" />
   </header>
@@ -91,9 +94,9 @@ will usually come down to semantics of the HTML structure.
       features backed by our world-class team of developers and designers.
     </p>
   </div>
-</div>
+</article>
 
-<div class="product-card product-card--featured">
+<article class="product-card product-card--featured">
   <header class="product-card__header">
     <img src="/ecp-icon.png" class="product-card__header-image" />
   </header>
@@ -104,7 +107,46 @@ will usually come down to semantics of the HTML structure.
       Calendar Pro has all the features you need (and none of the junk you don’t).
     </p>
   </div>
-</div>
+</article>
+```
+
+#### IDs
+
+We should aim to not use the `id` attribute whenever possible. However, sometimes it is
+unavoidable due to accessibility reasons. There are no hard rules for naming IDs, but staying
+consistent throughout an application is important.
+
+As BEM aims to name classes with a consistent structure, this is a great starting point for
+naming IDs.
+
+**Good**
+```html
+<article id="product-card--tec" class="product-card">
+  <header class="product-card__header">
+    <img src="/tec-icon.png" class="product-card__header-image" />
+  </header>
+  <div class="product-card__content">
+    <h3 class="product-card__label">The Events Calendar</h3>
+    <p class="product-card__description">
+      Easily create and manage an events calendar on your website with The Events Calendar.
+      Whether your events are in-person or virtual events, this plugin boasts professional
+      features backed by our world-class team of developers and designers.
+    </p>
+  </div>
+</article>
+
+<article id="product-card--ecp" class="product-card product-card--featured">
+  <header class="product-card__header">
+    <img src="/ecp-icon.png" class="product-card__header-image" />
+  </header>
+  <div class="product-card__content">
+    <h3 class="product-card__label">Events Calendar Pro</h3>
+    <p class="product-card__description">
+      When events are your business, you need a calendar with more than the basics. Events
+      Calendar Pro has all the features you need (and none of the junk you don’t).
+    </p>
+  </div>
+</article>
 ```
 
 ### Attributes
@@ -475,22 +517,23 @@ would provide.
 </button>
 ```
 
-## Anchor tags
+## Security
 
-### `_blank`
+### Anchor tags
 
-When adding a new anchor tag with a `target="_blank"` attribute, simply adding that attribute [adds an additional attack vector](https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/) for folks with compromised site content.
+When adding a new anchor tag with a `target="_blank"` attribute, simply adding that attribute
+[adds an additional attack vector](https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/)
+for folks with compromised site content.
 
-For our plugins, we must be sure to add `rel="noopener noreferrer"` to anchor tags that make use of `target="_blank"`.
-
-**Good**
-
-```html
-<a href="https://theeventscalendar.com" target="_blank" rel="noopener noreferrer">TEC</a>
-```
+For our plugins, we must be sure to add `rel="noopener noreferrer"` to anchor tags that make use
+of `target="_blank"`.
 
 **Bad**
-
 ```html
 <a href="https://theeventscalendar.com" target="_blank">TEC</a>
+```
+
+**Good**
+```html
+<a href="https://theeventscalendar.com" target="_blank" rel="noopener noreferrer">TEC</a>
 ```
