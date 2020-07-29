@@ -44,7 +44,7 @@ First and foremost, we make an attempt to adhere to the [WordPress HTML coding s
 
 **Good**
 ```html
-<div id="component">
+<div class="component">
   <div class="part">
     <?php if ( 'met' === $condition ): ?>
       <a href="#"><?php esc_html_e( 'Follow this link', 'textdomain' ); ?></a>;
@@ -59,9 +59,18 @@ First and foremost, we make an attempt to adhere to the [WordPress HTML coding s
 
 Classes should follow the [Block Element Modifier (BEM)](http://getbem.com/naming/) format for
 naming consistency and ease of targetting in CSS. There are no hard rules for naming in BEM
-(other than what is provided in the link above). However, some ways are better than others. This
+(other than what is provided in the link above). However, some names are better than others. This
 will usually come down to semantics of the HTML structure. The better the structure, the clearer
 the names will be.
+
+A good example of using BEM is the product card seen below. It always follows the class name
+structure of `block__element--modifier`. The product card is the Block in BEM, with the class name
+`product-card`. It does not have an element or modifier as it is the top-level block. Child elements
+of the product card have classes that follow the block with two underscores and the element name.
+For example, we have `product-card__header` and `product-card__content`. These both follow a
+`block__element` structure. Modifiers are applied where needed, and can follow a `block--modifier`
+or `block__element--modifier` structure. Below, we see an example of a featured product card,
+with the class `product-card--featured`.
 
 **Bad**
 ```html
@@ -96,6 +105,48 @@ the names will be.
   </div>
 </article>
 
+<article class="product-card product-card--featured">
+  <header class="product-card__header">
+    <img src="/ecp-icon.png" class="product-card__header-image" />
+  </header>
+  <div class="product-card__content">
+    <h3 class="product-card__label">Events Calendar Pro</h3>
+    <p class="product-card__description">
+      When events are your business, you need a calendar with more than the basics. Events
+      Calendar Pro has all the features you need (and none of the junk you don’t).
+    </p>
+  </div>
+</article>
+```
+
+When applying modifiers, they should be applied in a semantic manner. If we have a
+featured product card where the header and content element styles change, we should add a
+`product-card--featured` class to the `product-card` block rather than a
+`product-card__header--featured` and `product-card__content--featured` class to each of the
+elements that have featured styles. This implies that we could have a featured product card
+header without a featured product card content, and vice-versa, when they both are applied together.
+This also introduces a maintenance problem when the product card grows and new elements that
+require featured styles are introduced.
+
+**Bad**
+```html
+<article class="product-card">
+  <header class="product-card__header product-card__header--featured">
+    <img src="/tec-icon.png" class="product-card__header-image" />
+  </header>
+  <div class="product-card__content product-card__content--featured">
+    <h3 class="product-card__label">The Events Calendar</h3>
+    <p class="product-card__description">
+      Easily create and manage an events calendar on your website with The Events Calendar.
+      Whether your events are in-person or virtual events, this plugin boasts professional
+      features backed by our world-class team of developers and designers.
+    </p>
+  </div>
+</article>
+```
+
+**Good**
+```html
 <article class="product-card product-card--featured">
   <header class="product-card__header">
     <img src="/ecp-icon.png" class="product-card__header-image" />
@@ -177,7 +228,8 @@ up over multiple lines. In such a case we use the following convention:
 ## Semantics
 
 HTML doesn't just display information on a page, it conveys meaning. Semantics are important when writing HTML
-as it describes the structure of a page to those who may not be able to visually browse the page.
+as it describes the structure of a page to those who may not be able to visually browse the page. BEM classes
+do not equal semantics, they are only names. Rather, it is the elements that create semantic structure.
 
 ### Header and Footer
 
@@ -341,6 +393,7 @@ for the user. We do not want to replace this with a link or another element.
 ```
 
 **Good**
+```html
 <button>Open menu</button>
 ```
 
@@ -370,10 +423,13 @@ empty `alt` attribute will convey this meaning.
 Forms are complex HTML structures that require a bit of attention to make them accessible.
 Fortunately, these are fairly easy to implement.
 
-The first is form labels and related inputs. Form inputs should have labels linked to them
-in order to convey this information properly to those using assistive technology. This can
-be done by setting an `id` attribute on the input and using the same value in the `for attribute
-of the label.
+#### Inputs and Labels
+
+Form [inputs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input) should have
+[labels](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) linked to them in
+order to convey this information properly to those using assistive technology. This can be
+done by setting an `id` attribute on the input and using the same value in the `for`
+attribute of the label.
 
 **Bad**
 ```html
@@ -387,9 +443,10 @@ of the label.
 <input type="text" id="full-name" name="name" />
 ```
 
-The next is to not use placeholders in place of labels. Placeholders may visually look like a
-label, but do not convey the same information. For this reason, we always want a label associated
-with a form input.
+#### Placeholders
+
+Placeholders may visually look like a label, but do not convey the same information as a label.
+For this reason, we always want a label associated with a form input.
 
 **Bad**
 ```html
@@ -400,6 +457,34 @@ with a form input.
 ```html
 <label for="phone">Phone</label>
 <input type="tel" id="phone" name="phone" placeholder="123-456-7890" />
+```
+
+#### Fieldsets and Legends
+
+[Fieldsets](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) are used to
+group related fields and labels together. A [legend](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/legend)
+is used to label the fieldset and is required for accessibility. Fieldsets are not required in
+forms, but can be useful for grouping related form inputs together.
+
+**Bad**
+```html
+<fieldset>
+  <label for="full-name">First Name</label>
+  <input type="text" id="full-name" name="fullName" />
+  <label for="date-of-birth">Date of birth</label>
+  <input type="date" id="date-of-birth" name="dob" min="1900-01-01" max="2019-12-31" />
+</fieldset>
+```
+
+**Good**
+```html
+<fieldset>
+  <legend>Personal information</legend>
+  <label for="full-name">First Name</label>
+  <input type="text" id="full-name" name="fullName" />
+  <label for="date-of-birth">Date of birth</label>
+  <input type="date" id="date-of-birth" name="dob" min="1900-01-01" max="2019-12-31" />
+</fieldset>
 ```
 
 ### Headings
@@ -456,7 +541,7 @@ technology to understand how elements are linked together and what state they ar
 ```
 
 **Good**
-``html
+```html
 <button
   id="accordion-header"
   aria-controls="accordion-content"
