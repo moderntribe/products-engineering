@@ -476,6 +476,23 @@ For this reason, we always want a label associated with a form input.
 <input type="tel" id="phone" name="phone" placeholder="123-456-7890" />
 ```
 
+#### Buttons and Submit
+
+A form should have a submit button to allow users to submit the information entered into the form.
+A form can also have buttons for custom functionality. Properly identifying the type of button
+is important not just in terms of functionality but also accessibility.
+
+When a button is placed within a form without the `type` attribute, the default value is `submit`
+and the form will submit when the button is clicked. To prevent this, always add a `type` attribute
+when adding a button to a form.
+
+**Good**
+```html
+<button class="form__submit-button" type="submit">Submit</button>
+<button class="form__reset-button" type="reset">Reset</button>
+<button class="form__custom-button" type="button">I will not submit the form</button>
+```
+
 #### Fieldsets and Legends
 
 [Fieldsets](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) are used to
