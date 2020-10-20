@@ -339,6 +339,23 @@ There are a variety of other semantic elements that help convey meaning. These i
 and many others. Using the appropriate element in the proper situations will help translate useful information
 to those users who do not browse the page visually.
 
+**Examples**
+```html
+<article class="list-view__event">
+  <time class="list-view__event-datetime" datetime="2020-01-01">January 1, 2020</time>
+  <h3 class="list-view__event-title">New Years Party</h3>
+  <address class="list-view__event-address">Times Square, New York City</address>
+</article>
+
+<section class="week-view__day-selector">
+  <ul class="week-view__day-selector-list">
+    <li class="week-view__day-selector-list-item">...</li>
+    <li class="week-view__day-selector-list-item">...</li>
+    ...
+  </ul>
+</section>
+```
+
 ## Accessibility
 
 We strive to write accessible HTML whenever possible. This means that we use the correct HTML
@@ -464,7 +481,7 @@ For this reason, we always want a label associated with a form input.
 [Fieldsets](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) are used to
 group related fields and labels together. A [legend](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/legend)
 is used to label the fieldset and is required for accessibility. Fieldsets are not required in
-forms, but can be useful for grouping related form inputs together.
+forms, but can be semantically useful for grouping related form inputs together.
 
 **Bad**
 ```html
