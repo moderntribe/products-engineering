@@ -30,7 +30,7 @@ Prequisite: [Install node.js](https://nodejs.org/)
 
 1. In the root directory of the plugin, type `npm install`.
 1. Edit PostCSS (`.pcss`) files in `src/resources/postcss` to your heart's content.
-1. Compile the PostCSS into CSS by running `gulp`
+1. Compile the PostCSS into CSS by running `gulp`.
 
 ### PostCSS plugins
 
