@@ -21,23 +21,24 @@ nav_order: 1
 
 ## PostCSS
 
-The CSS within Modern Tribe plugins built/transformed with [PostCSS](https://github.com/postcss/postcss). When contributing CSS changes to our plugins, please
-be sure to edit files within `src/resources/postcss` rather than `src/resources/css`. Getting your environment set up to work with our
-PostCSS configuration is fairly simple:
+The CSS within Modern Tribe plugins built/transformed with [PostCSS](https://github.com/postcss/postcss).
+When contributing CSS changes to our plugins, please be sure to edit files within `src/resources/postcss`
+rather than `src/resources/css`. Getting your environment set up to work with our PostCSS configuration
+is fairly simple:
 
 Prequisite: [Install node.js](https://nodejs.org/)
 
-1. In the root directory of the plugin, type `npm install`. If you have already run that command, it is always advised to run `npm update`
-1. Edit PostCSS (`.pcss`) files in `src/resources/postcss` to your heart's content
+1. In the root directory of the plugin, type `npm install`.
+1. Edit PostCSS (`.pcss`) files in `src/resources/postcss` to your heart's content.
 1. Compile the PostCSS into CSS by running `gulp`
 
 ### PostCSS plugins
 
 We employ a number of PostCSS plugins to transform our `.pcss` files into CSS. They are as follows:
 
-**[PostCSS CSSNext](http://cssnext.io/)**
+**[PostCSS Preset Env](https://preset-env.cssdb.org/)**
 
-PostCSS-cssnext is a PostCSS plugin that helps you to use the latest CSS syntax today. It transforms
+PostCSS Preset Env is a PostCSS plugin that helps you to use the latest CSS syntax today. It transforms
 new CSS specs into more compatible CSS so you don't need to wait for browser support.
 
 **[PostCSS Import](https://github.com/postcss/postcss-import)**
@@ -47,12 +48,12 @@ and it will inject the contents of `somefile.css`.
 
 **[PostCSS Nested](https://github.com/postcss/postcss-nested)**
 
-PostCSS plugin to unwrap nested rules like how Sass does it. Basically...it provides support for rule nesting.
+PostCSS plugin to unwrap nested rules like how Sass does it. Basically... it provides support for rule nesting.
 
 **[PostCSS Mixins](https://github.com/postcss/postcss-mixins)**
 
-This plugin adds support for mixins similar to Sass, however the syntax is a bit different. You define mixins via `@define-mixin mixinname {}`
-and you include the mixin via `@mixin mixinname;`.
+This plugin adds support for mixins similar to Sass, however the syntax is a bit different. You define mixins
+via `@define-mixin mixinname {}` and you include the mixin via `@mixin mixinname;`.
 
 **[PostCSS MediaQuery Packer](https://github.com/hail2u/node-css-mqpacker)**
 
@@ -63,9 +64,10 @@ This plugin merges identical media queries during compilation into CSS.
 First and foremost, we make an attempt to adhere to the [WordPress CSS coding standards](http://make.wordpress.org/core/handbook/coding-standards/css/).
 There is an exception to this rule, however...**Property Ordering**.
 
-## Property ordering
+### Property ordering
 
-There are a few strategies for ordering CSS properties out in the wild. The approach we take is alphabetical ordering of properties.
+There are a few strategies for ordering CSS properties out in the wild. The approach we take is alphabetical
+ordering of properties.
 
 **Avoid**
 
@@ -74,9 +76,6 @@ There are a few strategies for ordering CSS properties out in the wild. The appr
   color: #555;
   border: 1px solid #ddd;
   background: #eee;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
   position: absolute;
   top: 20px;
   left: 10px;
@@ -89,9 +88,6 @@ There are a few strategies for ordering CSS properties out in the wild. The appr
 .thing {
   background: #eee;
   border: 1px solid #ddd;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
   color: #555;
   left: 10px;
   position: absolute;
@@ -99,7 +95,7 @@ There are a few strategies for ordering CSS properties out in the wild. The appr
 }
 ```
 
-## Specificity
+### Specificity
 
 Be sure to use [efficient selectors](http://csswizardry.com/2011/09/writing-efficient-css-selectors/).
 Classes have a nice balance between reusability and efficiency, so their use is preferred over other
