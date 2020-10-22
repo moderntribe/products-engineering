@@ -142,3 +142,64 @@ than a `.product-card__header--featured` and `.product-card__content--featured` 
 elements that have featured styles. This implies that we could have a featured product card header without
 a featured product card content, and vice-versa, when they both are applied together. This also introduces
 a maintenance problem when the product card grows and new elements that require featured styles are introduced.
+
+## General style structure
+
+When building styles for a particular feature, you may run into scenarios where media queries and various
+different selectors are required and it may become difficult to know what order these should come in. As a
+general guideline, it is best to structure the styles in the following order: base styles, media queries,
+pseudo-classes, and modifiers. The example below illustrates how to set this up:
+
+```css
+.button {
+  background-color: var(--color-dark-grey);
+  color: var(--color-white);
+  font-size: 16px;
+  line-height: 1.25;
+
+  @media (--viewport-medium) {
+    font-size: 18px;
+    line-height: 1.33;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: var(--color-grey);
+
+    @media (--viewport-medium) {
+      background-color: transparent;
+      color: var(--color-dark-grey);
+    }
+  }
+}
+
+.button--secondary {
+  background-color: var(--color-blue);
+  border-radius: 10px;
+
+  @media (--viewport-medium) {
+    border-radius: 12px;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: var(--color-dark-blue);
+
+    @media (--viewport-medium) {
+      background-color: transparent;
+      color: var(--color-blue);
+    }
+  }
+}
+```
+
+There are a couple reasons we want to set up the style structure in this order. The first is due to the
+cascading nature of CSS. When there are multiple selectors with the same specificity (for example,
+`.button:hover` and `.button--secondary:hover`), the styles from the later selector will take effect.
+In this example, the background color will become dark blue.
+
+The second reason is that the later items can contain the earlier items. For example, pseudo-classes can
+contain media queries that change styles at different viewport sizes. Another example is that modifiers
+can contain both pseudo-classes and media queries. This is illustrated beautifully in the above example.
+If we did this in a different order than what is outlined in the example above, we may run into issues
+when media queries, pseudo-classes, and modifiers all combine together.
