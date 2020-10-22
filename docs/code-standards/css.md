@@ -61,7 +61,7 @@ This plugin merges identical media queries during compilation into CSS.
 
 ## CSS Basics
 
-First and foremost, we make an attempt to adhere to the [WordPress CSS coding standards](http://make.wordpress.org/core/handbook/coding-standards/css/).
+First and foremost, we make an attempt to adhere to the [WordPress CSS coding standards](https://make.wordpress.org/core/handbook/coding-standards/css/).
 There is an exception to this rule, however...**Property Ordering**.
 
 ### Property ordering
@@ -95,13 +95,50 @@ ordering of properties.
 }
 ```
 
-### Specificity
+### Efficiency
 
-Be sure to use [efficient selectors](http://csswizardry.com/2011/09/writing-efficient-css-selectors/).
+Be sure to use [efficient selectors](https://csswizardry.com/2011/09/writing-efficient-css-selectors/).
 Classes have a nice balance between reusability and efficiency, so their use is preferred over other
 selectors if possible.
+
+### Specificity
+
+Be conscious of [specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) when using
+selectors. As a rule of thumb, do not use IDs as selectors. They carry too much weight on specificity
+and become difficult to override. Use classes instead.
 
 ### !important
 
 As a general rule, don't use `!important` unless you absolutely must. Be prepared to justify its
 usage during the code review process.
+
+## Methodology
+
+We should use the [Block Element Modifier (BEM)](http://getbem.com/) methodology whenever possible.
+The BEM methodology to naming classes allows us to create modular styles and a consistent naming
+approach. Below we cover each component of the BEM methodology.
+
+### Block
+
+A block is an independent entity that has meaning on its own. Some examples include header,
+menu, card, and slider. Classes that represent a block could be: `.header`, `.menu`,
+`.product-card`, and `.image-slider`.
+
+### Element
+
+An element is a part of a block that doesn't mean anything by itself, but has semantic meaning attached
+to a block. Some examples include menu item, card title, and slider slide, Classes that represent an
+element could be: `.menu__item`, `.card__title`, and `.image-slider__slide`.
+
+### Modifier
+
+A modifier is a flag on a block or element that indicates an altered behavior or appearance. Some examples
+include a rounded button, a highlighted menu item, and a featured card. Classes that represent these
+could be: `.button--round`, `.menu__item--highlighted`, and `.product-card--featured`.
+
+When applying modifiers, they should be applied in a semantic manner. If we have a featured product card
+where the header and content element styles change, we should have a `.product-card--featured` class rather
+than a `.product-card__header--featured` and `.product-card__content--featured` class to each of the
+elements that have featured styles. This implies that we could have a featured product card header without
+a featured product card content, and vice-versa, when they both are applied together. This also introduces
+a maintenance problem when the product card grows and new elements that require featured styles are introduced.
