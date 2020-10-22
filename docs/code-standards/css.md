@@ -143,7 +143,7 @@ elements that have featured styles. This implies that we could have a featured p
 a featured product card content, and vice-versa, when they both are applied together. This also introduces
 a maintenance problem when the product card grows and new elements that require featured styles are introduced.
 
-## General style structure
+## General structure
 
 When building styles for a particular feature, you may run into scenarios where media queries and various
 different selectors are required and it may become difficult to know what order these should come in. As a
