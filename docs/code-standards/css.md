@@ -61,7 +61,7 @@ This plugin merges identical media queries during compilation into CSS.
 
 ## CSS Basics
 
-First and foremost, we make an attempt to adhere to the [WordPress CSS coding standards](https://make.wordpress.org/core/handbook/coding-standards/css/).
+First and foremost, we make an attempt to adhere to the [WordPress CSS coding standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/css/).
 There is an exception to this rule, however...**Property Ordering**.
 
 ### Property ordering
@@ -75,6 +75,7 @@ ordering of properties.
 .thing {
   color: #555;
   border: 1px solid #ddd;
+  border-radius: 5px;
   background: #eee;
   position: absolute;
   top: 20px;
@@ -88,6 +89,7 @@ ordering of properties.
 .thing {
   background: #eee;
   border: 1px solid #ddd;
+  border-radius: 5px;
   color: #555;
   left: 10px;
   position: absolute;
