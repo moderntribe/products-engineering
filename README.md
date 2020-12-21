@@ -1,6 +1,6 @@
 # Products Engineering docs
 
-This is a GitHub Pages site that can be seen at [https://moderntribe.github.io/products-engineering/](https://moderntribe.github.io/products-engineering/).
+This is a GitHub Pages site that can be seen at [https://the-events-calendar.github.io/products-engineering/](https://the-events-calendar.github.io/products-engineering/).
 
 ## Running locally
 
