@@ -1,17 +1,17 @@
 # ----
 # Site
 
-title: Tribe Engineering
-url: "https://moderntribe.github.io"
+title: The Events Calendar Engineering Docs
+url: "https://the-events-calendar.github.io"
 baseurl: "/products-engineering"
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
 logo: /siteicon.png
-description: Modern Tribe knowledge base for Developers
+description: The Events Calendar knowledge base for Developers
 author:
-  name: Modern Tribe
+  name: The Events Calendar
   email:
-  twitter: moderntribeinc
+  twitter: TheEventsCal
 
 # -----
 # Build

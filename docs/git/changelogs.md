@@ -27,7 +27,7 @@ and are displayed in the main page of the plugins.
 
 ## Examples
 
-You can take a look at the reference used inside of the repository of [TEC plugin](https://github.com/moderntribe/the-events-calendar/blob/master/readme.txt#L216-L241)
+You can take a look at the reference used inside of the repository of [TEC plugin](https://github.com/the-events-calendar/the-events-calendar/blob/master/readme.txt#L216-L241)
 
 ```
 == Changelog ==
