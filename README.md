@@ -9,7 +9,7 @@ You'll need the pre-requisites as indicated on the [GitHub Pages docs](https://h
 ### Clone the repo
 
 ```
-git clone git@github.com:moderntribe/products-engineering.git
+git clone git@github.com:the-events-calendar/products-engineering.git
 ```
 
 ### Serve up the pages
