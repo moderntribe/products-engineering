@@ -9,8 +9,7 @@ permalink: /
 # Tribe Products Engineering
 {: .no_toc }
 
-Standards and approaches for [The Events Calendar](https://wordpress.org/plugins/the-events-calendar/),
-[Event Tickets](https://wordpress.org/plugins/event-tickets/), and other plugins by [Modern Tribe](https://theeventscalendar.com).
+Standards and approaches for [The Events Calendar](https://theeventscalendar.com) family of plugins.
 {: .fs-6 .fw-300 }
 
 ---
