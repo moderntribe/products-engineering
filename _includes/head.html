@@ -6,7 +6,12 @@
   {% endif %}
 
   <title>{{ page.title }} - {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ "/assets/css/just-the-docs.css" | absolute_url }}">
+  <link rel="stylesheet" href="{{ "/assets/css/just-the-docs-default.css" | absolute_url }}">
+  {% if site.color_scheme == "dark" %}
+    <link rel="stylesheet" href="{{ "/assets/css/just-the-docs-dark.css" | absolute_url }}">
+  {% else %}
+    <link rel="stylesheet" href="{{ "/assets/css/just-the-docs-light.css" | absolute_url }}">
+  {% endif %}
 
   {% if site.ga_tracking != nil %}
     <script>
