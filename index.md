@@ -24,7 +24,7 @@ worth knowing.
 
 We have a set of [coding standards]({{ "/docs/code-standards" | absolute_url }})
 that we follow and encourage others to follow as well. When you submit
-Pull Requests, you'll probably notice a friendly bot - `tr1b0t` - that
+Pull Requests, you'll probably notice a friendly bot - `tec-bot` - that
 comments on your PR and suggests changes. Be gentle with him, he's only
 trying to help. He also has a pretty good idea about what we'd like to
 see in terms of code formatting, so don't ignore him.
