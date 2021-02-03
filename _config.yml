@@ -17,6 +17,7 @@ author:
 # Build
 
 remote_theme: pmarsceill/just-the-docs
+color_scheme: light
 
 permalink: pretty
 
